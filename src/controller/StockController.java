@@ -52,6 +52,12 @@ public class StockController {
       String userInput = scanner.nextLine();
       switch(userInput){
 
+        case "Q":
+        case "q":
+        case "quit":
+        case "Quit":
+          quit = true;
+          break;
       }
     }
 
