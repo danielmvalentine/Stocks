@@ -38,7 +38,7 @@ public class MockModelImpl implements Model {
   @Override
   public ProgramFunction xDayCrossovers(String stockName,
                                         LocalDate initialDate, LocalDate finalDate, int xValue) {
-    log.append("GainOrLoss: stock=" + stockName +
+    log.append("XDayCrossovers: stock=" + stockName +
             " initialDate=" + initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
             " finalDate=" + finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
             " xVal=" + xValue +

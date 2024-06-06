@@ -27,7 +27,8 @@ public class StockView {
    * Our method that writes the string that will be printed on the screen for our menu.
    */
   public void printMenu() {
-    writeMessage("Supported user instructions are: " + System.lineSeparator());
+    writeMessage(System.lineSeparator() + "Supported user instructions are: "
+            + System.lineSeparator());
     writeMessage("stock-price-shift - Examine the gain or loss of a stock over a specified period."
             + System.lineSeparator());
     writeMessage("xday-moving-average - Examine the x-day moving average of a stock for a " +

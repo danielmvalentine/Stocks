@@ -15,8 +15,9 @@ import view.StockView;
 public class StockController {
 
   private final Readable readable;
-  StockView stockView;
-  Model model;
+  private final StockView stockView;
+  private final Model model;
+  private boolean quit = false;
 
   public StockController(Readable readable, StockView stockView, Model model) {
     this.readable = readable;
@@ -29,17 +30,13 @@ public class StockController {
    */
   public void control(){
     Scanner scanner = new Scanner(readable);
-    boolean quit = false;
+
 
     stockView.welcomeMessage();
     while(!quit){
-      stockView.writeMessage("Input instruction: ");
-      String userInput = scanner.nextLine();
-      if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("q")) {
-        quit = true;
-      } else {
-        processCommand(userInput, scanner);
-      }
+      stockView.writeMessage(System.lineSeparator() + "Input instruction: ");
+      String userInput = scanner.next();
+      processCommand(userInput, scanner);
     }
 
     stockView.leavingMessage();
@@ -56,7 +53,7 @@ public class StockController {
     switch(userInput){
       case "stock-price-shift":
         stockView.writeMessage("Enter stock four digit tag: ");
-        tag = scanner.nextLine();
+        tag = scanner.next();
         stockView.writeMessage("Enter the starting date for your desired time period: ");
         startDate = getDate(scanner);
         checkCorrectDate(scanner, startDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
@@ -67,7 +64,7 @@ public class StockController {
         break;
       case "xday-moving-average":
         stockView.writeMessage("Enter stock four digit tag: ");
-        tag = scanner.nextLine();
+        tag = scanner.next();
         stockView.writeMessage("Enter the date to begin the x-day moving average analysis on: ");
         LocalDate date = getDate(scanner);
         checkCorrectDate(scanner, date.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
@@ -77,7 +74,7 @@ public class StockController {
         break;
       case "xday-crossovers":
         stockView.writeMessage("Enter stock four digit tag: ");
-        tag = scanner.nextLine();
+        tag = scanner.next();
         stockView.writeMessage("Enter the starting date for your desired time period: ");
         startDate = getDate(scanner);
         checkCorrectDate(scanner, startDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
@@ -91,8 +88,14 @@ public class StockController {
       case "portfolio":
         function = model.portfolioOptions();
         break;
+      case "q":
+      case "Q":
+      case "quit":
+      case "Quit":
+        quit = true;
+        break;
       default:
-        stockView.writeMessage("Invalid command: " + userInput);
+        stockView.writeMessage("Invalid command: " + userInput + System.lineSeparator());
         control();
         break;
     }
@@ -115,8 +118,8 @@ public class StockController {
     try {
       date = LocalDate.of(year, month, day);
     } catch (DateTimeException e) {
-      stockView.writeMessage("Invalid date: day: " + day
-              + ", month: " + month + ", year: " + year );
+      stockView.writeMessage("Invalid date: day=" + day
+              + " month=" + month + " year=" + year );
       return getDate(scanner);
     }
 
@@ -124,12 +127,13 @@ public class StockController {
   }
 
   private void checkCorrectDate(Scanner scanner, String date, String userInput) {
-    stockView.writeMessage("Is this the correct date? " + date);
+    stockView.writeMessage("Is this the correct date? " + date + System.lineSeparator());
     stockView.writeMessage("Y/N: ");
-    if(scanner.nextLine().equalsIgnoreCase("n")){
+    String response = scanner.next();
+    if(response.equalsIgnoreCase("n")){
       stockView.writeMessage("Restarting...");
       processCommand(userInput, scanner);
-    } else if (!scanner.nextLine().equalsIgnoreCase("y")){
+    } else if (!response.equalsIgnoreCase("y")){
       stockView.writeMessage("Invalid input, restarting...");
       processCommand(userInput, scanner);
     }
