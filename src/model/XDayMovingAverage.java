@@ -1,11 +1,13 @@
 package model;
 
+import java.time.LocalDate;
+
 /**
  * Public class for finding the x-day moving average of a stock.
  */
 public class XDayMovingAverage implements ProgramFunction {
   String tag;
-  String date;
+  LocalDate date;
   int x;
 
   /**
@@ -15,7 +17,7 @@ public class XDayMovingAverage implements ProgramFunction {
    * @param date The date to be started from.
    * @param x    The number of days to go back for the analysis.
    */
-  public XDayMovingAverage(String tag, String date, int x) {
+  public XDayMovingAverage(String tag, LocalDate date, int x) {
     this.tag = tag;
     this.date = date;
     this.x = x;

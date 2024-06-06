@@ -1,12 +1,14 @@
 package model;
 
+import java.time.LocalDate;
+
 /**
  * Public class for finding the number of x-day crossovers for stock.
  */
 public class XDayCrossovers implements ProgramFunction {
   String tag;
-  String dateOne;
-  String dateTwo;
+  LocalDate dateOne;
+  LocalDate dateTwo;
   int x;
 
   /**
@@ -17,7 +19,7 @@ public class XDayCrossovers implements ProgramFunction {
    * @param dateTwo The second date of the Stock.
    * @param x       The number for the x-day moving average.
    */
-  public XDayCrossovers(String tag, String dateOne, String dateTwo, int x) {
+  public XDayCrossovers(String tag, LocalDate dateOne, LocalDate dateTwo, int x) {
     this.tag = tag;
     this.dateOne = dateOne;
     this.dateTwo = dateTwo;

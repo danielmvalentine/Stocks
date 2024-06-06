@@ -60,18 +60,18 @@ public class StockController {
         tag = scanner.nextLine();
         stockView.writeMessage("Enter the starting date for your desired time period: ");
         startDate = getDate(scanner);
-        checkCorrectDate(scanner, startDate, userInput);
+        checkCorrectDate(scanner, startDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the ending date for your desired time period: ");
         endDate = getDate(scanner);
-        checkCorrectDate(scanner, endDate, userInput);
+        checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         function = new StockGainOrLoss(tag, startDate, endDate);
         break;
       case "xday-moving-average":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.nextLine();
         stockView.writeMessage("Enter the date to begin the x-day moving average analysis on: ");
-        String date = getDate(scanner);
-        checkCorrectDate(scanner, date, userInput);
+        LocalDate date = getDate(scanner);
+        checkCorrectDate(scanner, date.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the number of days the analysis should be performed on: ");
         x = scanner.nextInt();
         function = new XDayMovingAverage(tag, date, x);
@@ -81,10 +81,10 @@ public class StockController {
         tag = scanner.nextLine();
         stockView.writeMessage("Enter the starting date for your desired time period: ");
         startDate = getDate(scanner);
-        checkCorrectDate(scanner, startDate, userInput);
+        checkCorrectDate(scanner, startDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the ending date for your desired time period: ");
         endDate = getDate(scanner);
-        checkCorrectDate(scanner, endDate, userInput);
+        checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
         function = new XDayCrossovers(tag, startDate, endDate, x);
@@ -97,7 +97,7 @@ public class StockController {
     function.execute();
   }
 
-  private String getDate(Scanner scanner) {
+  private LocalDate getDate(Scanner scanner) {
     stockView.writeMessage("Enter year for the date: ");
     int year = scanner.nextInt();
     stockView.writeMessage("Enter month for the date: ");
@@ -115,8 +115,7 @@ public class StockController {
       return getDate(scanner);
     }
 
-    // In the format YYYY-MM-DD
-    return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    return date;
   }
 
   private void checkCorrectDate(Scanner scanner, String date, String userInput) {
