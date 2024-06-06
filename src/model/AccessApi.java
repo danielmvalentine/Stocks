@@ -10,10 +10,14 @@ import java.net.URL;
  */
 public class AccessApi {
 
-  String ticker = "GOOG";
+  String ticker;
 
-  public void returnData(String ticker, String dateOne, String dateTwo){
-    String apiKey = "W0M1JOKC82EZEQA8";
+  public AccessApi(String ticker){
+    this.ticker = ticker;
+  }
+
+  public void returnData(String dateOne, String dateTwo){
+    String apiKey = "L3XED6QYJ9KSPJYA";
     URL url = null;
 
     try {
@@ -28,7 +32,7 @@ public class AccessApi {
               + ".co/query?function=TIME_SERIES_DAILY"
               + "&outputsize=full"
               + "&symbol"
-              + "=" + ticker + "&apikey="+apiKey+"&datatype=csv");
+              + "=" + "GOOG" + "&apikey="+apiKey+"&datatype=csv");
     }
     catch (MalformedURLException e) {
       throw new RuntimeException("the alphavantage API has either changed or "
@@ -36,6 +40,8 @@ public class AccessApi {
     }
 
     StringBuilder output = new StringBuilder();
+
+
   }
 
 }

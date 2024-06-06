@@ -8,7 +8,7 @@ public class AlphaVantageDemo {
     //the API key needed to use this web service.
     //Please get your own free API key here: https://www.alphavantage.co/
     //Please look at documentation here: https://www.alphavantage.co/documentation/
-    String apiKey = "W0M1JOKC82EZEQA8";
+    String apiKey = "L3XED6QYJ9KSPJYA";
     String stockSymbol = "GOOG"; //ticker symbol for Google
     URL url = null;
 

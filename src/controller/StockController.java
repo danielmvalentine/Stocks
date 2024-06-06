@@ -50,8 +50,8 @@ public class StockController {
 
   public void processCommand(String userInput, Scanner scanner){
     String tag;
-    String startDate;
-    String endDate;
+    LocalDate startDate;
+    LocalDate endDate;
     int x;
 
     switch(userInput){
@@ -115,8 +115,8 @@ public class StockController {
       return getDate(scanner);
     }
 
-    // In the format MM.DD.YYYY
-    return date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+    // In the format YYYY-MM-DD
+    return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
   }
 
   private void checkCorrectDate(Scanner scanner, String date, String userInput) {

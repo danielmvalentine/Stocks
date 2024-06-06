@@ -1,12 +1,17 @@
 package model;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 /**
  * Public class for finding the gain or loss of a stock.
  */
 public class StockGainOrLoss implements ProgramFunction {
   String tag;
-  String dateOne;
-  String dateTwo;
+  LocalDate dateOne;
+  LocalDate dateTwo;
 
   /**
    * Creates a new StockGainOrLoss Object.
@@ -15,10 +20,13 @@ public class StockGainOrLoss implements ProgramFunction {
    * @param dateOne The first date of the Stock.
    * @param dateTwo The second date of the Stock.
    */
-  public StockGainOrLoss(String tag, String dateOne, String dateTwo) {
+  public StockGainOrLoss(String tag, LocalDate dateOne, LocalDate dateTwo) {
     this.tag = tag;
     this.dateOne = dateOne;
     this.dateTwo = dateTwo;
+
+    String dataBase = new AccessApi(tag).toString();
+    System.out.println(dataBase);
   }
 
   /**
@@ -32,5 +40,11 @@ public class StockGainOrLoss implements ProgramFunction {
     // placeholder for now
     // Can just return the string of the gain/loss
     return "";
+  }
+
+  public static void main(String[] args){
+    LocalDate myDateOne = LocalDate.of(1999,07,24);
+    LocalDate myDateTwo = LocalDate.now();
+    new StockGainOrLoss("GOOG", myDateOne, myDateTwo);
   }
 }
