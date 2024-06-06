@@ -1,5 +1,8 @@
 package model.functions;
 
+/**
+ * Our Interface that our public methods for functions call.
+ */
 public interface ProgramFunction {
   /**
    * Executes the given command
