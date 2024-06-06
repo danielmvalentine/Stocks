@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.List;
 
 /**
  * This interface represents certain functions to be offered by a program 

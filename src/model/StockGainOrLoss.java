@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import model.AccessApi;
+
 /**
  * Public class for finding the gain or loss of a stock.
  */
@@ -25,8 +27,7 @@ public class StockGainOrLoss implements ProgramFunction {
     this.dateOne = dateOne;
     this.dateTwo = dateTwo;
 
-    String dataBase = new AccessApi(tag).toString();
-    System.out.println(dataBase);
+
   }
 
   /**
@@ -45,6 +46,10 @@ public class StockGainOrLoss implements ProgramFunction {
   public static void main(String[] args){
     LocalDate myDateOne = LocalDate.of(1999,07,24);
     LocalDate myDateTwo = LocalDate.now();
-    new StockGainOrLoss("GOOG", myDateOne, myDateTwo);
+    String tempOne = "";
+    String tempTwo = "";
+    String finalOutput = new AccessApi("GOOG").returnData(tempOne, tempTwo);
+    System.out.println(finalOutput);
+
   }
 }
