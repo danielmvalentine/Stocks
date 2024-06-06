@@ -1,4 +1,4 @@
-package model;
+package model.functions;
 
 /**
  * Public class for controlling the viewing and creation of Portfolio.

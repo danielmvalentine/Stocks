@@ -1,11 +1,13 @@
 package view;
 
+import java.io.IOException;
+
 public class StockView {
 
-  private final StringBuilder appendable;
+  private final Appendable appendable;
 
-  public StockView() {
-    appendable = new StringBuilder();
+  public StockView(Appendable appendable) {
+    this.appendable = appendable;
   }
 
   /**
@@ -16,7 +18,7 @@ public class StockView {
   public void writeMessage(String message) throws IllegalStateException {
     try{
       appendable.append(message);
-    }catch(IllegalStateException e){
+    } catch(IOException e){
       throw new IllegalStateException(e.getMessage());
     }
   }

@@ -1,4 +1,4 @@
-package model;
+package model.functions;
 
 public interface ProgramFunction {
   /**

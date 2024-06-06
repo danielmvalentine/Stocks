@@ -3,14 +3,10 @@ package controller;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Scanner;
 
-import model.PortfolioOptions;
-import model.ProgramFunction;
-import model.StockGainOrLoss;
-import model.XDayCrossovers;
-import model.XDayMovingAverage;
+import model.Model;
+import model.functions.ProgramFunction;
 import view.StockView;
 
 /**
@@ -20,11 +16,12 @@ public class StockController {
 
   private final Readable readable;
   StockView stockView;
-  ProgramFunction function;
+  Model model;
 
-  public StockController(Readable readable, StockView stockView) {
+  public StockController(Readable readable, StockView stockView, Model model) {
     this.readable = readable;
     this.stockView = stockView;
+    this.model = model;
   }
 
   /**
@@ -35,7 +32,7 @@ public class StockController {
     boolean quit = false;
 
     stockView.welcomeMessage();
-    while(!quit && scanner.hasNext()){
+    while(!quit){
       stockView.writeMessage("Input instruction: ");
       String userInput = scanner.nextLine();
       if (userInput.equalsIgnoreCase("quit") || userInput.equalsIgnoreCase("q")) {
@@ -49,6 +46,8 @@ public class StockController {
   }
 
   public void processCommand(String userInput, Scanner scanner){
+    ProgramFunction function = null;
+
     String tag;
     LocalDate startDate;
     LocalDate endDate;
@@ -64,7 +63,7 @@ public class StockController {
         stockView.writeMessage("Enter the ending date for your desired time period: ");
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
-        function = new StockGainOrLoss(tag, startDate, endDate);
+        function = model.gainOrLossOverTime(tag, startDate, endDate);
         break;
       case "xday-moving-average":
         stockView.writeMessage("Enter stock four digit tag: ");
@@ -74,7 +73,7 @@ public class StockController {
         checkCorrectDate(scanner, date.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the number of days the analysis should be performed on: ");
         x = scanner.nextInt();
-        function = new XDayMovingAverage(tag, date, x);
+        function = model.movingAverage(tag, date, x);
         break;
       case "xday-crossovers":
         stockView.writeMessage("Enter stock four digit tag: ");
@@ -87,14 +86,20 @@ public class StockController {
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
-        function = new XDayCrossovers(tag, startDate, endDate, x);
+        function = model.xDayCrossovers(tag, startDate, endDate, x);
         break;
       case "portfolio":
-        function = new PortfolioOptions();
+        function = model.portfolioOptions();
+        break;
+      default:
+        stockView.writeMessage("Invalid command: " + userInput);
+        control();
         break;
     }
 
-    function.execute();
+    if (function != null) {
+      function.execute();
+    }
   }
 
   private LocalDate getDate(Scanner scanner) {

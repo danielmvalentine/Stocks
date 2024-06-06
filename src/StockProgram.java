@@ -1,10 +1,12 @@
 import java.io.InputStreamReader;
 
 import controller.StockController;
+import model.Model;
+import model.ModelImpl;
 import view.StockView;
 
 /**
- * The drivcer of this application.
+ * The driver of this application.
  */
 public class StockProgram {
   /**
@@ -13,8 +15,9 @@ public class StockProgram {
    */
   public static void main(String[] args) {
     Readable rd = new InputStreamReader(System.in);
-    StockView view = new StockView();
-    StockController controller = new StockController(rd, view);
+    StockView view = new StockView(System.out);
+    Model model = new ModelImpl();
+    StockController controller = new StockController(rd, view, model);
     controller.control();
   }
 }
