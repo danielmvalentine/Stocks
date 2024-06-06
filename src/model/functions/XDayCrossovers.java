@@ -2,6 +2,8 @@ package model.functions;
 
 import java.time.LocalDate;
 
+import model.AccessApi;
+
 /**
  * Public class for finding the number of x-day crossovers for stock.
  */
@@ -35,6 +37,12 @@ public class XDayCrossovers implements ProgramFunction {
   @Override
   public String execute() {
     return "";
+  }
+
+  private helperXDayCross(){
+    String bigData = new AccessApi(tag).returnData(dateOne.toString(), dateTwo.toString());
+
+
   }
 
 }

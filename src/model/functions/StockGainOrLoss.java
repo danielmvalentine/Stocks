@@ -116,14 +116,4 @@ public class StockGainOrLoss implements ProgramFunction {
     double doubleFinalDouble = moneySum / height;
     return(doubleFinalDouble - firstValue);
   }
-
-  public static void main(String[] args){
-    LocalDate myDateOne = LocalDate.of(1999,07,24);
-    LocalDate myDateTwo = LocalDate.now();
-    String tempOne = "";
-    String tempTwo = "";
-    String finalOutput = new AccessApi("GOOG").returnData(tempOne, tempTwo);
-    System.out.println(finalOutput);
-
-  }
 }
