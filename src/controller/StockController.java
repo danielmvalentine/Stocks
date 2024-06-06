@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
 
 import view.StockView;
@@ -27,6 +28,12 @@ public class StockController {
       stockView.writeMessage("Input instruction: ");
       String userInput = scanner.nextLine();
       switch(userInput){
+        case "1":
+          System.out.println("Enter stock four digit tag: ");
+          String tag = scanner.nextLine();
+          System.out.println("Enter how many days back you would like to start checking stock " +
+                  "data from: ");
+          String daysBack = scanner.nextLine();
 
         case "Q":
         case "q":
