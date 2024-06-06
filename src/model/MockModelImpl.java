@@ -2,9 +2,11 @@ package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import model.functions.ProgramFunction;
+import model.portfolio.IPortfolio;
 
 public class MockModelImpl implements Model {
   final StringBuilder log;
@@ -50,5 +52,28 @@ public class MockModelImpl implements Model {
   public ProgramFunction portfolioOptions() {
     log.append("PortfolioOptions: \n");
     return null;
+  }
+
+  @Override
+  public IPortfolio getPortfolio(String title) {
+    log.append("getPortfolio: title=" + title + System.lineSeparator());
+    return null;
+  }
+
+  @Override
+  public ArrayList<IPortfolio> getAllPortfolios() {
+    log.append("getAllPortfolios: \n");
+    return null;
+  }
+
+  @Override
+  public String formatPortfolios() {
+    log.append("formatPortfolios: \n");
+    return "";
+  }
+
+  @Override
+  public void addPortfolio(IPortfolio portfolio) {
+    log.append("addPortfolio: \n" + portfolio.toString());
   }
 }

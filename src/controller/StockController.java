@@ -16,7 +16,7 @@ public class StockController {
 
   private final Readable readable;
   private final StockView stockView;
-  private final Model model;
+  protected final Model model;
   private boolean quit = false;
 
   public StockController(Readable readable, StockView stockView, Model model) {

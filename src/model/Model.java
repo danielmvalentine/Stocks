@@ -1,9 +1,12 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 import model.functions.ProgramFunction;
+import model.portfolio.IPortfolio;
+import model.portfolio.PortfolioImpl;
 
 /**
  * This interface represents certain functions to be offered by a program
@@ -53,5 +56,34 @@ public interface Model {
    * @return The function that will perform this operation.
    */
   public ProgramFunction portfolioOptions();
+
+  /**
+   * Gets a specific portfolio given its title
+   *
+   * @param title The title of the portfolio to be found
+   * @return The portfolio with the given title.
+   */
+  public IPortfolio getPortfolio(String title);
+
+  /**
+   * Used in the portfolio controller to get the portfolios of the user.
+   *
+   * @return A List of Portfolios that the user has.
+   */
+  public ArrayList<IPortfolio> getAllPortfolios();
+
+  /**
+   * Formats the portfolios as a string.
+   *
+   * @return The String of the returned portfolios
+   */
+  public String formatPortfolios();
+
+  /**
+   * Adds a portfolio to the users list of portfolios
+   *
+   * @param portfolio The portfolio to be added
+   */
+  public void addPortfolio(IPortfolio portfolio);
 
 }

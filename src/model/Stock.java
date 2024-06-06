@@ -2,14 +2,15 @@ package model;
 
 import java.util.Date;
 
-public interface Stock {
-  /**
-   * Simple method for getting the current price of the stock.
-   *
-   * @return Return the current price of the stock.
-   */
-  double getCurrentPrice();
+/**
+ * Our public class that we will use to represent a stock.
+ */
+public class Stock {
+  private final String ticker;
+  private double shares;
 
-
-  Date getCurrentDate();
+  public Stock(String ticker, double shares) {
+    this.ticker = ticker;
+    this.shares = shares;
+  }
 }
