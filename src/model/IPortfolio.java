@@ -16,12 +16,12 @@ public interface IPortfolio {
    * A method to add a new stock to our portfolio.
    * @param inputStock The stock we wish to add to our portfolio.
    */
-  public void addToPortfolio(Stock inputStock);
+  public void addToPortfolio(StockImp inputStock);
 
   /**
    * A method to remove a stock from our portfolio.
    * @param removeStock The stock we wish to remove from our portfolio.
    */
-  public void removeFromPortfolio(Stock removeStock);
+  public void removeFromPortfolio(StockImp removeStock);
 
 }

@@ -1,5 +1,8 @@
 import java.io.InputStreamReader;
 
+import controller.StockController;
+import view.StockView;
+
 /**
  * The drivcer of this application.
  */
@@ -9,10 +12,9 @@ public class StockProgram {
    * @param args any command line arguments.
    */
   public static void main(String[] args) {
-    IStock model = new SimpleStock();
     Readable rd = new InputStreamReader(System.in);
     StockView view = new StockView();
-    StockController controller = new StockController(model, view, readable);
+    StockController controller = new StockController(rd, view);
     controller.control();
   }
 }
