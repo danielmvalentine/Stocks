@@ -12,7 +12,7 @@ public class AccessApi {
 
   String ticker = "GOOG";
 
-  public void returnData(String ticker){
+  public void returnData(String ticker, String dateOne, String dateTwo){
     String apiKey = "W0M1JOKC82EZEQA8";
     URL url = null;
 

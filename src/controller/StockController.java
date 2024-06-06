@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import view.StockView;
+import model.StockGainOrLoss;
 
 /**
  * Our basic controller that we use to represent
@@ -29,11 +30,9 @@ public class StockController {
       String userInput = scanner.nextLine();
       switch(userInput){
         case "1":
-          System.out.println("Enter stock four digit tag: ");
-          String tag = scanner.nextLine();
-          System.out.println("Enter how many days back you would like to start checking stock " +
-                  "data from: ");
-          String daysBack = scanner.nextLine();
+          // This will be the way to call the method.
+          // double finalValue = mainGainOrLoss();
+          System.out.println();
 
         case "Q":
         case "q":
