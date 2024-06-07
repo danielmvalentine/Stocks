@@ -29,12 +29,12 @@ public class StockController {
   /**
    * Our main method for our controller to edit maneuvering around our menu.
    */
-  public void control(){
+  public void control() {
     Scanner scanner = new Scanner(readable);
 
 
     stockView.welcomeMessage();
-    while(!quit){
+    while (!quit) {
       stockView.printMenu();
       stockView.writeMessage(System.lineSeparator() + "Input instruction: ");
       String userInput = scanner.next();
@@ -44,7 +44,7 @@ public class StockController {
     stockView.leavingMessage();
   }
 
-  public void processCommand(String userInput, Scanner scanner){
+  public void processCommand(String userInput, Scanner scanner) {
     ProgramFunction function = null;
 
     String tag;
@@ -52,12 +52,12 @@ public class StockController {
     LocalDate endDate;
     int x;
 
-    switch(userInput){
+    switch (userInput) {
       case "1":
       case "stock-price-shift":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
-        if(tag.length() != 4){
+        if (tag.length() != 4) {
           System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
@@ -70,13 +70,13 @@ public class StockController {
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         function = model.gainOrLossOverTime(tag, startDate, endDate);
-        function.execute();
+        System.out.println(function.execute());
         break;
       case "2":
       case "xday-moving-average":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
-        if(tag.length() != 4){
+        if (tag.length() != 4) {
           System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
@@ -88,13 +88,13 @@ public class StockController {
                 + System.lineSeparator());
         x = scanner.nextInt();
         function = model.movingAverage(tag, date, x);
-        function.execute();
+        System.out.println(function.execute());
         break;
       case "3":
       case "xday-crossovers":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
-        if(tag.length() != 4){
+        if (tag.length() != 4) {
           System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
@@ -109,7 +109,7 @@ public class StockController {
         stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
         function = model.xDayCrossovers(tag, startDate, endDate, x);
-        function.execute();
+        System.out.println(function.execute());
         break;
       case "4":
       case "portfolio":
@@ -146,7 +146,7 @@ public class StockController {
       date = LocalDate.of(year, month, day);
     } catch (DateTimeException e) {
       stockView.writeMessage("Invalid date: day=" + day
-              + " month=" + month + " year=" + year );
+              + " month=" + month + " year=" + year);
       return getDate(scanner);
     }
 
@@ -157,10 +157,10 @@ public class StockController {
     stockView.writeMessage("Is this the correct date? " + date + System.lineSeparator());
     stockView.writeMessage("Y/N: ");
     String response = scanner.next();
-    if(response.equalsIgnoreCase("n")){
+    if (response.equalsIgnoreCase("n")) {
       stockView.writeMessage("Restarting...");
       processCommand(userInput, scanner);
-    } else if (!response.equalsIgnoreCase("y")){
+    } else if (!response.equalsIgnoreCase("y")) {
       stockView.writeMessage("Invalid input, restarting...");
       processCommand(userInput, scanner);
     }

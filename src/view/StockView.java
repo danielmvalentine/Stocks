@@ -12,13 +12,14 @@ public class StockView {
 
   /**
    * Public method writeMessage tries to write the message using a stringBuilder.
+   *
    * @param message The message we pass in as a String.
    * @throws IllegalStateException If it is not possible to Append.
    */
   public void writeMessage(String message) throws IllegalStateException {
-    try{
+    try {
       appendable.append(message);
-    } catch(IOException e){
+    } catch (IOException e) {
       throw new IllegalStateException(e.getMessage());
     }
   }
@@ -44,7 +45,7 @@ public class StockView {
   /**
    * Simply prints our welcome message at the beginning of our application.
    */
-  public void welcomeMessage(){
+  public void welcomeMessage() {
     writeMessage("Welcome to the Stocks Program!" + System.lineSeparator());
     printMenu();
   }
@@ -52,7 +53,7 @@ public class StockView {
   /**
    * Method for leaving the program.
    */
-  public void leavingMessage(){
+  public void leavingMessage() {
     writeMessage("Thank you for using this program!");
   }
 

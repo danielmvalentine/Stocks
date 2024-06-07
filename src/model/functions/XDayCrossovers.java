@@ -40,21 +40,23 @@ public class XDayCrossovers implements ProgramFunction {
     return "The days which have crossover occurrences are as follows: " + helperXDayCross();
   }
 
-  private String helperXDayCross(){
+  private String helperXDayCross() {
     String bigData = new AccessApi(tag).returnData(dateOne.toString(), dateTwo.toString());
+    bigData = bigData.replaceAll(System.lineSeparator(), ",");
+    bigData = bigData.replaceAll("\\s", "");
     String[] bigDataSplit = bigData.split(",");
     boolean atFirstDate = false;
     ArrayList<String> listOfCrossDays = new ArrayList<String>();
-    for(int i = 0; i < bigDataSplit.length; i++) {
+    for (int i = 0; i < bigDataSplit.length; i++) {
       if (bigDataSplit[i].equals(dateOne.toString())) {
         atFirstDate = true;
       }
       if (atFirstDate && bigDataSplit[i].contains("-")) {
         double dayAverage =
                 (Double.parseDouble(bigDataSplit[i + 1].replaceAll("\\s", ""))
-                + Double.parseDouble(bigDataSplit[i + 2].replaceAll("\\s", ""))
-                + Double.parseDouble(bigDataSplit[i + 3].replaceAll("\\s", ""))
-                + Double.parseDouble(bigDataSplit[i + 4].replaceAll("\\s", "")))
+                        + Double.parseDouble(bigDataSplit[i + 2].replaceAll("\\s", ""))
+                        + Double.parseDouble(bigDataSplit[i + 3].replaceAll("\\s", ""))
+                        + Double.parseDouble(bigDataSplit[i + 4].replaceAll("\\s", "")))
                         / 4;
         double dayFinal = Double.parseDouble(bigDataSplit[i + 4]);
         if (dayFinal > dayAverage) {
@@ -67,11 +69,11 @@ public class XDayCrossovers implements ProgramFunction {
     }
     StringBuilder finalStringBuilder = new StringBuilder();
     int counterForNewLine = 0;
-    for(int i = 0; i < listOfCrossDays.size(); i++) {
+    for (int i = 0; i < listOfCrossDays.size(); i++) {
       finalStringBuilder.append(listOfCrossDays.get(i));
       finalStringBuilder.append(", ");
       counterForNewLine++;
-      if(counterForNewLine > 6){
+      if (counterForNewLine > 6) {
         finalStringBuilder.append(System.lineSeparator());
         counterForNewLine = 0;
       }

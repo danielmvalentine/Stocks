@@ -27,8 +27,6 @@ public class StockGainOrLoss implements ProgramFunction {
     this.tag = tag;
     this.dateOne = dateOne;
     this.dateTwo = dateTwo;
-
-
   }
 
   /**
@@ -40,13 +38,13 @@ public class StockGainOrLoss implements ProgramFunction {
   @Override
   public String execute() throws IllegalArgumentException {
     double helperResult = helperGainOrLoss();
-    if(isNaN(helperResult)){
-      return("You have hit your maximum limit for accessing the API today."
+    if (isNaN(helperResult)) {
+      return ("You have hit your maximum limit for accessing the API today."
               + " Please try again tomorrow");
     }
-    if(helperResult >= 0){
+    if (helperResult >= 0) {
       return "The total gained over this period of time is: " + helperResult;
-    }else{
+    } else {
       return "The total lost over this period of time is: " + helperResult;
     }
   }
@@ -54,49 +52,50 @@ public class StockGainOrLoss implements ProgramFunction {
   /**
    * Private helperGainOrLoss takes the big data and the dates and converts them into a new
    * ArrayList of Strings that lasts only from the first date to the last date.
+   *
    * @return Returns an ArrayList from the beginning of our data to the end.
    * @throws IllegalArgumentException If dates are backwards.
    */
   private double helperGainOrLoss() throws IllegalArgumentException {
-    ArrayList<String> finalData = new ArrayList<>();
-    if(dateOne.isBefore(dateTwo)) {
-      String bigData = new AccessApi(tag).returnData(dateOne.toString(), dateTwo.toString());
 
+    ArrayList<String> finalData = new ArrayList<>();
+    if (dateOne.isBefore(dateTwo)) {
+      String bigData = new AccessApi(tag).returnData(dateOne.toString(), dateTwo.toString());
       // For loop that separates everything in the main data string by commas and finds dateOne
       // A for loop will be easier to deal with! with a list!
       boolean atFirst = false;
-      boolean atSecond = false;
       String[] separatedData = bigData.split(",");
       finalData.add("");
-      for(int i = 0; i < separatedData.length; i++) {
-        if(atSecond == true){
-          finalData.add(separatedData[i]);
-          atFirst = false;
-          atSecond = false;
-        }
+      for (int i = 0; i < separatedData.length; i++) {
         // If we've hit the first date asked for.
-        if(separatedData[i].equals(dateOne.toString())) {
+        if (separatedData[i].equals(dateOne.toString())) {
           atFirst = true;
         }
-        if(atFirst = true){
+        if (atFirst) {
           finalData.add(separatedData[i]);
         }
-        if(separatedData[i].equals(dateTwo.toString())) {
-          atSecond = true;
+        if (separatedData[i].equals(dateTwo.toString())) {
+          finalData.add(separatedData[i + 1]);
+          finalData.add(separatedData[i + 2]);
+          finalData.add(separatedData[i + 3]);
+          finalData.add(separatedData[i + 4]);
+          finalData.add(separatedData[i + 5]);
+          atFirst = false;
         }
       }
-    }else{
+    } else {
       throw new IllegalArgumentException("Date one must be before date two.");
     }
+    System.out.println(finalData);
     return helpFindFromArrayList(finalData);
   }
 
-  public double helpFindFromArrayList(ArrayList<String> input){
+  public double helpFindFromArrayList(ArrayList<String> input) {
 
     // First we find how tall our arraylist is by finding how many lineSeparators there are.
     int height = 0;
-    for(int i = 0; i < input.size(); i++){
-      if(input.get(i).contains("-")){
+    for (int i = 0; i < input.size(); i++) {
+      if (input.get(i).contains("-")) {
         height++;
       }
     }
@@ -106,20 +105,21 @@ public class StockGainOrLoss implements ProgramFunction {
     boolean isFirst = true;
     double firstValue = 0;
     String valueNext = "";
-    for(int i = 0; i < input.size(); i++){
+    for (int i = 0; i < input.size(); i++) {
       // checks for if it has a dash in it. If true we want to take the next input
       // and convert it to a double because our format is date followed by number.
-      if(input.get(i).contains("-")){
-        valueNext = input.get(i + 1).replaceAll("\\s", "");
+      if (input.get(i).contains("-")) {
+        valueNext = input.get(i + 1);
         largeSum += Double.parseDouble(valueNext);
-        if(isFirst){
+        if (isFirst) {
           firstValue = Double.parseDouble(input.get(i + 1));
         }
         isFirst = false;
       }
     }
+    System.out.println(height);
     double doubleFinalDouble = largeSum / height;
-    DecimalFormat decfor = new DecimalFormat("0.00");
-    return(Double.parseDouble(decfor.format(doubleFinalDouble - firstValue)));
+    DecimalFormat decfor = new DecimalFormat("0.000");
+    return (Double.parseDouble(decfor.format(doubleFinalDouble - firstValue)));
   }
 }

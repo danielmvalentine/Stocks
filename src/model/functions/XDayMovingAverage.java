@@ -1,7 +1,10 @@
 package model.functions;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import model.AccessApi;
+
+import static java.lang.Double.isNaN;
 
 /**
  * Public class for finding the x-day moving average of a stock.
@@ -33,7 +36,15 @@ public class XDayMovingAverage implements ProgramFunction {
    */
   @Override
   public String execute() throws IllegalArgumentException {
-    return "The average change over the past " + x + " days is: " + helperXDayMovingAvg();
+    if (isNaN(helperXDayMovingAvg())) {
+      return ("You have hit your maximum limit for accessing the API today."
+              + " Please try again tomorrow");
+    }
+    if(helperXDayMovingAvg() >= 0){
+      return "The average change over the past " + x + " days is: +" + helperXDayMovingAvg();
+    }else{
+      return "The average change over the past " + x + " days is: -" + helperXDayMovingAvg();
+    }
   }
 
   private double helperXDayMovingAvg(){
@@ -41,25 +52,30 @@ public class XDayMovingAverage implements ProgramFunction {
     LocalDate XDay = date.minusDays(x);
     // Represents our big data String that has all the data.
     String bigData = new AccessApi(tag).returnData(XDay.toString(), date.toString());
+    bigData = bigData.replaceAll(System.lineSeparator(), ",");
+    bigData = bigData.replaceAll("\\s", "");
     String[] dividedData = bigData.split(",");
     boolean atXDay = false;
     double sum = 0;
     int averageCounter = 0;
     for(int i = 0; i < dividedData.length; i++){
+      if(dividedData[i].contains("-")){
+      }
       if(dividedData[i].equals(XDay.toString())){
         atXDay = true;
       }
       if(atXDay && dividedData[i].contains("-")){
-        sum += Double.parseDouble(dividedData[i+1]);
+        sum += Double.parseDouble(dividedData[i+1].replaceAll("\\s", ""));
         averageCounter++;
       }
       if(dividedData[i].equals(date.toString())){
         atXDay = false;
-        sum += Double.parseDouble(dividedData[i+1]);
+        sum += Double.parseDouble(dividedData[i+1].replaceAll("\\s", ""));
         averageCounter++;
       }
     }
-    return sum/averageCounter;
+    DecimalFormat decfor = new DecimalFormat("0.000");
+    return Double.parseDouble(decfor.format(sum/averageCounter));
   }
 }
 
