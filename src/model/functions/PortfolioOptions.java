@@ -9,7 +9,6 @@ import view.StockView;
  * Public class that holds the functions for the viewing and creation of Portfolios.
  */
 public class PortfolioOptions implements ProgramFunction {
-
   Model model;
   StockView stockView;
   Readable rd;
@@ -23,7 +22,7 @@ public class PortfolioOptions implements ProgramFunction {
    */
   public PortfolioOptions(Model model, Readable rd, StockView view) {
     this.model = model;
-    stockView = view;
+    this.stockView = view;
     this.rd = rd;
   }
 

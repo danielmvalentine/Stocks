@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import model.functions.StockGainOrLoss;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
 
 /**
  * Testing StockGainOrLoss.

@@ -12,6 +12,9 @@ import view.PortfolioView;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Contains the tests for the portfolio controller.
+ */
 public class PortfolioControllerTest {
   StringBuilder out;
   Appendable ap;

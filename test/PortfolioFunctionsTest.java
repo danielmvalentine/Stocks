@@ -11,6 +11,9 @@ import model.portfolio.PortfolioImpl;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Contains the tests for the various Portfolio functions.
+ */
 public class PortfolioFunctionsTest {
   Model m;
   IPortfolio portfolio1;
@@ -117,7 +120,7 @@ public class PortfolioFunctionsTest {
 
   @Test
   public void testGetValueOfPortfolio() {
-    LocalDate date = LocalDate.of(2024, 6,6);
+    LocalDate date = LocalDate.of(2024, 6, 6);
 
     m.addPortfolio(portfolio1);
     assertEquals("0.0", m.getPortfolio("portfolio1").getPortfolioValue(date));

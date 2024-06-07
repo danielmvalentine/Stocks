@@ -12,6 +12,9 @@ import view.StockView;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Contains the tests for the StockController class.
+ */
 public class StockControllerTest {
   StringBuilder out;
   Appendable ap;
@@ -27,9 +30,6 @@ public class StockControllerTest {
     view = new StockView(ap);
   }
 
-
-  // TODO "2200\n1\n20\n" + // Tests invalid year - is valid???
-  // TODO "-100\n2\n20\n" + // Tests negative year - is valid???
 
   @Test
   public void testInvalidDate() {

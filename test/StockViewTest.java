@@ -5,6 +5,9 @@ import view.StockView;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Contains the tests for the StockView class.¬
+ */
 public class StockViewTest {
   StockView view;
   StringBuilder out;

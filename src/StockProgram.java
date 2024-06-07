@@ -11,6 +11,7 @@ import view.StockView;
 public class StockProgram {
   /**
    * Main method of the program.
+   *
    * @param args any command line arguments.
    */
   public static void main(String[] args) {

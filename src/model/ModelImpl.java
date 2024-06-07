@@ -3,14 +3,18 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
 import model.functions.ProgramFunction;
+import model.functions.PortfolioOptions;
 import model.functions.StockGainOrLoss;
 import model.functions.XDayCrossovers;
 import model.functions.XDayMovingAverage;
 import model.portfolio.IPortfolio;
 import view.StockView;
 
+/**
+ * Is an implementation of the Model interface. Contains the portfolios of the user, and
+ * the functions that can be done by the program.
+ */
 public class ModelImpl implements Model {
 
   ArrayList<IPortfolio> portfolios = new ArrayList<IPortfolio>();
@@ -40,7 +44,7 @@ public class ModelImpl implements Model {
 
   @Override
   public IPortfolio getPortfolio(String title) {
-    for(IPortfolio portfolio : portfolios) {
+    for (IPortfolio portfolio : portfolios) {
       if (portfolio.getPortfolioTitle().equals(title)) {
         return portfolio;
       }
@@ -79,7 +83,7 @@ public class ModelImpl implements Model {
   }
 
   private boolean sameTitle(ArrayList<IPortfolio> portfolios, String title) {
-    for(IPortfolio portfolio : portfolios) {
+    for (IPortfolio portfolio : portfolios) {
       if (portfolio.getPortfolioTitle().equals(title)) {
         return true;
       }
