@@ -63,7 +63,6 @@ public class AccessApi {
       throw new IllegalArgumentException("No price data found for "+ticker);
     }
 
-    System.out.println("Return value: ");
     return output.toString();
 
   }

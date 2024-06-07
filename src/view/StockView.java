@@ -29,15 +29,15 @@ public class StockView {
   public void printMenu() {
     writeMessage(System.lineSeparator() + "Supported user instructions are: "
             + System.lineSeparator());
-    writeMessage("stock-price-shift - Examine the gain or loss of a stock over a specified period."
+    writeMessage("1 - stock-price-shift - Examine the gain or loss of a stock over a specified period."
             + System.lineSeparator());
-    writeMessage("xday-moving-average - Examine the x-day moving average of a stock for a " +
+    writeMessage("2 - xday-moving-average - Examine the x-day moving average of a stock for a " +
             "specified date and a specified value of x."
             + System.lineSeparator());
-    writeMessage("xday-crossovers - Determine which days are x-day crossovers for a " +
+    writeMessage("3 - xday-crossovers - Determine which days are x-day crossovers for a " +
             "specific stock over a specific date range and a specific value of x."
             + System.lineSeparator());
-    writeMessage("portfolio - Create or view a portfolio." + System.lineSeparator());
+    writeMessage("4 - portfolio - Create or view a portfolio." + System.lineSeparator());
     writeMessage("Q or Quit - Quit the program." + System.lineSeparator());
   }
 

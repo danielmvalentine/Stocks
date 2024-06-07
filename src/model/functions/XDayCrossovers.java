@@ -37,7 +37,7 @@ public class XDayCrossovers implements ProgramFunction {
    */
   @Override
   public String execute() {
-    return "";
+    return "The days which have crossover occurrences are as follows: " + helperXDayCross();
   }
 
   private String helperXDayCross(){
