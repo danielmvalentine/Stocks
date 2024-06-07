@@ -55,7 +55,7 @@
     portfolio.
   </p>
     <p>
-    <b>4 or remove-portfolio</b> - Takes in the title of a created portfolio and the stock to be 
+    <b>4 or remove-stock-from</b> - Takes in the title of a created portfolio and the stock to be 
       removed. Removes the given stock from the given portfolio.
   </p>
     <p>
