@@ -1,36 +1,56 @@
 package model.portfolio;
+
 import java.time.LocalDate;
 
 import model.Stock;
 
 /**
- * The public interface that we will implement when we create portfolios.
+ * Represents a stock portfolio and holds all the functions relating to a portfolio.
  */
 public interface IPortfolio {
 
-  public String getPortfolioTitle();
+  /**
+   * Returns the title of the portfolio, and is used for formatting, and equivalency checks.
+   *
+   * @return The title of the portfolio.
+   */
+  String getPortfolioTitle();
 
-  public Stock getStock(String ticker);
+  /**
+   * Finds the stock within this portfolio with the given ticker symbol.
+   *
+   * @param ticker The ticker symbol for the desired stock.
+   * @return The stock with the given ticker symbol.
+   */
+  Stock getStock(String ticker);
 
-  public String formatStock();
+  /**
+   * Formats all the stock within this portfolio, including their ticker symbol and the number of
+   * shares the portfolio has.
+   *
+   * @return The formatted stocks as a String.
+   */
+  String formatStock();
 
   /**
    * A method to get the current info in the portfolio.
+   *
    * @return Returns the current data in the portfolio as a structured String.
    */
-  public String getPortfolioValue(LocalDate givenDate);
-
+  String getPortfolioValue(LocalDate givenDate);
 
   /**
    * A method to add a new stock to our portfolio.
+   *
    * @param inputStock The stock we wish to add to our portfolio.
    */
-  public void addToPortfolio(Stock inputStock);
+  void addToPortfolio(Stock inputStock);
 
   /**
    * A method to remove a stock from our portfolio.
+   *
    * @param removeStock The stock we wish to remove from our portfolio.
    */
-  public void removeFromPortfolio(String removeStock);
+  void removeFromPortfolio(String removeStock);
 
 }

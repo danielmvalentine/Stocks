@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import model.functions.ProgramFunction;
 import model.portfolio.IPortfolio;
-import model.portfolio.PortfolioImpl;
 import view.StockView;
 
 /**
@@ -24,8 +23,8 @@ public interface Model {
    * @param finalDate   the final date to be searched to.
    * @return The function that will perform this operation.
    */
-  public ProgramFunction gainOrLossOverTime(String stockName,
-                                            LocalDate initialDate, LocalDate finalDate);
+  ProgramFunction gainOrLossOverTime(String stockName,
+                                     LocalDate initialDate, LocalDate finalDate);
 
   /**
    * Allows a user to examine the x-day moving average of a stock for a specified
@@ -36,7 +35,7 @@ public interface Model {
    * @param xValue    the number of days before the given date to be examined.
    * @return The function that will perform this operation.
    */
-  public ProgramFunction movingAverage(String stockName, LocalDate date, int xValue);
+  ProgramFunction movingAverage(String stockName, LocalDate date, int xValue);
 
   /**
    * Allow a user to determine which days are x-day crossovers for a specified stock
@@ -48,15 +47,15 @@ public interface Model {
    * @param xValue      the number of days before the given date to be examined.
    * @return The function that will perform this operation.
    */
-  public ProgramFunction xDayCrossovers(String stockName,
-                                        LocalDate initialDate, LocalDate finalDate, int xValue);
+  ProgramFunction xDayCrossovers(String stockName,
+                                 LocalDate initialDate, LocalDate finalDate, int xValue);
 
   /**
    * Allow a user to access different functions with portfolios.
    *
    * @return The function that will perform this operation.
    */
-  public ProgramFunction portfolioOptions(Readable rd, StockView view);
+  ProgramFunction portfolioOptions(Readable rd, StockView view);
 
 
   /**
@@ -65,27 +64,27 @@ public interface Model {
    * @param title The title of the portfolio to be found
    * @return The portfolio with the given title.
    */
-  public IPortfolio getPortfolio(String title);
+  IPortfolio getPortfolio(String title);
 
   /**
    * Used in the portfolio controller to get the portfolios of the user.
    *
    * @return A List of Portfolios that the user has.
    */
-  public ArrayList<IPortfolio> getAllPortfolios();
+  ArrayList<IPortfolio> getAllPortfolios();
 
   /**
    * Formats the portfolios as a string.
    *
    * @return The String of the returned portfolios
    */
-  public String formatPortfolios();
+  String formatPortfolios();
 
   /**
    * Adds a portfolio to the users list of portfolios
    *
    * @param portfolio The portfolio to be added
    */
-  public void addPortfolio(IPortfolio portfolio);
+  void addPortfolio(IPortfolio portfolio);
 
 }

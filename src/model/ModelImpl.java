@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.functions.PortfolioOptions;
+
 import model.functions.ProgramFunction;
 import model.functions.StockGainOrLoss;
 import model.functions.XDayCrossovers;

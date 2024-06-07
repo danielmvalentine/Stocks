@@ -10,12 +10,17 @@ import model.functions.ProgramFunction;
 import model.portfolio.IPortfolio;
 import view.StockView;
 
+/**
+ * A Model object that aids in the testing of the controller and the bridge between it and
+ * the model.
+ */
 public class MockModelImpl implements Model {
   final StringBuilder log;
 
   /**
    * Creates a new MockModelImpl object with a log.
-   * @param log   The log of the methods that the controller asks this mock to do.
+   *
+   * @param log The log of the methods that the controller asks this mock to do.
    */
   public MockModelImpl(StringBuilder log) {
     this.log = Objects.requireNonNull(log);

@@ -10,7 +10,12 @@ import model.functions.ProgramFunction;
 import view.StockView;
 
 /**
- * Our basic controller that we use to represent
+ * This class represents the controller of an interactive stocks program.
+ * It utilizes a text-based interface, with the user being able to type
+ * commands to examine stocks.
+ * <p>
+ * This controller works with any Readable to read its inputs and
+ * any Appendable to transmit output through a viewer.
  */
 public class StockController {
 
@@ -19,6 +24,14 @@ public class StockController {
   protected final Model model;
   private boolean quit;
 
+  /**
+   * Creates a new StockController object of the StockProgram. Handles user input and
+   * tells the model to do what when.
+   *
+   * @param readable  The input of the controller.
+   * @param stockView Transmits the output of the controller.
+   * @param model     The functionality of the controller.
+   */
   public StockController(Readable readable, StockView stockView, Model model) {
     this.readable = readable;
     this.stockView = stockView;
@@ -28,6 +41,7 @@ public class StockController {
 
   /**
    * Our main method for our controller to edit maneuvering around our menu.
+   * Will iterate until the user quits the program.
    */
   public void control() {
     Scanner scanner = new Scanner(readable);
@@ -44,7 +58,8 @@ public class StockController {
     stockView.leavingMessage();
   }
 
-  public void processCommand(String userInput, Scanner scanner) {
+  // Processes all available commands.
+  private void processCommand(String userInput, Scanner scanner) {
     ProgramFunction function = null;
 
     String tag;
@@ -58,6 +73,7 @@ public class StockController {
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
         if (tag.length() != 4) {
+          // Will reset the user interface so they can retype the command.
           System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
@@ -69,13 +85,18 @@ public class StockController {
                 + System.lineSeparator());
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
+
+        // Delegates to the model
         function = model.gainOrLossOverTime(tag, startDate, endDate);
         break;
+
+
       case "2":
       case "xday-moving-average":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
         if (tag.length() != 4) {
+          // Will reset the user interface so they can retype the command.
           System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
@@ -86,13 +107,18 @@ public class StockController {
         stockView.writeMessage("Enter the number of days the analysis should be performed on"
                 + System.lineSeparator());
         x = scanner.nextInt();
+
+        // Delegates to the model
         function = model.movingAverage(tag, date, x);
         break;
+
+
       case "3":
       case "xday-crossovers":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
         if (tag.length() != 4) {
+          // Will reset the user interface so they can retype the command.
           System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
@@ -106,30 +132,49 @@ public class StockController {
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
+
+        // Delegates to the model
         function = model.xDayCrossovers(tag, startDate, endDate, x);
         break;
+
+
       case "4":
       case "portfolio":
+        // Delegates to the model
         function = model.portfolioOptions(this.readable, this.stockView);
         break;
+
+
       case "q":
       case "Q":
       case "quit":
       case "Quit":
         quit = true;
         break;
+
+
       default:
+        // Will reset the controller to allow the user to correct their command
         stockView.writeMessage("Invalid command: " + userInput + System.lineSeparator());
         control();
         break;
     }
 
+    // Executes the user-given command
     if (function != null) {
       function.execute();
     }
   }
 
-  LocalDate getDate(Scanner scanner) {
+  /**
+   * Asks the user to type in a date, and returns that date
+   * as a formatted LocalDate Object. Will return an invalid date notice
+   * if the date doesn't exist and allow the user to try again.
+   *
+   * @param scanner Allows the user to input a date.
+   * @return The user inputted date as a LocalDate Object.
+   */
+  protected LocalDate getDate(Scanner scanner) {
     stockView.writeMessage("Enter year for the date: ");
     int year = scanner.nextInt();
     stockView.writeMessage("Enter month for the date: ");
@@ -150,6 +195,7 @@ public class StockController {
     return date;
   }
 
+  // Checks that the inputted date is correct and will reset the user if incorrect
   private void checkCorrectDate(Scanner scanner, String date, String userInput) {
     stockView.writeMessage("Is this the correct date? " + date + System.lineSeparator());
     stockView.writeMessage("Y/N: ");

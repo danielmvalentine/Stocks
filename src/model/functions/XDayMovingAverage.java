@@ -2,6 +2,7 @@ package model.functions;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+
 import model.AccessApi;
 
 import static java.lang.Double.isNaN;
@@ -40,14 +41,14 @@ public class XDayMovingAverage implements ProgramFunction {
       return ("You have hit your maximum limit for accessing the API today."
               + " Please try again tomorrow");
     }
-    if(helperXDayMovingAvg() >= 0){
+    if (helperXDayMovingAvg() >= 0) {
       return "The average change over the past " + x + " days is: +" + helperXDayMovingAvg();
-    }else{
+    } else {
       return "The average change over the past " + x + " days is: -" + helperXDayMovingAvg();
     }
   }
 
-  private double helperXDayMovingAvg(){
+  private double helperXDayMovingAvg() {
     // Represents our "XDay", or our date when we go back X many days.
     LocalDate XDay = date.minusDays(x);
     // Represents our big data String that has all the data.
@@ -58,24 +59,24 @@ public class XDayMovingAverage implements ProgramFunction {
     boolean atXDay = false;
     double sum = 0;
     int averageCounter = 0;
-    for(int i = 0; i < dividedData.length; i++){
-      if(dividedData[i].contains("-")){
+    for (int i = 0; i < dividedData.length; i++) {
+      if (dividedData[i].contains("-")) {
       }
-      if(dividedData[i].equals(XDay.toString())){
+      if (dividedData[i].equals(XDay.toString())) {
         atXDay = true;
       }
-      if(atXDay && dividedData[i].contains("-")){
-        sum += Double.parseDouble(dividedData[i+1].replaceAll("\\s", ""));
+      if (atXDay && dividedData[i].contains("-")) {
+        sum += Double.parseDouble(dividedData[i + 1].replaceAll("\\s", ""));
         averageCounter++;
       }
-      if(dividedData[i].equals(date.toString())){
+      if (dividedData[i].equals(date.toString())) {
         atXDay = false;
-        sum += Double.parseDouble(dividedData[i+1].replaceAll("\\s", ""));
+        sum += Double.parseDouble(dividedData[i + 1].replaceAll("\\s", ""));
         averageCounter++;
       }
     }
     DecimalFormat decfor = new DecimalFormat("0.000");
-    return Double.parseDouble(decfor.format(sum/averageCounter));
+    return Double.parseDouble(decfor.format(sum / averageCounter));
   }
 }
 
