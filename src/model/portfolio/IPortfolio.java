@@ -1,5 +1,5 @@
 package model.portfolio;
-import java.util.Date;
+import java.time.LocalDate;
 
 import model.Stock;
 
@@ -10,11 +10,15 @@ public interface IPortfolio {
 
   public String getPortfolioTitle();
 
+  public Stock getStock(String ticker);
+
+  public String formatStock();
+
   /**
    * A method to get the current info in the portfolio.
    * @return Returns the current data in the portfolio as a structured String.
    */
-  public String getPortfolioValue(Date givenDate);
+  public String getPortfolioValue(LocalDate givenDate);
 
 
   /**
@@ -27,6 +31,6 @@ public interface IPortfolio {
    * A method to remove a stock from our portfolio.
    * @param removeStock The stock we wish to remove from our portfolio.
    */
-  public void removeFromPortfolio(Stock removeStock);
+  public void removeFromPortfolio(String removeStock);
 
 }

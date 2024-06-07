@@ -15,13 +15,13 @@ import view.StockView;
 public class StockController {
 
   private final Readable readable;
-  private final StockView stockView;
+  private final StockView view;
   protected final Model model;
   private boolean quit = false;
 
-  public StockController(Readable readable, StockView stockView, Model model) {
+  public StockController(Readable readable, StockView view, Model model) {
     this.readable = readable;
-    this.stockView = stockView;
+    this.view = view;
     this.model = model;
   }
 
@@ -32,14 +32,14 @@ public class StockController {
     Scanner scanner = new Scanner(readable);
 
 
-    stockView.welcomeMessage();
+    view.welcomeMessage();
     while(!quit){
-      stockView.writeMessage(System.lineSeparator() + "Input instruction: ");
+      view.writeMessage(System.lineSeparator() + "Input instruction: ");
       String userInput = scanner.next();
       processCommand(userInput, scanner);
     }
 
-    stockView.leavingMessage();
+    view.leavingMessage();
   }
 
   public void processCommand(String userInput, Scanner scanner){
@@ -52,36 +52,36 @@ public class StockController {
 
     switch(userInput){
       case "stock-price-shift":
-        stockView.writeMessage("Enter stock four digit tag: ");
+        view.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next();
-        stockView.writeMessage("Enter the starting date for your desired time period: ");
+        view.writeMessage("Enter the starting date for your desired time period: ");
         startDate = getDate(scanner);
         checkCorrectDate(scanner, startDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
-        stockView.writeMessage("Enter the ending date for your desired time period: ");
+        view.writeMessage("Enter the ending date for your desired time period: ");
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         function = model.gainOrLossOverTime(tag, startDate, endDate);
         break;
       case "xday-moving-average":
-        stockView.writeMessage("Enter stock four digit tag: ");
+        view.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next();
-        stockView.writeMessage("Enter the date to begin the x-day moving average analysis on: ");
+        view.writeMessage("Enter the date to begin the x-day moving average analysis on: ");
         LocalDate date = getDate(scanner);
         checkCorrectDate(scanner, date.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
-        stockView.writeMessage("Enter the number of days the analysis should be performed on: ");
+        view.writeMessage("Enter the number of days the analysis should be performed on: ");
         x = scanner.nextInt();
         function = model.movingAverage(tag, date, x);
         break;
       case "xday-crossovers":
-        stockView.writeMessage("Enter stock four digit tag: ");
+        view.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next();
-        stockView.writeMessage("Enter the starting date for your desired time period: ");
+        view.writeMessage("Enter the starting date for your desired time period: ");
         startDate = getDate(scanner);
         checkCorrectDate(scanner, startDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
-        stockView.writeMessage("Enter the ending date for your desired time period: ");
+        view.writeMessage("Enter the ending date for your desired time period: ");
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
-        stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
+        view.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
         function = model.xDayCrossovers(tag, startDate, endDate, x);
         break;
@@ -95,7 +95,7 @@ public class StockController {
         quit = true;
         break;
       default:
-        stockView.writeMessage("Invalid command: " + userInput + System.lineSeparator());
+        view.writeMessage("Invalid command: " + userInput + System.lineSeparator());
         control();
         break;
     }
@@ -105,12 +105,12 @@ public class StockController {
     }
   }
 
-  private LocalDate getDate(Scanner scanner) {
-    stockView.writeMessage("Enter year for the date: ");
+  LocalDate getDate(Scanner scanner) {
+    view.writeMessage("Enter year for the date: ");
     int year = scanner.nextInt();
-    stockView.writeMessage("Enter month for the date: ");
+    view.writeMessage("Enter month for the date: ");
     int month = scanner.nextInt();
-    stockView.writeMessage("Enter day for the date: ");
+    view.writeMessage("Enter day for the date: ");
     int day = scanner.nextInt();
 
     LocalDate date;
@@ -118,7 +118,7 @@ public class StockController {
     try {
       date = LocalDate.of(year, month, day);
     } catch (DateTimeException e) {
-      stockView.writeMessage("Invalid date: day=" + day
+      view.writeMessage("Invalid date: day=" + day
               + " month=" + month + " year=" + year );
       return getDate(scanner);
     }
@@ -127,14 +127,14 @@ public class StockController {
   }
 
   private void checkCorrectDate(Scanner scanner, String date, String userInput) {
-    stockView.writeMessage("Is this the correct date? " + date + System.lineSeparator());
-    stockView.writeMessage("Y/N: ");
+    view.writeMessage("Is this the correct date? " + date + System.lineSeparator());
+    view.writeMessage("Y/N: ");
     String response = scanner.next();
     if(response.equalsIgnoreCase("n")){
-      stockView.writeMessage("Restarting...");
+      view.writeMessage("Restarting...");
       processCommand(userInput, scanner);
     } else if (!response.equalsIgnoreCase("y")){
-      stockView.writeMessage("Invalid input, restarting...");
+      view.writeMessage("Invalid input, restarting...");
       processCommand(userInput, scanner);
     }
   }

@@ -9,7 +9,6 @@ import model.functions.StockGainOrLoss;
 import model.functions.XDayCrossovers;
 import model.functions.XDayMovingAverage;
 import model.portfolio.IPortfolio;
-import model.portfolio.PortfolioImpl;
 
 public class ModelImpl implements Model {
 
@@ -63,10 +62,11 @@ public class ModelImpl implements Model {
     String output = "";
 
     for (IPortfolio portfolio : portfolios) {
-      output.concat("; " + portfolio.getPortfolioTitle());
+      output += "\n";
+      output += portfolio.getPortfolioTitle();
     }
 
-    return output.substring(2);
+    return output;
   }
 
   @Override

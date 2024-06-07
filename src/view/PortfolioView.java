@@ -18,6 +18,8 @@ public class PortfolioView extends StockView {
             + System.lineSeparator());
     writeMessage("remove-stock-from - Remove a stock from a specified portfolio."
             + System.lineSeparator());
+    writeMessage("examine-portfolio - Prints the stock and shares of stock within a portfolio."
+            + System.lineSeparator());
     writeMessage("get-value-of - Gets the value of a specified portfolio."
             + System.lineSeparator());
     writeMessage("B or Back - Return to the main menu." + System.lineSeparator());

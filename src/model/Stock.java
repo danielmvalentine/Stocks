@@ -13,4 +13,8 @@ public class Stock {
     this.ticker = ticker;
     this.shares = shares;
   }
+
+  public String getTicker() {
+    return ticker;
+  }
 }
