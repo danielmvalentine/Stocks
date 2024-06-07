@@ -58,7 +58,7 @@ public class StockController {
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
         if(tag.length() != 4){
-          System.out.println("Invalid tag, restarting...");
+          System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
         stockView.writeMessage("Enter the starting date for your desired time period"
@@ -70,13 +70,14 @@ public class StockController {
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         function = model.gainOrLossOverTime(tag, startDate, endDate);
+        function.execute();
         break;
       case "2":
       case "xday-moving-average":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
         if(tag.length() != 4){
-          System.out.println("Invalid tag, restarting...");
+          System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
         stockView.writeMessage("Enter the date to begin the x-day moving average analysis on"
@@ -87,13 +88,14 @@ public class StockController {
                 + System.lineSeparator());
         x = scanner.nextInt();
         function = model.movingAverage(tag, date, x);
+        function.execute();
         break;
       case "3":
       case "xday-crossovers":
         stockView.writeMessage("Enter stock four digit tag: ");
         tag = scanner.next().toUpperCase();
         if(tag.length() != 4){
-          System.out.println("Invalid tag, restarting...");
+          System.out.println("Invalid tag");
           processCommand(userInput, scanner);
         }
         stockView.writeMessage("Enter the starting date for your desired time period"
@@ -107,6 +109,7 @@ public class StockController {
         stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
         function = model.xDayCrossovers(tag, startDate, endDate, x);
+        function.execute();
         break;
       case "4":
       case "portfolio":

@@ -1,11 +1,12 @@
 package model.functions;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 import model.AccessApi;
+
+import static java.lang.Double.isNaN;
 
 /**
  * Public class for finding the gain or loss of a stock.
@@ -39,6 +40,10 @@ public class StockGainOrLoss implements ProgramFunction {
   @Override
   public String execute() throws IllegalArgumentException {
     double helperResult = helperGainOrLoss();
+    if(isNaN(helperResult)){
+      return("You have hit your maximum limit for accessing the API today."
+              + " Please try again tomorrow");
+    }
     if(helperResult >= 0){
       return "The total gained over this period of time is: " + helperResult;
     }else{
@@ -88,11 +93,10 @@ public class StockGainOrLoss implements ProgramFunction {
 
   public double helpFindFromArrayList(ArrayList<String> input){
 
-    double moneySum = 0;
     // First we find how tall our arraylist is by finding how many lineSeparators there are.
     int height = 0;
     for(int i = 0; i < input.size(); i++){
-      if(input.get(i).equals(System.lineSeparator())){
+      if(input.get(i).contains("-")){
         height++;
       }
     }
@@ -101,19 +105,21 @@ public class StockGainOrLoss implements ProgramFunction {
     // Specialized flag just used for grabbing the first value.
     boolean isFirst = true;
     double firstValue = 0;
+    String valueNext = "";
     for(int i = 0; i < input.size(); i++){
       // checks for if it has a dash in it. If true we want to take the next input
       // and convert it to a double because our format is date followed by number.
       if(input.get(i).contains("-")){
-        largeSum += Double.parseDouble(input.get(i + 1));
+        valueNext = input.get(i + 1).replaceAll("\\s", "");
+        largeSum += Double.parseDouble(valueNext);
         if(isFirst){
           firstValue = Double.parseDouble(input.get(i + 1));
         }
         isFirst = false;
       }
     }
-
-    double doubleFinalDouble = moneySum / height;
-    return(doubleFinalDouble - firstValue);
+    double doubleFinalDouble = largeSum / height;
+    DecimalFormat decfor = new DecimalFormat("0.00");
+    return(Double.parseDouble(decfor.format(doubleFinalDouble - firstValue)));
   }
 }

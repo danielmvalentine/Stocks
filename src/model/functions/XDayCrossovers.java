@@ -50,9 +50,12 @@ public class XDayCrossovers implements ProgramFunction {
         atFirstDate = true;
       }
       if (atFirstDate && bigDataSplit[i].contains("-")) {
-        double dayAverage = (Double.parseDouble(bigDataSplit[i + 1])
-                + Double.parseDouble(bigDataSplit[i + 2] + Double.parseDouble(bigDataSplit[i + 3]))
-                + Double.parseDouble(bigDataSplit[i + 4])) / 4;
+        double dayAverage =
+                (Double.parseDouble(bigDataSplit[i + 1].replaceAll("\\s", ""))
+                + Double.parseDouble(bigDataSplit[i + 2].replaceAll("\\s", ""))
+                + Double.parseDouble(bigDataSplit[i + 3].replaceAll("\\s", ""))
+                + Double.parseDouble(bigDataSplit[i + 4].replaceAll("\\s", "")))
+                        / 4;
         double dayFinal = Double.parseDouble(bigDataSplit[i + 4]);
         if (dayFinal > dayAverage) {
           listOfCrossDays.add(bigDataSplit[i]);
