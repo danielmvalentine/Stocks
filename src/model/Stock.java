@@ -17,4 +17,8 @@ public class Stock {
   public String getTicker() {
     return ticker;
   }
+
+  public double getShares() {
+    return shares;
+  }
 }

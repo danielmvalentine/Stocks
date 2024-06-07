@@ -1,7 +1,9 @@
 package model.portfolio;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 import model.AccessApi;
@@ -48,23 +50,27 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public String getPortfolioValue(LocalDate givenDate) {
-    String bigData;
+    String bigData = "";
     String[] separatedData;
-    StringBuilder output = new StringBuilder();
+    double value = 0;
+    String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
 
     for (Stock stock : stocks) {
       bigData = new AccessApi(stock.getTicker())
               .returnData(givenDate.toString(), givenDate.toString());
       separatedData = bigData.split(",");
-      for (int i = 0; i < separatedData.length; i+= 1) {
-        if (separatedData[i].equals(givenDate.toString())) {
-          output.append(separatedData[i]);
-          output.append(separatedData[i + 1]);
+      if (bigData.contains(date)) {
+        for (int i = 0; i < separatedData.length; i += 5) {
+          if(separatedData[i].contains(date)) {
+            value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
+            break;
+          }
         }
       }
     }
 
-    return output.toString();
+
+    return String.valueOf(value);
   }
 
   @Override

@@ -46,7 +46,7 @@ public class PortfolioController extends StockController {
         shares = scanner.nextInt();
         if (this.model.getPortfolio(title) != null) {
           this.model.getPortfolio(title).addToPortfolio(new Stock(stock, shares));
-          view.writeMessage("Stock successfully added to the portfolio");
+          view.writeMessage("Stock successfully added to the portfolio" + System.lineSeparator());
         } else {
           view.writeMessage("Portfolio does not exist." + System.lineSeparator());
         }
