@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.functions.ProgramFunction;
-import model.functions.PortfolioOptions;
+import model.functions.*;
 import model.functions.StockGainOrLoss;
 import model.functions.XDayCrossovers;
 import model.functions.XDayMovingAverage;

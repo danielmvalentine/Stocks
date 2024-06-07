@@ -7,7 +7,7 @@ import model.Model;
 import model.ModelImpl;
 import model.Stock;
 import model.portfolio.IPortfolio;
-import model.portfolio.PortfolioImpl;
+import model.portfolio.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,10 +48,10 @@ public class PortfolioFunctionsTest {
     assertEquals("No portfolios found", m.formatPortfolios());
 
     m.addPortfolio(portfolio1);
-    assertEquals("\nportfolio1", m.formatPortfolios());
+    assertEquals("\nportfolio1: No stocks found", m.formatPortfolios());
 
     m.addPortfolio(new PortfolioImpl("portfolio1"));
-    assertEquals("\nportfolio1", m.formatPortfolios());
+    assertEquals("\nportfolio1: No stocks found", m.formatPortfolios());
   }
 
   @Test

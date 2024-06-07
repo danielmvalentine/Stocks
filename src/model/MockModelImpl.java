@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import model.functions.PortfolioOptions;
+import model.functions.*;
 import model.functions.ProgramFunction;
 import model.portfolio.IPortfolio;
 import view.StockView;

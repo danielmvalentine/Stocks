@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import model.Model;
 import model.Stock;
-import model.portfolio.PortfolioImpl;
+import model.portfolio.*;
 import view.PortfolioView;
 
 /**
