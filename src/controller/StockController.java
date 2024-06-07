@@ -3,7 +3,6 @@ package controller;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Scanner;
 
 import model.Model;
@@ -18,12 +17,13 @@ public class StockController {
   private final Readable readable;
   private final StockView stockView;
   protected final Model model;
-  private boolean quit = false;
+  private boolean quit;
 
   public StockController(Readable readable, StockView stockView, Model model) {
     this.readable = readable;
     this.stockView = stockView;
     this.model = model;
+    this.quit = false;
   }
 
   /**
@@ -34,7 +34,7 @@ public class StockController {
 
 
     stockView.welcomeMessage();
-    while (!quit) {
+    while (!this.quit) {
       stockView.printMenu();
       stockView.writeMessage(System.lineSeparator() + "Input instruction: ");
       String userInput = scanner.next();
@@ -70,7 +70,6 @@ public class StockController {
         endDate = getDate(scanner);
         checkCorrectDate(scanner, endDate.format(DateTimeFormatter.ISO_LOCAL_DATE), userInput);
         function = model.gainOrLossOverTime(tag, startDate, endDate);
-        System.out.println(function.execute());
         break;
       case "2":
       case "xday-moving-average":
@@ -88,7 +87,6 @@ public class StockController {
                 + System.lineSeparator());
         x = scanner.nextInt();
         function = model.movingAverage(tag, date, x);
-        System.out.println(function.execute());
         break;
       case "3":
       case "xday-crossovers":
@@ -109,11 +107,10 @@ public class StockController {
         stockView.writeMessage("Enter the value of x for the x-day crossover value: ");
         x = scanner.nextInt();
         function = model.xDayCrossovers(tag, startDate, endDate, x);
-        System.out.println(function.execute());
         break;
       case "4":
       case "portfolio":
-        function = model.portfolioOptions();
+        function = model.portfolioOptions(this.readable, this.stockView);
         break;
       case "q":
       case "Q":

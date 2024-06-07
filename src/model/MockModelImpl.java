@@ -5,8 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import model.functions.PortfolioOptions;
 import model.functions.ProgramFunction;
 import model.portfolio.IPortfolio;
+import view.StockView;
 
 public class MockModelImpl implements Model {
   final StringBuilder log;
@@ -49,9 +51,10 @@ public class MockModelImpl implements Model {
   }
 
   @Override
-  public ProgramFunction portfolioOptions() {
-    log.append("PortfolioOptions: \n");
-    return null;
+  public ProgramFunction portfolioOptions(Readable rd, StockView view) {
+    log.append("PortfolioOptions: readable=" + rd +
+            " view=" + view + System.lineSeparator());
+    return new PortfolioOptions(this, rd, view);
   }
 
   @Override
@@ -74,6 +77,6 @@ public class MockModelImpl implements Model {
 
   @Override
   public void addPortfolio(IPortfolio portfolio) {
-    log.append("addPortfolio: \n" + portfolio.toString());
+    log.append("addPortfolio: " + portfolio.getPortfolioTitle() + System.lineSeparator());
   }
 }

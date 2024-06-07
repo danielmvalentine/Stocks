@@ -9,6 +9,7 @@ import model.functions.StockGainOrLoss;
 import model.functions.XDayCrossovers;
 import model.functions.XDayMovingAverage;
 import model.portfolio.IPortfolio;
+import view.StockView;
 
 public class ModelImpl implements Model {
 
@@ -33,8 +34,8 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public ProgramFunction portfolioOptions() {
-    return new PortfolioOptions(this);
+  public ProgramFunction portfolioOptions(Readable rd, StockView view) {
+    return new PortfolioOptions(this, rd, view);
   }
 
   @Override
@@ -64,6 +65,7 @@ public class ModelImpl implements Model {
     for (IPortfolio portfolio : portfolios) {
       output += "\n";
       output += portfolio.getPortfolioTitle();
+      output += ": " + portfolio.formatStock();
     }
 
     return output;
@@ -71,8 +73,17 @@ public class ModelImpl implements Model {
 
   @Override
   public void addPortfolio(IPortfolio portfolio) {
-    if (!portfolios.contains(portfolio)) {
+    if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
       portfolios.add(portfolio);
     }
+  }
+
+  private boolean sameTitle(ArrayList<IPortfolio> portfolios, String title) {
+    for(IPortfolio portfolio : portfolios) {
+      if (portfolio.getPortfolioTitle().equals(title)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

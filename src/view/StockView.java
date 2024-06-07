@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class StockView {
 
-  private final Appendable appendable;
+  public final Appendable appendable;
 
   public StockView(Appendable appendable) {
     this.appendable = appendable;
@@ -18,7 +18,7 @@ public class StockView {
    */
   public void writeMessage(String message) throws IllegalStateException {
     try {
-      appendable.append(message);
+      this.appendable.append(message);
     } catch (IOException e) {
       throw new IllegalStateException(e.getMessage());
     }
@@ -47,7 +47,6 @@ public class StockView {
    */
   public void welcomeMessage() {
     writeMessage("Welcome to the Stocks Program!" + System.lineSeparator());
-    printMenu();
   }
 
   /**

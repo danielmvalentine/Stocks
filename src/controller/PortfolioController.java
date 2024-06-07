@@ -7,10 +7,9 @@ import model.Model;
 import model.Stock;
 import model.portfolio.PortfolioImpl;
 import view.PortfolioView;
-import view.StockView;
 
 public class PortfolioController extends StockController {
-  private boolean quit = false;
+  private boolean quit;
   PortfolioView view;
   Readable readable;
 
@@ -19,6 +18,22 @@ public class PortfolioController extends StockController {
     super(readable, view, model);
     this.view = view;
     this.readable = readable;
+    this.quit = false;
+  }
+
+  public void control() {
+    Scanner scanner = new Scanner(readable);
+
+
+    view.welcomeMessage();
+    while(!this.quit){
+      view.printMenu();
+      view.writeMessage(System.lineSeparator() + "Input instruction: ");
+      String userInput = scanner.next();
+      processCommand(userInput, scanner);
+    }
+
+    quit = true;
   }
 
   @Override
@@ -29,14 +44,17 @@ public class PortfolioController extends StockController {
     int shares;
 
     switch (userInput) {
+      case "1":
       case "create-portfolio":
         view.writeMessage("Enter a title for the portfolio: ");
         title = scanner.next();
         this.model.addPortfolio(new PortfolioImpl(title));
         break;
+      case "2":
       case "list-portfolios":
         view.writeMessage("List of portfolios: " + this.model.formatPortfolios());
         break;
+      case "3":
       case "add-stock-to":
         view.writeMessage("Enter the title of the portfolio the stock should be added to: ");
         title = scanner.next();
@@ -51,6 +69,7 @@ public class PortfolioController extends StockController {
           view.writeMessage("Portfolio does not exist." + System.lineSeparator());
         }
         break;
+      case "4":
       case "remove-stock-from":
         view.writeMessage("Enter the title of the portfolio the stock should be removed from: ");
         title = scanner.next();
@@ -67,6 +86,7 @@ public class PortfolioController extends StockController {
           view.writeMessage("Portfolio does not exist." + System.lineSeparator());
         }
         break;
+      case "5":
       case "examine-portfolio":
         view.writeMessage("Enter the title of the portfolio to be examined: ");
         title = scanner.next();
@@ -76,6 +96,7 @@ public class PortfolioController extends StockController {
           view.writeMessage("Portfolio does not exist." + System.lineSeparator());
         }
         break;
+      case "6":
       case "get-value-of":
         view.writeMessage("Enter the title of the portfolio to be examined: ");
         title = scanner.next();
@@ -90,8 +111,7 @@ public class PortfolioController extends StockController {
       case "B":
       case "back":
       case "Back":
-        new StockController(this.readable, new StockView(System.out), this.model).control();
-        quit = true;
+        this.quit = true;
         break;
       default:
         view.writeMessage("Invalid command: " + userInput + System.lineSeparator());

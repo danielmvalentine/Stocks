@@ -10,7 +10,10 @@ public class Stock {
   private double shares;
 
   public Stock(String ticker, double shares) {
-    this.ticker = ticker;
+    if (ticker.length() != 4) {
+      throw new IllegalArgumentException("ticker length must be 4");
+    }
+    this.ticker = ticker.toUpperCase();
     this.shares = shares;
   }
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import model.functions.ProgramFunction;
 import model.portfolio.IPortfolio;
 import model.portfolio.PortfolioImpl;
+import view.StockView;
 
 /**
  * This interface represents certain functions to be offered by a program
@@ -55,7 +56,8 @@ public interface Model {
    *
    * @return The function that will perform this operation.
    */
-  public ProgramFunction portfolioOptions();
+  public ProgramFunction portfolioOptions(Readable rd, StockView view);
+
 
   /**
    * Gets a specific portfolio given its title

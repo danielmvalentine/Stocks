@@ -38,6 +38,7 @@ public class PortfolioImpl implements IPortfolio {
     for (Stock stock : stocks) {
       output += "\n";
       output += stock.getTicker();
+      output += " " + stock.getShares();
     }
 
     return output;

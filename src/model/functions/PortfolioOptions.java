@@ -3,9 +3,7 @@ package model.functions;
 import java.io.InputStreamReader;
 
 import controller.PortfolioController;
-import controller.StockController;
 import model.Model;
-import model.ModelImpl;
 import view.PortfolioView;
 import view.StockView;
 
@@ -15,9 +13,13 @@ import view.StockView;
 public class PortfolioOptions implements ProgramFunction {
 
   Model model;
+  StockView stockView;
+  Readable rd;
 
-  public PortfolioOptions(Model model) {
+  public PortfolioOptions(Model model, Readable rd, StockView view) {
     this.model = model;
+    stockView = view;
+    this.rd = rd;
   }
 
   /**
@@ -28,8 +30,7 @@ public class PortfolioOptions implements ProgramFunction {
    */
   @Override
   public String execute() throws IllegalArgumentException {
-    Readable rd = new InputStreamReader(System.in);
-    PortfolioView view = new PortfolioView(System.out);
+    PortfolioView view = new PortfolioView(stockView.appendable);
     PortfolioController controller = new PortfolioController(rd, view, this.model);
     controller.control();
 
