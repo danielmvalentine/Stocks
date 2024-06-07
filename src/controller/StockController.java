@@ -35,6 +35,7 @@ public class StockController {
 
     stockView.welcomeMessage();
     while(!quit){
+      stockView.printMenu();
       stockView.writeMessage(System.lineSeparator() + "Input instruction: ");
       String userInput = scanner.next();
       processCommand(userInput, scanner);
