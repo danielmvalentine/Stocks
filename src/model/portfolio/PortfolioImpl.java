@@ -1,5 +1,9 @@
 package model.portfolio;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -94,5 +98,13 @@ public class PortfolioImpl implements IPortfolio {
     if (stock != null && this.stocks.contains(stock)) {
       this.stocks.remove(stock);
     }
+  }
+
+  @Override
+  public void savePortfolio() throws IOException {
+    File newFile = new File("saved_portfolios/" + this.getPortfolioTitle() + ".txt");
+    FileWriter writer = new FileWriter(newFile);
+    writer.write(this.formatStock());
+    writer.close();
   }
 }

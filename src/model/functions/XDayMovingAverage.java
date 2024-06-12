@@ -42,17 +42,17 @@ public class XDayMovingAverage implements ProgramFunction {
               + " Please try again tomorrow");
     }
     if (helperXDayMovingAvg() >= 0) {
-      return "The average change over the past " + x + " days is: +" + helperXDayMovingAvg();
+      return "The average change over the past " + x + " days is: +$" + helperXDayMovingAvg();
     } else {
-      return "The average change over the past " + x + " days is: -" + helperXDayMovingAvg();
+      return "The average change over the past " + x + " days is: -$" + helperXDayMovingAvg();
     }
   }
 
   private double helperXDayMovingAvg() {
     // Represents our "XDay", or our date when we go back X many days.
-    LocalDate XDay = date.minusDays(x);
+    LocalDate xDay = date.minusDays(x);
     // Represents our big data String that has all the data.
-    String bigData = new AccessApi(tag).returnData(XDay.toString(), date.toString());
+    String bigData = new AccessApi(tag).returnData(xDay.toString(), date.toString());
     bigData = bigData.replaceAll(System.lineSeparator(), ",");
     bigData = bigData.replaceAll("\\s", "");
     String[] dividedData = bigData.split(",");
@@ -60,9 +60,7 @@ public class XDayMovingAverage implements ProgramFunction {
     double sum = 0;
     int averageCounter = 0;
     for (int i = 0; i < dividedData.length; i++) {
-      if (dividedData[i].contains("-")) {
-      }
-      if (dividedData[i].equals(XDay.toString())) {
+      if (dividedData[i].equals(xDay.toString())) {
         atXDay = true;
       }
       if (atXDay && dividedData[i].contains("-")) {
@@ -76,7 +74,7 @@ public class XDayMovingAverage implements ProgramFunction {
       }
     }
     DecimalFormat decfor = new DecimalFormat("0.000");
-    return Double.parseDouble(decfor.format(sum / averageCounter));
+    return Double.parseDouble(decfor.format(sum / x));
   }
 }
 

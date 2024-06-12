@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Date;
-
 /**
  * Our public class that we will use to represent a stock. A stock has a ticker symbol and
  * a number of shares.

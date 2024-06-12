@@ -44,10 +44,10 @@ public class StockControllerTest {
     controller = new StockController(rd, view, model);
     controller.control();
 
-    String[] expected = {"Invalid date: day=29 month=2 year=2001",
-            "Invalid date: day=-1 month=2 year=2001",
-            "Invalid date: day=20 month=15 year=2001",
-            "Invalid date: day=20 month=-1 year=2001",};
+    String[] expected = {"Invalid date: day=29 month=2 year=2001"
+            , "Invalid date: day=-1 month=2 year=2001"
+            , "Invalid date: day=20 month=15 year=2001"
+            , "Invalid date: day=20 month=-1 year=2001"};
 
     String[] output = ap.toString().split("\n");
 

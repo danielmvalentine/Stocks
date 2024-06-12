@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 import controller.StockController;
@@ -14,7 +15,7 @@ public class StockProgram {
    *
    * @param args any command line arguments.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     Readable rd = new InputStreamReader(System.in);
     StockView view = new StockView(System.out);
     Model model = new ModelImpl();

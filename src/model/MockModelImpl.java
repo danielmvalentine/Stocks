@@ -1,12 +1,12 @@
 package model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import model.functions.*;
-import model.functions.ProgramFunction;
 import model.portfolio.IPortfolio;
 import view.StockView;
 
@@ -84,4 +84,5 @@ public class MockModelImpl implements Model {
   public void addPortfolio(IPortfolio portfolio) {
     log.append("addPortfolio: " + portfolio.getPortfolioTitle() + System.lineSeparator());
   }
+
 }

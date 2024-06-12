@@ -64,6 +64,7 @@ public class XDayCrossovers implements ProgramFunction {
         }
       }
       if (bigDataSplit[i].equals(dateTwo.toString())) {
+        System.out.println("Hit");
         atFirstDate = false;
       }
     }

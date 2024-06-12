@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public interface Model {
 
 
   /**
-   * Gets a specific portfolio given its title
+   * Gets a specific portfolio given its title.
    *
    * @param title The title of the portfolio to be found
    * @return The portfolio with the given title.
@@ -81,7 +82,7 @@ public interface Model {
   String formatPortfolios();
 
   /**
-   * Adds a portfolio to the users list of portfolios
+   * Adds a portfolio to the users list of portfolios.
    *
    * @param portfolio The portfolio to be added
    */

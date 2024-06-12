@@ -23,7 +23,7 @@ public class TestXDayMovingAverage {
   }
 
   /**
-   * Second test will be much longer,
+   * Second test will be much longer.
    */
   @Test
   public void testXDayMovingAverageLong() {

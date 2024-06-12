@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,8 +14,8 @@ import view.StockView;
  * This class represents the controller of an interactive stocks program.
  * It utilizes a text-based interface, with the user being able to type
  * commands to examine stocks.
- * <p>
- * This controller works with any Readable to read its inputs and
+ *
+ * <p>This controller works with any Readable to read its inputs and
  * any Appendable to transmit output through a viewer.
  */
 public class StockController {
@@ -43,7 +44,7 @@ public class StockController {
    * Our main method for our controller to edit maneuvering around our menu.
    * Will iterate until the user quits the program.
    */
-  public void control() {
+  public void control() throws IOException {
     Scanner scanner = new Scanner(readable);
 
 
@@ -59,7 +60,7 @@ public class StockController {
   }
 
   // Processes all available commands.
-  private void processCommand(String userInput, Scanner scanner) {
+  private void processCommand(String userInput, Scanner scanner) throws IOException {
     ProgramFunction function = null;
 
     String tag;
@@ -88,6 +89,7 @@ public class StockController {
 
         // Delegates to the model
         function = model.gainOrLossOverTime(tag, startDate, endDate);
+        System.out.println(function.execute());
         break;
 
 
@@ -110,6 +112,7 @@ public class StockController {
 
         // Delegates to the model
         function = model.movingAverage(tag, date, x);
+        System.out.println(function.execute());
         break;
 
 
@@ -135,6 +138,7 @@ public class StockController {
 
         // Delegates to the model
         function = model.xDayCrossovers(tag, startDate, endDate, x);
+        System.out.println(function.execute());
         break;
 
 
@@ -196,7 +200,7 @@ public class StockController {
   }
 
   // Checks that the inputted date is correct and will reset the user if incorrect
-  private void checkCorrectDate(Scanner scanner, String date, String userInput) {
+  private void checkCorrectDate(Scanner scanner, String date, String userInput) throws IOException {
     stockView.writeMessage("Is this the correct date? " + date + System.lineSeparator());
     stockView.writeMessage("Y/N: ");
     String response = scanner.next();

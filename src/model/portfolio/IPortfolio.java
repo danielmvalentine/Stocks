@@ -1,5 +1,6 @@
 package model.portfolio;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import model.Stock;
@@ -53,4 +54,8 @@ public interface IPortfolio {
    */
   void removeFromPortfolio(String removeStock);
 
+  /**
+   * Saves the given portfolio as a .txt file.
+   */
+  void savePortfolio() throws IOException;
 }

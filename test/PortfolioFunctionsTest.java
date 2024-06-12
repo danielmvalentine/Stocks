@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import model.Model;
 import model.ModelImpl;
 import model.Stock;
-import model.portfolio.IPortfolio;
 import model.portfolio.*;
 
 import static org.junit.Assert.assertEquals;

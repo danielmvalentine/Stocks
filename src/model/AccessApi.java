@@ -31,7 +31,7 @@ public class AccessApi {
    * @return Returns the data from the API as a String.
    */
   public String returnData(String dateOne, String dateTwo) {
-    String apiKey = "ITLOWDS3G38OV14F";
+    String apiKey = "QEFVQOMF9QYHO5D8";
     URL url = null;
 
     try {

@@ -1,13 +1,13 @@
 package model;
 
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.functions.ProgramFunction;
 import model.functions.*;
-import model.functions.StockGainOrLoss;
-import model.functions.XDayCrossovers;
-import model.functions.XDayMovingAverage;
 import model.portfolio.IPortfolio;
 import view.StockView;
 

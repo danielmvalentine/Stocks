@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -12,8 +13,8 @@ import view.PortfolioView;
  * This class represents the controller of an interactive portfolio program within
  * the stocks program. It utilizes a text-based interface, with the user being able to type
  * commands to examine portfolios.
- * <p>
- * This controller works with any Readable to read its inputs and
+ *
+ * <p>This controller works with any Readable to read its inputs and
  * any Appendable to transmit output through a viewer.
  */
 public class PortfolioController extends StockController {
@@ -43,7 +44,7 @@ public class PortfolioController extends StockController {
    * Our main method for our controller to edit maneuvering around our menu.
    * Will iterate until the user quits the portfolio program.
    */
-  public void control() {
+  public void control() throws IOException {
     Scanner scanner = new Scanner(readable);
 
     view.welcomeMessage();
@@ -58,7 +59,7 @@ public class PortfolioController extends StockController {
   }
 
   // Processes all available commands.
-  private void processCommand(String userInput, Scanner scanner) {
+  private void processCommand(String userInput, Scanner scanner) throws IOException {
 
     String title;
     String stock;
@@ -153,6 +154,19 @@ public class PortfolioController extends StockController {
           view.writeMessage("Portfolio does not exist." + System.lineSeparator());
         }
         break;
+
+      case "7":
+      case "save-portfolio":
+        view.writeMessage("Enter the title of the portfolio to be saved: ");
+        title = scanner.next();
+        if (this.model.getPortfolio(title) != null) {
+          //Saves the portfolio
+          this.model.getPortfolio(title).savePortfolio();
+        } else {
+          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
+        }
+        break;
+
 
 
       case "b":

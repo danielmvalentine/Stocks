@@ -1,9 +1,17 @@
 package view;
 
+/**
+ * Our public class for the view portion of our portfolio.
+ */
 public class PortfolioView extends StockView {
 
   Appendable appendable;
 
+  /**
+   * Constructor.
+   *
+   * @param appendable Dealing with scanner.
+   */
   public PortfolioView(Appendable appendable) {
     super(appendable);
     this.appendable = appendable;
@@ -25,11 +33,13 @@ public class PortfolioView extends StockView {
             + System.lineSeparator());
     writeMessage("6 - get-value-of - Gets the value of a specified portfolio."
             + System.lineSeparator());
+    writeMessage("7 - save-portfolio - Saves the specified portfolio to the computer."
+            + System.lineSeparator());
     writeMessage("B or Back - Return to the main menu." + System.lineSeparator());
   }
 
   @Override
-  public void welcomeMessage(){
+  public void welcomeMessage() {
     writeMessage(System.lineSeparator() + "The following are the portfolio options!"
             + System.lineSeparator());
   }

@@ -2,6 +2,9 @@ package view;
 
 import java.io.IOException;
 
+/**
+ * Public class for our view portion of the Stocks.
+ */
 public class StockView {
 
   public final Appendable appendable;
@@ -30,7 +33,8 @@ public class StockView {
   public void printMenu() {
     writeMessage(System.lineSeparator() + "Supported user instructions are: "
             + System.lineSeparator());
-    writeMessage("1 - stock-price-shift - Examine the gain or loss of a stock over a specified period."
+    writeMessage("1 - stock-price-shift - " +
+            "Examine the gain or loss of a stock over a specified period."
             + System.lineSeparator());
     writeMessage("2 - xday-moving-average - Examine the x-day moving average of a stock for a " +
             "specified date and a specified value of x."

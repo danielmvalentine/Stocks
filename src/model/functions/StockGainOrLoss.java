@@ -43,9 +43,9 @@ public class StockGainOrLoss implements ProgramFunction {
               + " Please try again tomorrow");
     }
     if (helperResult >= 0) {
-      return "The total gained over this period of time is: " + helperResult;
+      return "The total gained over this period of time is: $" + helperResult;
     } else {
-      return "The total lost over this period of time is: " + helperResult;
+      return "The total lost over this period of time is: $" + helperResult;
     }
   }
 
@@ -86,10 +86,14 @@ public class StockGainOrLoss implements ProgramFunction {
     } else {
       throw new IllegalArgumentException("Date one must be before date two.");
     }
-    System.out.println(finalData);
     return helpFindFromArrayList(finalData);
   }
 
+  /**
+   * Helper method for the helper method.
+   * @param input Input of an ArrayList given in the previous method.
+   * @return Return a double as the final value.
+   */
   public double helpFindFromArrayList(ArrayList<String> input) {
 
     // First we find how tall our arraylist is by finding how many lineSeparators there are.
@@ -117,7 +121,6 @@ public class StockGainOrLoss implements ProgramFunction {
         isFirst = false;
       }
     }
-    System.out.println(height);
     double doubleFinalDouble = largeSum / height;
     DecimalFormat decfor = new DecimalFormat("0.000");
     return (Double.parseDouble(decfor.format(doubleFinalDouble - firstValue)));

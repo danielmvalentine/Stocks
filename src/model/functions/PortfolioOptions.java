@@ -1,5 +1,7 @@
 package model.functions;
 
+import java.io.IOException;
+
 import controller.PortfolioController;
 import model.Model;
 import view.PortfolioView;
@@ -33,7 +35,7 @@ public class PortfolioOptions implements ProgramFunction {
    * @return An empty String as this function is slightly different from the others.
    */
   @Override
-  public String execute() throws IllegalArgumentException {
+  public String execute() throws IllegalArgumentException, IOException {
     PortfolioView view = new PortfolioView(stockView.appendable);
     PortfolioController controller = new PortfolioController(rd, view, this.model);
     // Starts the portfolio-centric interface.
