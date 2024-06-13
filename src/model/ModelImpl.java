@@ -1,12 +1,19 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.portfolio.IPortfolio;
+import model.portfolio.PortfolioImpl;
 import model.stockFunctions.PortfolioOptions;
 import model.stockFunctions.StockFunction;
 import model.stockFunctions.StockGainOrLoss;
@@ -67,15 +74,15 @@ public class ModelImpl implements Model {
       return "No portfolios found";
     }
 
-    String output = "";
+    StringBuilder output = new StringBuilder();
 
     for (IPortfolio portfolio : portfolios) {
-      output += "\n";
-      output += portfolio.getPortfolioTitle();
-      output += ": " + portfolio.formatStock();
+      output.append("\n");
+      output.append(portfolio.getPortfolioTitle());
+      output.append(": ").append(portfolio.formatStock());
     }
 
-    return output;
+    return output.toString();
   }
 
   @Override
@@ -88,7 +95,8 @@ public class ModelImpl implements Model {
       for(int i = 0; i <= newList.length - 1; i++){
         newList[i] = portfolios[i];
       }
-      newList[newList.length] = portfolio;
+      newList[newList.length - 1] = portfolio;
+      portfolios = newList;
     }
   }
 
@@ -106,14 +114,34 @@ public class ModelImpl implements Model {
 
   @Override
   public void getFromTxt(String title, String filePath) throws IOException {
-    String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
-    ArrayList<String> listOfStockNames = new ArrayList<>();
-    double[] listOfStockValues = new double[fileContent.length()];
-    boolean isAtTag = false;
-    boolean isAtValue = false;
-    int acc = 0;
-    for(int i = 0; i < fileContent.length(); i++) {
-
+    try {
+      File file = new File(filePath);
+      FileInputStream fis = new FileInputStream(file);
+      InputStreamReader isr = new InputStreamReader(fis);
+      BufferedReader br = new BufferedReader(isr);
+      String lineContent;
+      String fileContent = "";
+      while((lineContent = br.readLine()) != null) {
+       fileContent = fileContent + lineContent;
+      }
+      br.close();
+      ArrayList<String> listOfStockNames = new ArrayList<>();
+      double[] listOfStockValues = new double[fileContent.length()];
+      // How many stocks do we need to add to the portfolio?
+      int acc = 0;
+      String[] stockInfo = fileContent.split(System.lineSeparator());
+      IPortfolio newPortfolio = new PortfolioImpl(title);
+      for (int i = 0; i < stockInfo.length; i++) {
+        String[] individualStockInfo = stockInfo[i].split(",");
+        String ticker = individualStockInfo[0];
+        double shares = Double.parseDouble(individualStockInfo[1]);
+        String date = individualStockInfo[2];
+        LocalDate individualDate = LocalDate.parse(date);
+        Stock newStock = new Stock(ticker, shares, individualDate);
+        newPortfolio.addToPortfolio(newStock);
+      }
+    }catch(NoSuchFileException e) {
+      e.printStackTrace();
     }
   }
 }

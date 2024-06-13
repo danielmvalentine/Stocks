@@ -3,6 +3,10 @@ package model.portfolio;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -161,14 +165,31 @@ public class PortfolioImpl implements IPortfolio {
   public void savePortfolio() throws IOException {
     File newFile = new File("saved_portfolios/" + this.getPortfolioTitle() + ".txt");
     FileWriter writer = new FileWriter(newFile);
-    writer.write(this.formatStock());
+    String temporaryString = "";
+    String finalBuy = "";
+    String finalSell = "";
+    for (Stock stock : stocks) {
+      LocalDate nullBuySubstitute = stock.getBuyDate();
+      LocalDate nullSellSubstitute = stock.getSellDate();
+      if (stock.getBuyDate() != null) {
+        finalBuy = nullBuySubstitute.toString();
+      } else{
+        finalBuy = "TBD";
+      }
+      if (stock.getSellDate() != null) {
+        finalSell = nullSellSubstitute.toString() + "|";
+      } else {
+        finalSell = "TBD|";
+      }
+        temporaryString = temporaryString + stock.getTicker() + ","
+                + stock.getShares() + "," + finalBuy + ","
+                + finalSell + System.lineSeparator();
+
+    }
+    writer.write(temporaryString);
     writer.close();
   }
 
-  @Override
-  public void getFromTxt(String titleOfPortfolio, String title) {
-
-  }
 
   @Override
   public void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo) {
