@@ -198,15 +198,16 @@ public class PortfolioController extends StockController {
 
       case "9":
       case "load-portfolio":
-        view.writeMessage("Enter the title of the file of the portfolio to be loaded: "
-                + System.lineSeparator() + "Ex: portfolio.txt");
+        view.writeMessage("Enter the title of the file of the portfolio to be loaded"
+                + System.lineSeparator() + "Ex: portfolio.txt" + System.lineSeparator());
         title = scanner.next();
-        String titleOfPortfolio = new String("");
+        title = "saved_portfolios/" + title;
+        StringBuilder titleOfPortfolio = new StringBuilder();
         for(int i = 0; i < title.length() - 5; i++){
-          titleOfPortfolio = titleOfPortfolio + title.charAt(i);
+          titleOfPortfolio.append(title.charAt(i));
         }
-        PortfolioImpl newPortfolio = new PortfolioImpl(titleOfPortfolio);
-        this.model.getPortfolio(titleOfPortfolio).getFromTxt(titleOfPortfolio, title);
+        PortfolioImpl newPortfolio = new PortfolioImpl(titleOfPortfolio.toString());
+        this.model.getFromTxt(titleOfPortfolio.toString(), title);
         break;
 
       case "10":
