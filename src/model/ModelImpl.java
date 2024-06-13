@@ -80,7 +80,10 @@ public class ModelImpl implements Model {
 
   @Override
   public void addPortfolio(IPortfolio portfolio) {
-    if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
+    if (portfolios == null) {
+      portfolios = new IPortfolio[1];
+      portfolios[0] = portfolio;
+    } else if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
       IPortfolio[] newList = new IPortfolio[portfolios.length + 1];
       for(int i = 0; i <= newList.length - 1; i++){
         newList[i] = portfolios[i];

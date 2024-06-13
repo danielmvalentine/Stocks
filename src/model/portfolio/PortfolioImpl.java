@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.AccessApi;
 import model.Stock;
@@ -16,7 +17,7 @@ import model.Stock;
  */
 public class PortfolioImpl implements IPortfolio {
   private final String title;
-  private ArrayList<Stock> stocks = new ArrayList<Stock>();
+  private Stock[] stocks;
 
   /**
    * Creates a new PortfolioImpl object with a title.
@@ -25,6 +26,7 @@ public class PortfolioImpl implements IPortfolio {
    */
   public PortfolioImpl(String title) {
     this.title = title;
+    this.stocks = new Stock[0];
   }
 
   @Override
@@ -39,7 +41,7 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public String formatStock() {
-    if (stocks.isEmpty()) {
+    if (stocks.length == 0) {
       return "No stocks found";
     }
 
@@ -62,33 +64,40 @@ public class PortfolioImpl implements IPortfolio {
     return title;
   }
 
+
   @Override
   public String getPortfolioValue(LocalDate givenDate) {
-    String bigData = "";
-    String[] separatedData;
-    double value = 0;
-    String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    // Checks that the date entered is not the future.
+    if (!givenDate.isAfter(LocalDate.now())) {
+
+      String bigData = "";
+      String[] separatedData;
+      double value = 0;
+      String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
 
 
-    for (Stock stock : stocks) {
-      if (stock.getBuyDate().isBefore(givenDate) && stock.getSellDate().isAfter(givenDate)) {
-        // Gets the data for the given stock
-        bigData = new AccessApi(stock.getTicker())
-                .returnData(givenDate.toString(), givenDate.toString());
-        separatedData = bigData.split(",");
-        if (bigData.contains(date)) {
-          // Locates the given date and adds the end of day value per stock times its shares.
-          for (int i = 0; i < separatedData.length; i += 5) {
-            if (separatedData[i].contains(date)) {
-              value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
-              break;
+      for (Stock stock : stocks) {
+        if (stock.getBuyDate().isBefore(givenDate) && stock.getSellDate().isAfter(givenDate)) {
+          // Gets the data for the given stock
+          bigData = new AccessApi(stock.getTicker())
+                  .returnData(givenDate.toString(), givenDate.toString());
+          separatedData = bigData.split(",");
+          if (bigData.contains(date)) {
+            // Locates the given date and adds the end of day value per stock times its shares.
+            for (int i = 0; i < separatedData.length; i += 5) {
+              if (separatedData[i].contains(date)) {
+                value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
+                break;
+              }
             }
           }
         }
       }
+
+      return String.valueOf(value);
     }
 
-    return String.valueOf(value);
+    return "Date is in the future, please enter a date in the past.";
   }
 
   @Override
@@ -124,14 +133,27 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public void addToPortfolio(Stock inputStock) {
-    this.stocks.add(inputStock);
+    Stock[] newStocks = new Stock[stocks.length + 1];
+    for (int i = 0; i < stocks.length; i++) {
+      newStocks[i] = stocks[i];
+    }
+    newStocks[newStocks.length - 1] = inputStock;
+    this.stocks = newStocks;
   }
 
   @Override
   public void removeFromPortfolio(String removeStock) {
     Stock stock = getStock(removeStock);
-    if (stock != null && this.stocks.contains(stock)) {
-      this.stocks.remove(stock);
+    Stock[] newStocks = new Stock[stocks.length - 1];
+    if (stock != null) {
+      for (int i = 0; i < stocks.length; i += 1) {
+        if (stocks[i].getTicker().equals(removeStock)) {
+          i += 1;
+        } else {
+          newStocks[i] = stocks[i];
+        }
+      }
+      this.stocks = newStocks;
     }
   }
 

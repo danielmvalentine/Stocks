@@ -103,7 +103,7 @@ public class PortfolioController extends StockController {
 
       // Will remove all stock if the shares entered are greater than the shares present
       case "4":
-      case "remove-stock-from":
+      case "sell-stock-from":
         view.writeMessage("Enter the title of the portfolio the stock should be sold from: ");
         title = scanner.next();
         view.writeMessage("Enter the stock to be sold from the portfolio: ");

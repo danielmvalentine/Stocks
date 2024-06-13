@@ -27,15 +27,17 @@ public class PortfolioView extends StockView {
             + System.lineSeparator());
     writeMessage("3 - add-stock-to - Add a stock to a specified portfolio."
             + System.lineSeparator());
-    writeMessage("4 - remove-stock-from - Remove a stock from a specified portfolio."
+    writeMessage("4 - sell-stock-from - Remove a stock from a specified portfolio."
             + System.lineSeparator());
     writeMessage("5 - examine-portfolio - Prints the stock and shares of stock within a portfolio."
             + System.lineSeparator());
     writeMessage("6 - get-value-of - Gets the value of a specified portfolio."
             + System.lineSeparator());
-    writeMessage("7 - save-portfolio - Saves the specified portfolio to the computer."
+    writeMessage("7 - distribution of value - Returns the value of each stock in the portfolio."
             + System.lineSeparator());
-    writeMessage("8 - load-portfolio - Loads the specified portfolio. (Portfolio must be located" +
+    writeMessage("8 - save-portfolio - Saves the specified portfolio to the computer."
+            + System.lineSeparator());
+    writeMessage("9 - load-portfolio - Loads the specified portfolio. (Portfolio must be located" +
             "in the given folder titled 'saved_portfolios'" + System.lineSeparator());
     writeMessage("B or Back - Return to the main menu." + System.lineSeparator());
   }
