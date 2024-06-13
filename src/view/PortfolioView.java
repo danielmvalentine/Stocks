@@ -23,7 +23,7 @@ public class PortfolioView extends StockView {
             + System.lineSeparator());
     writeMessage("1 - create-portfolio - Create a new portfolio."
             + System.lineSeparator());
-    writeMessage("2 - list-portfolios - Lists the portfolios that have been created"
+    writeMessage("2 - list-portfolios - Lists the current portfolios and their current information"
             + System.lineSeparator());
     writeMessage("3 - add-stock-to - Add a stock to a specified portfolio."
             + System.lineSeparator());

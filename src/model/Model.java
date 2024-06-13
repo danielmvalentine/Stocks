@@ -96,4 +96,11 @@ public interface Model {
    * @param filePath The path to the .txt file to be read.
    */
   void getFromTxt(String title, String filePath) throws IOException;
+
+  /**
+   * Determines the number of portfolios in the given model.
+   *
+   * @return The number of portfolios in the model as an int.
+   */
+  int numberOfPortfolios();
 }

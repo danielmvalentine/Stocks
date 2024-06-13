@@ -49,7 +49,7 @@ public class PortfolioImpl implements IPortfolio {
 
     for (Stock stock : stocks) {
       if (stock.getSellDate() == null) {
-        output += "\n";
+        output += System.lineSeparator() + "  ";
         output += stock.getTicker();
         output += "; " + stock.getShares() + " shares";
 

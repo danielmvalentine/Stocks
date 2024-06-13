@@ -3,7 +3,6 @@ package model;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import model.portfolio.IPortfolio;
@@ -71,13 +70,13 @@ public class MockModelImpl implements Model {
 
   @Override
   public IPortfolio[] getAllPortfolios() {
-    log.append("getAllPortfolios: \n");
+    log.append("getAllPortfolios: " + System.lineSeparator());
     return null;
   }
 
   @Override
   public String formatPortfolios() {
-    log.append("formatPortfolios: \n");
+    log.append("formatPortfolios: " + System.lineSeparator());
     return "";
   }
 
@@ -89,6 +88,12 @@ public class MockModelImpl implements Model {
   @Override
   public void getFromTxt(String title, String filePath) throws IOException {
     log.append("getFromTxt: title=" + title + "filePath=" + filePath + System.lineSeparator());
+  }
+
+  @Override
+  public int numberOfPortfolios() {
+    log.append("numberOfPortfolios: " + System.lineSeparator());
+    return 0;
   }
 
 }

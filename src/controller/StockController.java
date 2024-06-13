@@ -192,9 +192,19 @@ public class StockController {
       date = LocalDate.of(year, month, day);
     } catch (DateTimeException e) {
       stockView.writeMessage("Invalid date: day=" + day
-              + " month=" + month + " year=" + year);
+              + " month=" + month + " year=" + year + System.lineSeparator()
+              + System.lineSeparator());
       return getDate(scanner);
     }
+
+    if (date.isAfter(LocalDate.now())) {
+      stockView.writeMessage("Invalid date: day=" + day
+              + " month=" + month + " year=" + year + System.lineSeparator()
+              + System.lineSeparator());
+      return getDate(scanner);
+    }
+
+    stockView.writeMessage(System.lineSeparator());
 
     return date;
   }

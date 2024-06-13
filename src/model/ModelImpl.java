@@ -85,10 +85,11 @@ public class ModelImpl implements Model {
       portfolios[0] = portfolio;
     } else if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
       IPortfolio[] newList = new IPortfolio[portfolios.length + 1];
-      for(int i = 0; i <= newList.length - 1; i++){
+      for(int i = 0; i < newList.length - 1; i++){
         newList[i] = portfolios[i];
       }
-      newList[newList.length] = portfolio;
+      newList[newList.length - 1] = portfolio;
+      this.portfolios = newList;
     }
   }
 
@@ -114,6 +115,15 @@ public class ModelImpl implements Model {
     int acc = 0;
     for(int i = 0; i < fileContent.length(); i++) {
 
+    }
+  }
+
+  @Override
+  public int numberOfPortfolios() {
+    if (portfolios == null) {
+      return 0;
+    } else {
+      return this.portfolios.length;
     }
   }
 }

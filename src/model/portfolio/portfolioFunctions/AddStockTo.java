@@ -16,10 +16,14 @@ public class AddStockTo implements PortfolioFunction {
 
   public AddStockTo(Model model, PortfolioView view, String title,
                     String stock, double shares, LocalDate date) {
+    if (stock.length() != 4) {
+      throw new IllegalArgumentException();
+    }
+
     this.model = model;
     this.view = view;
     this.title = title;
-    this.stock = stock;
+    this.stock = stock.toUpperCase();
     this.shares = shares;
     this.date = date;
   }

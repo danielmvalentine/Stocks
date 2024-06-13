@@ -21,10 +21,14 @@ public class SellStockFrom implements PortfolioFunction {
 
   public SellStockFrom(Model model, PortfolioView view, String title,
                        String stock, double shares, LocalDate date) {
+    if (stock.length() != 4) {
+      throw new IllegalArgumentException();
+    }
+
     this.model = model;
     this.view = view;
     this.title = title;
-    this.stock = stock;
+    this.stock = stock.toUpperCase();
     this.shares = shares;
     this.date = date;
   }
@@ -52,10 +56,15 @@ public class SellStockFrom implements PortfolioFunction {
   // The method that takes care of selling the stock and adjusting the portfolio if needed.
   private void sellStock() {
     IPortfolio portfolio = this.model.getPortfolio(title);
+    Stock stockOfInterest = portfolio.getStock(stock);
+    LocalDate buyDate = stockOfInterest.getBuyDate();
 
-    if (portfolio.getStock(stock).getShares() > this.shares) {
+    if (stockOfInterest.getShares() > this.shares) {
       double leftoverShares = portfolio.getStock(stock).getShares() - this.shares;
-      portfolio.addToPortfolio(new Stock(stock, leftoverShares, date));
+      portfolio.removeFromPortfolio(stock);
+      portfolio.addToPortfolio(new Stock(stock, this.shares, buyDate));
+      portfolio.addToPortfolio(new Stock(stock, leftoverShares, buyDate));
+
     }
     portfolio.getStock(stock).addSellDate(date);
     view.writeMessage("Stock successfully sold from the portfolio."

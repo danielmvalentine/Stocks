@@ -73,16 +73,26 @@ public class PortfolioController extends StockController {
       case "create-portfolio":
         view.writeMessage("Enter a title for the portfolio: ");
         title = scanner.next();
+        int initNumberOfPortfolios = this.model.numberOfPortfolios();
 
         // Tells the model to add a new portfolio
         this.model.addPortfolio(new PortfolioImpl(title));
+
+        if (this.model.numberOfPortfolios() > initNumberOfPortfolios) {
+          view.writeMessage("Portfolio successfully added!");
+        } else {
+          view.writeMessage("Portfolio already exists!");
+        }
+        view.writeMessage(System.lineSeparator());
+
         break;
 
 
       case "2":
       case "list-portfolios":
         // Tells the model to format its portfolios
-        view.writeMessage("List of portfolios: " + this.model.formatPortfolios());
+        view.writeMessage("List of portfolios: " + this.model.formatPortfolios()
+                + System.lineSeparator());
         break;
 
 
@@ -97,7 +107,12 @@ public class PortfolioController extends StockController {
         view.writeMessage("Enter the date the stock was added: ");
         date = super.getDate(scanner);
 
-        new AddStockTo(model, view, title, stock, shares, date).execute();
+        try {
+          new AddStockTo(model, view, title, stock, shares, date).execute();
+        } catch (IllegalArgumentException e) {
+          view.writeMessage("Invalid stock ticker!");
+        }
+
         break;
 
 
@@ -113,7 +128,12 @@ public class PortfolioController extends StockController {
         view.writeMessage("Enter the date the stock should be sold on: ");
         date = super.getDate(scanner);
 
-        new SellStockFrom(model, view, title, stock, shares, date).execute();
+        try {
+          new SellStockFrom(model, view, title, stock, shares, date).execute();
+        } catch (IllegalArgumentException e) {
+          view.writeMessage("Invalid stock ticker!" + System.lineSeparator());
+        }
+
         break;
 
 
