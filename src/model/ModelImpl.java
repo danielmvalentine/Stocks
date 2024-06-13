@@ -56,8 +56,8 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public ArrayList<IPortfolio> getAllPortfolios() {
-    return portfolios;
+  public IPortfolio[] getAllPortfolios() {
+    return portfolios.toArray(new IPortfolio[portfolios.size()]);
   }
 
 

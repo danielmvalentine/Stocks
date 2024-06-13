@@ -72,7 +72,7 @@ public interface Model {
    *
    * @return A List of Portfolios that the user has.
    */
-  ArrayList<IPortfolio> getAllPortfolios();
+  IPortfolio[] getAllPortfolios();
 
   /**
    * Formats the portfolios as a string.
