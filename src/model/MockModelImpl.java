@@ -6,8 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import model.functions.*;
 import model.portfolio.IPortfolio;
+import model.stockFunctions.PortfolioOptions;
+import model.stockFunctions.StockFunction;
 import view.StockView;
 
 /**
@@ -27,8 +28,8 @@ public class MockModelImpl implements Model {
   }
 
   @Override
-  public ProgramFunction gainOrLossOverTime(String stockName,
-                                            LocalDate initialDate, LocalDate finalDate) {
+  public StockFunction gainOrLossOverTime(String stockName,
+                                          LocalDate initialDate, LocalDate finalDate) {
     log.append("GainOrLoss: stock=" + stockName +
             " initialDate=" + initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
             " finalDate=" + finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
@@ -37,7 +38,7 @@ public class MockModelImpl implements Model {
   }
 
   @Override
-  public ProgramFunction movingAverage(String stockName, LocalDate date, int xValue) {
+  public StockFunction movingAverage(String stockName, LocalDate date, int xValue) {
     log.append("movingAvg: stock=" + stockName +
             " date=" + date.format(DateTimeFormatter.ISO_LOCAL_DATE) +
             " xVal=" + xValue + System.lineSeparator());
@@ -45,7 +46,7 @@ public class MockModelImpl implements Model {
   }
 
   @Override
-  public ProgramFunction xDayCrossovers(String stockName,
+  public StockFunction xDayCrossovers(String stockName,
                                         LocalDate initialDate, LocalDate finalDate, int xValue) {
     log.append("XDayCrossovers: stock=" + stockName +
             " initialDate=" + initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
@@ -56,7 +57,7 @@ public class MockModelImpl implements Model {
   }
 
   @Override
-  public ProgramFunction portfolioOptions(Readable rd, StockView view) {
+  public StockFunction portfolioOptions(Readable rd, StockView view) {
     log.append("PortfolioOptions: readable=" + rd +
             " view=" + view + System.lineSeparator());
     return new PortfolioOptions(this, rd, view);
@@ -83,6 +84,11 @@ public class MockModelImpl implements Model {
   @Override
   public void addPortfolio(IPortfolio portfolio) {
     log.append("addPortfolio: " + portfolio.getPortfolioTitle() + System.lineSeparator());
+  }
+
+  @Override
+  public void getFromTxt(String title, String filePath) throws IOException {
+    log.append("getFromTxt: title=" + title + "filePath=" + filePath + System.lineSeparator());
   }
 
 }

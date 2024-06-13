@@ -68,5 +68,4 @@ public interface IPortfolio {
    */
   void savePortfolio() throws IOException;
 
-
 }

@@ -1,16 +1,17 @@
 package model;
 
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.functions.*;
 import model.portfolio.IPortfolio;
+import model.stockFunctions.PortfolioOptions;
+import model.stockFunctions.StockFunction;
+import model.stockFunctions.StockGainOrLoss;
+import model.stockFunctions.XDayCrossovers;
+import model.stockFunctions.XDayMovingAverage;
 import view.StockView;
 
 /**
@@ -23,24 +24,24 @@ public class ModelImpl implements Model {
 
 
   @Override
-  public ProgramFunction gainOrLossOverTime(String stockName,
-                                            LocalDate initialDate, LocalDate finalDate) {
+  public StockFunction gainOrLossOverTime(String stockName,
+                                          LocalDate initialDate, LocalDate finalDate) {
     return new StockGainOrLoss(stockName, initialDate, finalDate);
   }
 
   @Override
-  public ProgramFunction movingAverage(String stockName, LocalDate date, int xValue) {
+  public StockFunction movingAverage(String stockName, LocalDate date, int xValue) {
     return new XDayMovingAverage(stockName, date, xValue);
   }
 
   @Override
-  public ProgramFunction xDayCrossovers(String stockName,
+  public StockFunction xDayCrossovers(String stockName,
                                         LocalDate initialDate, LocalDate finalDate, int xValue) {
     return new XDayCrossovers(stockName, initialDate, finalDate, xValue);
   }
 
   @Override
-  public ProgramFunction portfolioOptions(Readable rd, StockView view) {
+  public StockFunction portfolioOptions(Readable rd, StockView view) {
     return new PortfolioOptions(this, rd, view);
   }
 
