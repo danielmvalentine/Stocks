@@ -58,4 +58,6 @@ public interface IPortfolio {
    * Saves the given portfolio as a .txt file.
    */
   void savePortfolio() throws IOException;
+
+
 }

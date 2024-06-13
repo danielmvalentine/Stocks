@@ -35,6 +35,8 @@ public class PortfolioView extends StockView {
             + System.lineSeparator());
     writeMessage("7 - save-portfolio - Saves the specified portfolio to the computer."
             + System.lineSeparator());
+    writeMessage("8 - load-portfolio - Loads the specified portfolio. (Portfolio must be located" +
+            "in the given folder titled 'saved_portfolios'" + System.lineSeparator());
     writeMessage("B or Back - Return to the main menu." + System.lineSeparator());
   }
 

@@ -167,6 +167,35 @@ public class PortfolioController extends StockController {
         }
         break;
 
+      case "8":
+      case "load-portfolio":
+        view.writeMessage("Enter the title of the file of the portfolio to be loaded: "
+                + System.lineSeparator() + "Ex: portfolio.txt");
+        title = scanner.next();
+        String titleOfPortfolio = new String("");
+        for(int i = 0; i < title.length() - 5; i++){
+          titleOfPortfolio = titleOfPortfolio + title.charAt(i);
+        }
+        PortfolioImpl newPortfolio = new PortfolioImpl(titleOfPortfolio);
+        this.model.getPortfolio(titleOfPortfolio).getFromTxt(titleOfPortfolio, title);
+        break;
+
+      case "9":
+      case "find-portfolio-over-time":
+        view.writeMessage("Enter the name of the portfolio to be examined: ");
+        title = scanner.next();
+        view.writeMessage("Enter the date you would like the beginning "
+                + "of the examination to begin on: ");
+        LocalDate dateOne = getDate(scanner);
+        view.writeMessage("Enter the date you would like the end of "
+                + "the examination to happen on: ");
+        LocalDate dateTwo = getDate(scanner);
+        if (this.model.getPortfolio(title) != null) {
+          this.model.getPortfolio(title).getPortfolioOverTime(dateOne, dateTwo);
+        } else {
+          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
+        }
+        break;
 
 
       case "b":

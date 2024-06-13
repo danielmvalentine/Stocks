@@ -88,4 +88,12 @@ public interface Model {
    */
   void addPortfolio(IPortfolio portfolio);
 
+  /**
+   * Takes our portfolio and finds its value over a certain set of time.
+   * We will represent this as a bar chart of asterisks.
+   *
+   * @param title The title of the portfolio to be added.
+   * @param filePath The path to the .txt file to be read.
+   */
+  void getFromTxt(String title, String filePath) throws IOException;
 }

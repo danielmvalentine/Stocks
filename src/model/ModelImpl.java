@@ -4,6 +4,8 @@ package model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -89,5 +91,18 @@ public class ModelImpl implements Model {
       }
     }
     return false;
+  }
+
+  @Override
+  public void getFromTxt(String title, String filePath) throws IOException {
+    String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
+    ArrayList<String> listOfStockNames = new ArrayList<>();
+    double[] listOfStockValues = new double[fileContent.length()];
+    boolean isAtTag = false;
+    boolean isAtValue = false;
+    int acc = 0;
+    for(int i = 0; i < fileContent.length(); i++) {
+
+    }
   }
 }
