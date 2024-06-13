@@ -68,4 +68,19 @@ public interface IPortfolio {
    */
   void savePortfolio() throws IOException;
 
+  /**
+   * Reads the given txt file and makes a portfolio.
+   *
+   * @param titleOfPortfolio Title of the portfolio we want to make.
+   * @param title Title of the file.
+   */
+  void getFromTxt(String titleOfPortfolio, String title);
+
+  /**
+   * Gets the values of a portfolio over time as a bar chart.
+   *
+   * @param dateOne The date to start on.
+   * @param dateTwo The date to end on.
+   */
+  void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo);
 }

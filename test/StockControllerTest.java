@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -32,7 +33,7 @@ public class StockControllerTest {
 
 
   @Test
-  public void testInvalidDate() {
+  public void testInvalidDate() throws IOException {
     Reader rd = new StringReader("xday-moving-average\nGOOG\n" +
             "2001\n2\n29\n" + // Tests invalid day
             "2001\n2\n-1\n" + // Tests negative day
@@ -68,7 +69,7 @@ public class StockControllerTest {
   }
 
   @Test
-  public void testControllerGainOrLoss() {
+  public void testControllerGainOrLoss() throws IOException {
     Reader rd = new StringReader("stock-price-shift\nGOOG\n" +
             "2020\n2\n24\nY\n" + //First date
             "2020\n3\n3\nY\n" + // Second date
@@ -89,7 +90,7 @@ public class StockControllerTest {
   }
 
   @Test
-  public void testControllerXDayMovingAverage() {
+  public void testControllerXDayMovingAverage() throws IOException {
     Reader rd = new StringReader("xday-moving-average\nGOOG\n" +
             "2020\n2\n24\nY\n" + // Entering the date
             "30\nquit" // Entering the x value and quitting
@@ -108,7 +109,7 @@ public class StockControllerTest {
   }
 
   @Test
-  public void testControllerXDayCrossovers() {
+  public void testControllerXDayCrossovers() throws IOException {
     Reader rd = new StringReader("xday-crossovers\nGOOG\n" +
             "2020\n2\n24\nY\n" + // Entering the first date
             "2020\n3\n3\nY\n" + // Entering the second date

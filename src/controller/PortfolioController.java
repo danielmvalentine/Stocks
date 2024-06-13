@@ -176,7 +176,7 @@ public class PortfolioController extends StockController {
         }
         break;
 
-      case "8":
+      case "9":
       case "load-portfolio":
         view.writeMessage("Enter the title of the file of the portfolio to be loaded: "
                 + System.lineSeparator() + "Ex: portfolio.txt");
@@ -189,7 +189,7 @@ public class PortfolioController extends StockController {
         this.model.getPortfolio(titleOfPortfolio).getFromTxt(titleOfPortfolio, title);
         break;
 
-      case "9":
+      case "10":
       case "find-portfolio-over-time":
         view.writeMessage("Enter the name of the portfolio to be examined: ");
         title = scanner.next();

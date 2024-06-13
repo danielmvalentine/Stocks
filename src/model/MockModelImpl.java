@@ -70,7 +70,7 @@ public class MockModelImpl implements Model {
   }
 
   @Override
-  public ArrayList<IPortfolio> getAllPortfolios() {
+  public IPortfolio[] getAllPortfolios() {
     log.append("getAllPortfolios: \n");
     return null;
   }

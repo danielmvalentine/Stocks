@@ -90,6 +90,9 @@ public class ModelImpl implements Model {
   }
 
   private boolean sameTitle(IPortfolio[] portfolios, String title) {
+    if (portfolios == null) {
+      return false;
+    }
     for (IPortfolio portfolio : portfolios) {
       if (portfolio.getPortfolioTitle().equals(title)) {
         return true;

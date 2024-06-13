@@ -142,4 +142,14 @@ public class PortfolioImpl implements IPortfolio {
     writer.write(this.formatStock());
     writer.close();
   }
+
+  @Override
+  public void getFromTxt(String titleOfPortfolio, String title) {
+
+  }
+
+  @Override
+  public void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo) {
+
+  }
 }
