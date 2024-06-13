@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import model.Model;
-import model.functions.ProgramFunction;
+import model.stockFunctions.StockFunction;
 import view.StockView;
 
 /**
@@ -61,7 +61,7 @@ public class StockController {
 
   // Processes all available commands.
   private void processCommand(String userInput, Scanner scanner) throws IOException {
-    ProgramFunction function = null;
+    StockFunction function = null;
 
     String tag;
     LocalDate startDate;

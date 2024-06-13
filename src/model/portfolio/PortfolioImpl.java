@@ -1,6 +1,5 @@
 package model.portfolio;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,9 +46,12 @@ public class PortfolioImpl implements IPortfolio {
     String output = "";
 
     for (Stock stock : stocks) {
-      output += "\n";
-      output += stock.getTicker();
-      output += " " + stock.getShares();
+      if (stock.getSellDate() == null) {
+        output += "\n";
+        output += stock.getTicker();
+        output += "; " + stock.getShares() + " shares";
+
+      }
     }
 
     return output;
@@ -69,22 +71,55 @@ public class PortfolioImpl implements IPortfolio {
 
 
     for (Stock stock : stocks) {
-      // Gets the data for the given stock
-      bigData = new AccessApi(stock.getTicker())
-              .returnData(givenDate.toString(), givenDate.toString());
-      separatedData = bigData.split(",");
-      if (bigData.contains(date)) {
-        // Locates the given date and adds the end of day value per stock times its shares.
-        for (int i = 0; i < separatedData.length; i += 5) {
-          if (separatedData[i].contains(date)) {
-            value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
-            break;
+      if (stock.getBuyDate().isBefore(givenDate) && stock.getSellDate().isAfter(givenDate)) {
+        // Gets the data for the given stock
+        bigData = new AccessApi(stock.getTicker())
+                .returnData(givenDate.toString(), givenDate.toString());
+        separatedData = bigData.split(",");
+        if (bigData.contains(date)) {
+          // Locates the given date and adds the end of day value per stock times its shares.
+          for (int i = 0; i < separatedData.length; i += 5) {
+            if (separatedData[i].contains(date)) {
+              value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
+              break;
+            }
           }
         }
       }
     }
 
     return String.valueOf(value);
+  }
+
+  @Override
+  public String distributionOfValue(LocalDate givenDate) {
+    String bigData = "";
+    String[] separatedData;
+    String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    String output = "";
+
+    for (Stock stock : stocks) {
+      if (stock.getBuyDate().isBefore(givenDate) && stock.getSellDate().isAfter(givenDate)) {
+        // Gets the data for the given stock
+        bigData = new AccessApi(stock.getTicker())
+                .returnData(givenDate.toString(), givenDate.toString());
+        separatedData = bigData.split(",");
+        if (bigData.contains(date)) {
+          // Locates the given date and adds the end of day value per stock times its shares.
+          for (int i = 0; i < separatedData.length; i += 5) {
+            if (separatedData[i].contains(date)) {
+              output += System.lineSeparator();
+              output += stock.getTicker() + ": $";
+              output += stock.getShares() * Double.parseDouble(separatedData[i + 4]);
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    return output;
+
   }
 
   @Override

@@ -1,4 +1,4 @@
-package model.functions;
+package model.stockFunctions;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import static java.lang.Double.isNaN;
 /**
  * Public class for finding the x-day moving average of a stock.
  */
-public class XDayMovingAverage implements ProgramFunction {
+public class XDayMovingAverage implements StockFunction {
   String tag;
   LocalDate date;
   int x;

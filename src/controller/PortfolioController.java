@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import model.Model;
-import model.Stock;
+
 import model.portfolio.*;
+import model.portfolio.portfolioFunctions.AddStockTo;
+import model.portfolio.portfolioFunctions.SellStockFrom;
 import view.PortfolioView;
 
 /**
@@ -64,6 +66,7 @@ public class PortfolioController extends StockController {
     String title;
     String stock;
     int shares;
+    LocalDate date;
 
     switch (userInput) {
       case "1":
@@ -91,37 +94,26 @@ public class PortfolioController extends StockController {
         stock = scanner.next();
         view.writeMessage("Enter the number of shares to be added: ");
         shares = scanner.nextInt();
+        view.writeMessage("Enter the date the stock was added: ");
+        date = super.getDate(scanner);
 
-        if (this.model.getPortfolio(title) != null) {
-          // Tells the model to add some shares of a stock to a portfolio
-          this.model.getPortfolio(title).addToPortfolio(new Stock(stock, shares));
-          view.writeMessage("Stock successfully added to the portfolio" + System.lineSeparator());
-        } else {
-          // If the portfolio doesn't exist, informs the user and resets.
-          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
-        }
+        new AddStockTo(model, view, title, stock, shares, date).execute();
         break;
 
 
+      // Will remove all stock if the shares entered are greater than the shares present
       case "4":
       case "remove-stock-from":
-        view.writeMessage("Enter the title of the portfolio the stock should be removed from: ");
+        view.writeMessage("Enter the title of the portfolio the stock should be sold from: ");
         title = scanner.next();
-        view.writeMessage("Enter the stock to be removed from the portfolio: ");
+        view.writeMessage("Enter the stock to be sold from the portfolio: ");
         stock = scanner.next();
-        if (this.model.getPortfolio(title) != null) {
-          if (this.model.getPortfolio(title).getStock(stock) != null) {
-            // Tells the model to remove a stock from a portfolio
-            this.model.getPortfolio(title).removeFromPortfolio(stock);
-            view.writeMessage("Stock removed from the portfolio." + System.lineSeparator());
-          } else {
-            // If the stock doesn't exist in the portfolio, informs the user and resets.
-            view.writeMessage("Stock does not exist." + System.lineSeparator());
-          }
-        } else {
-          // If the portfolio doesn't exist, informs the user and resets.
-          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
-        }
+        view.writeMessage("Enter the number of shares to be sold: ");
+        shares = scanner.nextInt();
+        view.writeMessage("Enter the date the stock should be sold on: ");
+        date = super.getDate(scanner);
+
+        new SellStockFrom(model, view, title, stock, shares, date).execute();
         break;
 
 
@@ -138,13 +130,12 @@ public class PortfolioController extends StockController {
         }
         break;
 
-
       case "6":
       case "get-value-of":
         view.writeMessage("Enter the title of the portfolio to be examined: ");
         title = scanner.next();
         view.writeMessage("Enter the date for the portfolio to be examined: ");
-        LocalDate date = super.getDate(scanner);
+        date = super.getDate(scanner);
         if (this.model.getPortfolio(title) != null) {
           // Calculates the value of the portfolio
           view.writeMessage("Value of portfolio: "
@@ -155,7 +146,25 @@ public class PortfolioController extends StockController {
         }
         break;
 
+
       case "7":
+      case "distribution-of-value":
+        view.writeMessage("Enter the title of the portfolio to be examined: ");
+        title = scanner.next();
+        view.writeMessage("Enter the date for the portfolio to be examined: ");
+        date = super.getDate(scanner);
+        if (this.model.getPortfolio(title) != null) {
+          // Calculates the value of the portfolio
+          view.writeMessage("Value of portfolio: "
+                  + this.model.getPortfolio(title).distributionOfValue(date));
+        } else {
+          // If the portfolio doesn't exist, informs the user and resets.
+          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
+        }
+        break;
+
+
+      case "8":
       case "save-portfolio":
         view.writeMessage("Enter the title of the portfolio to be saved: ");
         title = scanner.next();

@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -42,7 +43,11 @@ public class PortfolioControllerTest {
     Model mock = new MockModelImpl(log);
 
     controller = new PortfolioController(rd, view, mock);
-    controller.control();
+    try {
+      controller.control();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
     // Testing assign-value
     assertEquals("addPortfolio: portfolio\n",

@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-import model.functions.StockGainOrLoss;
+import model.stockFunctions.StockGainOrLoss;
 
 import static org.junit.Assert.assertEquals;
 

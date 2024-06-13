@@ -1,11 +1,10 @@
 package model;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-import model.functions.ProgramFunction;
+import model.stockFunctions.StockFunction;
 import model.portfolio.IPortfolio;
 import view.StockView;
 
@@ -24,8 +23,8 @@ public interface Model {
    * @param finalDate   the final date to be searched to.
    * @return The function that will perform this operation.
    */
-  ProgramFunction gainOrLossOverTime(String stockName,
-                                     LocalDate initialDate, LocalDate finalDate);
+  StockFunction gainOrLossOverTime(String stockName,
+                                   LocalDate initialDate, LocalDate finalDate);
 
   /**
    * Allows a user to examine the x-day moving average of a stock for a specified
@@ -36,7 +35,7 @@ public interface Model {
    * @param xValue    the number of days before the given date to be examined.
    * @return The function that will perform this operation.
    */
-  ProgramFunction movingAverage(String stockName, LocalDate date, int xValue);
+  StockFunction movingAverage(String stockName, LocalDate date, int xValue);
 
   /**
    * Allow a user to determine which days are x-day crossovers for a specified stock
@@ -48,15 +47,15 @@ public interface Model {
    * @param xValue      the number of days before the given date to be examined.
    * @return The function that will perform this operation.
    */
-  ProgramFunction xDayCrossovers(String stockName,
-                                 LocalDate initialDate, LocalDate finalDate, int xValue);
+  StockFunction xDayCrossovers(String stockName,
+                               LocalDate initialDate, LocalDate finalDate, int xValue);
 
   /**
    * Allow a user to access different functions with portfolios.
    *
    * @return The function that will perform this operation.
    */
-  ProgramFunction portfolioOptions(Readable rd, StockView view);
+  StockFunction portfolioOptions(Readable rd, StockView view);
 
 
   /**

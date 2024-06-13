@@ -1,4 +1,4 @@
-package model.functions;
+package model.stockFunctions;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import model.AccessApi;
 /**
  * Public class for finding the number of x-day crossovers for stock.
  */
-public class XDayCrossovers implements ProgramFunction {
+public class XDayCrossovers implements StockFunction {
   String tag;
   LocalDate dateOne;
   LocalDate dateTwo;

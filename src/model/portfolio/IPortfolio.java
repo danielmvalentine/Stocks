@@ -26,8 +26,8 @@ public interface IPortfolio {
   Stock getStock(String ticker);
 
   /**
-   * Formats all the stock within this portfolio, including their ticker symbol and the number of
-   * shares the portfolio has.
+   * Formats all the stock within this portfolio, including their ticker symbol, the number of
+   * shares the portfolio has, and the date it was purchased on.
    *
    * @return The formatted stocks as a String.
    */
@@ -36,9 +36,18 @@ public interface IPortfolio {
   /**
    * A method to get the current info in the portfolio.
    *
+   * @param givenDate the date given to assess the portfolio on.
    * @return Returns the current data in the portfolio as a structured String.
    */
   String getPortfolioValue(LocalDate givenDate);
+
+  /**
+   * Formats the value of each stock in the portfolio.
+   *
+   * @param givenDate the date given to assess the portfolio on.
+   * @return  Returns the current data in the portfolio as a structured String.
+   */
+  String distributionOfValue(LocalDate givenDate);
 
   /**
    * A method to add a new stock to our portfolio.

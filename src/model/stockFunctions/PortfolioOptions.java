@@ -1,4 +1,4 @@
-package model.functions;
+package model.stockFunctions;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import view.StockView;
 /**
  * Public class that holds the functions for the viewing and creation of Portfolios.
  */
-public class PortfolioOptions implements ProgramFunction {
+public class PortfolioOptions implements StockFunction {
   Model model;
   StockView stockView;
   Readable rd;

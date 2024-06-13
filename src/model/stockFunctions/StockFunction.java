@@ -1,4 +1,4 @@
-package model.functions;
+package model.stockFunctions;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import java.io.IOException;
  * Our Interface that our public methods for functions call. We will use these for all
  * classes in our functions package.
  */
-public interface ProgramFunction {
+public interface StockFunction {
   /**
    * Executes the given command.
    *
