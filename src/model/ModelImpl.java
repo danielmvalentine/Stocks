@@ -20,7 +20,7 @@ import view.StockView;
  */
 public class ModelImpl implements Model {
 
-  ArrayList<IPortfolio> portfolios = new ArrayList<IPortfolio>();
+  IPortfolio[] portfolios;
 
 
   @Override
@@ -57,13 +57,13 @@ public class ModelImpl implements Model {
 
   @Override
   public IPortfolio[] getAllPortfolios() {
-    return portfolios.toArray(new IPortfolio[portfolios.size()]);
+    return portfolios;
   }
 
 
   @Override
   public String formatPortfolios() {
-    if (portfolios.isEmpty()) {
+    if (portfolios.length == 0) {
       return "No portfolios found";
     }
 
@@ -81,11 +81,15 @@ public class ModelImpl implements Model {
   @Override
   public void addPortfolio(IPortfolio portfolio) {
     if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
-      portfolios.add(portfolio);
+      IPortfolio[] newList = new IPortfolio[portfolios.length + 1];
+      for(int i = 0; i <= newList.length - 1; i++){
+        newList[i] = portfolios[i];
+      }
+      newList[newList.length] = portfolio;
     }
   }
 
-  private boolean sameTitle(ArrayList<IPortfolio> portfolios, String title) {
+  private boolean sameTitle(IPortfolio[] portfolios, String title) {
     for (IPortfolio portfolio : portfolios) {
       if (portfolio.getPortfolioTitle().equals(title)) {
         return true;
