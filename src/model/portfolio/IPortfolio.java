@@ -73,8 +73,9 @@ public interface IPortfolio {
    *
    * @param dateOne The date to start on.
    * @param dateTwo The date to end on.
+   * @return Returns the bar chart as a String.
    */
-  void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo);
+  String getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo);
 
   /**
    * Gets the number of stocks within this portfolio.

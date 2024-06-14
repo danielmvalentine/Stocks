@@ -237,8 +237,43 @@ public class PortfolioImpl implements IPortfolio {
 
 
   @Override
-  public void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo) {
+  public String getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo) {
+    StringBuilder finalString = new StringBuilder();
+    LocalDate newDate = dateOne;
 
+    // First off find how many days between the two dates.
+    int dateDistance = 1;
+    while(newDate.isBefore(dateTwo)){
+      newDate = newDate.plusDays(1);
+      dateDistance += 1;
+    }
+    newDate = dateOne;
+
+    // Then find the highest value date
+    double highestValue = 0;
+    for(int i = 0; i < dateDistance; i++){
+      if(Double.parseDouble(this.getPortfolioValue(newDate)) > highestValue){
+        highestValue = Double.parseDouble(this.getPortfolioValue(newDate));
+      }
+      newDate = newDate.plusDays(1);
+    }
+    highestValue = highestValue / 20;
+
+    // Then add the info to the string with the data we've gathered!
+    newDate = dateOne;
+    for(int i = 0; i < dateDistance; i++){
+      finalString.append(newDate.toString()).append(" - ");
+      double stockValue = Double.parseDouble(this.getPortfolioValue(newDate));
+      double starCount = stockValue/highestValue;
+      StringBuilder stars = new StringBuilder();
+      for(int j = 0; j < starCount; j++){
+        stars.append("*");
+      }
+      finalString.append(stars).append(System.lineSeparator());
+      newDate = newDate.plusDays(1);
+    }
+    finalString.append("* = ").append(highestValue);
+    return finalString.toString();
   }
 
   @Override

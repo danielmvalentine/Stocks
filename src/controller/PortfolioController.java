@@ -201,11 +201,11 @@ public class PortfolioController extends StockController {
         view.writeMessage("Enter the title of the file of the portfolio to be loaded"
                 + System.lineSeparator() + "Ex: portfolio.txt" + System.lineSeparator());
         title = scanner.next();
-        title = "saved_portfolios/" + title;
         StringBuilder titleOfPortfolio = new StringBuilder();
-        for(int i = 0; i < title.length() - 5; i++){
+        for(int i = 0; i < title.length() - 4; i++){
           titleOfPortfolio.append(title.charAt(i));
         }
+        title = "saved_portfolios/" + title;
         PortfolioImpl newPortfolio = new PortfolioImpl(titleOfPortfolio.toString());
         this.model.getFromTxt(titleOfPortfolio.toString(), title);
         break;
@@ -221,7 +221,8 @@ public class PortfolioController extends StockController {
                 + "the examination to happen on: ");
         LocalDate dateTwo = getDate(scanner);
         if (this.model.getPortfolio(title) != null) {
-          this.model.getPortfolio(title).getPortfolioOverTime(dateOne, dateTwo);
+          view.writeMessage(this.model
+                  .getPortfolio(title).getPortfolioOverTime(dateOne, dateTwo));
         } else {
           view.writeMessage("Portfolio does not exist.");
         }
