@@ -2,8 +2,6 @@ package model;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 
 import model.stockFunctions.StockFunction;
 import model.portfolio.IPortfolio;

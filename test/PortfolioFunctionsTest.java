@@ -28,8 +28,8 @@ public class PortfolioFunctionsTest {
     portfolio1 = new PortfolioImpl("portfolio1");
     portfolio2 = new PortfolioImpl("portfolio2");
 
-    stock1 = new Stock("GOOG", 2);
-    stock2 = new Stock("APPL", 3);
+    stock1 = new Stock("GOOG", 2, LocalDate.of(2012, 2, 2));
+    stock2 = new Stock("APPL", 3, LocalDate.of(2012, 2, 2));
   }
 
   @Test

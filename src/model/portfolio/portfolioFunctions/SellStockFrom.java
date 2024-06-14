@@ -59,14 +59,29 @@ public class SellStockFrom implements PortfolioFunction {
     Stock stockOfInterest = portfolio.getStock(stock);
     LocalDate buyDate = stockOfInterest.getBuyDate();
 
-    if (stockOfInterest.getShares() > this.shares) {
-      double leftoverShares = portfolio.getStock(stock).getShares() - this.shares;
-      portfolio.removeFromPortfolio(stock);
-      portfolio.addToPortfolio(new Stock(stock, this.shares, buyDate));
-      portfolio.addToPortfolio(new Stock(stock, leftoverShares, buyDate));
+    double leftoverShares = 0;
 
+    Stock leftoverStock = null;
+
+    if (stockOfInterest.getShares() > this.shares) {
+      leftoverShares = portfolio.getStock(stock).getShares() - this.shares;
+      leftoverStock = new Stock(stockOfInterest.getTicker(), leftoverShares,
+              stockOfInterest.getBuyDate());
     }
-    portfolio.getStock(stock).addSellDate(date);
+
+    Stock originalStock = new Stock(stockOfInterest.getTicker(),
+            stockOfInterest.getShares() - leftoverShares,
+            stockOfInterest.getBuyDate());
+    originalStock.addSellDate(date);
+
+
+    portfolio.removeFromPortfolio(stock);
+    portfolio.addToPortfolio(originalStock);
+
+    if (leftoverStock != null) {
+      portfolio.addToPortfolio(leftoverStock);
+    }
+
     view.writeMessage("Stock successfully sold from the portfolio."
             + System.lineSeparator());
   }

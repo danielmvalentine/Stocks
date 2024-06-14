@@ -29,70 +29,71 @@ public class MockModelImpl implements Model {
   @Override
   public StockFunction gainOrLossOverTime(String stockName,
                                           LocalDate initialDate, LocalDate finalDate) {
-    log.append("GainOrLoss: stock=" + stockName +
-            " initialDate=" + initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
-            " finalDate=" + finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
-            System.lineSeparator());
+    log.append("GainOrLoss: stock=").append(stockName).append(" initialDate=")
+            .append(initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" finalDate=")
+            .append(finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+            .append(System.lineSeparator());
     return null;
   }
 
   @Override
   public StockFunction movingAverage(String stockName, LocalDate date, int xValue) {
-    log.append("movingAvg: stock=" + stockName +
-            " date=" + date.format(DateTimeFormatter.ISO_LOCAL_DATE) +
-            " xVal=" + xValue + System.lineSeparator());
+    log.append("movingAvg: stock=").append(stockName).append(" date=")
+            .append(date.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" xVal=").append(xValue)
+            .append(System.lineSeparator());
     return null;
   }
 
   @Override
   public StockFunction xDayCrossovers(String stockName,
                                         LocalDate initialDate, LocalDate finalDate, int xValue) {
-    log.append("XDayCrossovers: stock=" + stockName +
-            " initialDate=" + initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
-            " finalDate=" + finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE) +
-            " xVal=" + xValue +
-            System.lineSeparator());
+    log.append("XDayCrossovers: stock=").append(stockName).append(" initialDate=")
+            .append(initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" finalDate=")
+            .append(finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" xVal=")
+            .append(xValue).append(System.lineSeparator());
     return null;
   }
 
   @Override
   public StockFunction portfolioOptions(Readable rd, StockView view) {
-    log.append("PortfolioOptions: readable=" + rd +
-            " view=" + view + System.lineSeparator());
+    log.append("PortfolioOptions: readable=").append(rd).append(" view=").append(view)
+            .append(System.lineSeparator());
     return new PortfolioOptions(this, rd, view);
   }
 
   @Override
   public IPortfolio getPortfolio(String title) {
-    log.append("getPortfolio: title=" + title + System.lineSeparator());
+    log.append("getPortfolio: title=").append(title).append(System.lineSeparator());
     return null;
   }
 
   @Override
   public IPortfolio[] getAllPortfolios() {
-    log.append("getAllPortfolios: " + System.lineSeparator());
+    log.append("getAllPortfolios: ").append(System.lineSeparator());
     return null;
   }
 
   @Override
   public String formatPortfolios() {
-    log.append("formatPortfolios: " + System.lineSeparator());
+    log.append("formatPortfolios: ").append(System.lineSeparator());
     return "";
   }
 
   @Override
   public void addPortfolio(IPortfolio portfolio) {
-    log.append("addPortfolio: " + portfolio.getPortfolioTitle() + System.lineSeparator());
+    log.append("addPortfolio: ").append(portfolio.getPortfolioTitle())
+            .append(System.lineSeparator());
   }
 
   @Override
   public void getFromTxt(String title, String filePath) throws IOException {
-    log.append("getFromTxt: title=" + title + "filePath=" + filePath + System.lineSeparator());
+    log.append("getFromTxt: title=").append(title).append("filePath=").append(filePath)
+            .append(System.lineSeparator());
   }
 
   @Override
   public int numberOfPortfolios() {
-    log.append("numberOfPortfolios: " + System.lineSeparator());
+    log.append("numberOfPortfolios: ").append(System.lineSeparator());
     return 0;
   }
 

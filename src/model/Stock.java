@@ -8,8 +8,8 @@ import java.time.LocalDate;
  */
 public class Stock {
   private final String ticker;
-  private double shares;
-  private LocalDate buyDate;
+  private final double shares;
+  private final LocalDate buyDate;
   private LocalDate sellDate;
 
   /**
@@ -65,8 +65,9 @@ public class Stock {
   }
 
   /**
+   * Returns the date this stock was sold on. Used for formatting and equivalence checks.
    *
-   * @return
+   * @return  The date the stock was sold on or null if it hasn't been sold yet
    */
   public LocalDate getSellDate() {
     return sellDate;

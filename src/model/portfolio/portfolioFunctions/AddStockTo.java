@@ -30,7 +30,9 @@ public class AddStockTo implements PortfolioFunction {
 
   @Override
   public void execute() {
-    if (this.model.getPortfolio(title) != null) {
+    if (shares <= 0) {
+      view.writeMessage("Can't have negative shares" + System.lineSeparator());
+    } else if (this.model.getPortfolio(title) != null) {
       // Tells the model to add some shares of a stock to a portfolio
       this.model.getPortfolio(title).addToPortfolio(new Stock(stock, shares, date));
       view.writeMessage("Stock successfully added to the portfolio" + System.lineSeparator());

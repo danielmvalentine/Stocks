@@ -3,6 +3,7 @@ package model.portfolio.portfolioFunctions;
 import java.time.LocalDate;
 
 import model.Model;
+import model.Stock;
 import model.portfolio.IPortfolio;
 import view.PortfolioView;
 
@@ -26,11 +27,13 @@ public class Redistribute implements PortfolioFunction {
   @Override
   public void execute() {
     String totalValueString = this.portfolio.getPortfolioValue(LocalDate.now());
-    Double totalValue = Double.valueOf(totalValueString);
+    double totalValue = Double.parseDouble(totalValueString);
 
-    Double desiredPrice;
-    Double desiredShares;
-    Double priceOfStock;
+    double desiredPrice;
+    double desiredShares;
+    double priceOfStock;
+
+    Stock currentStock;
 
     for (int i = 0; i < redistribution.length; i++) {
       desiredPrice = (redistribution[i] / 100) * totalValue;
@@ -38,10 +41,16 @@ public class Redistribute implements PortfolioFunction {
 
       desiredShares = desiredPrice / priceOfStock;
 
-      if (desiredShares > this.portfolio.getStockByIndex(i).getShares()) {
+      currentStock = this.portfolio.getStockByIndex(i);
 
-      } else if (desiredShares < this.portfolio.getStockByIndex(i).getShares()) {
+      if (desiredShares > currentStock.getShares()) {
+        new AddStockTo(model, view, title,
+                currentStock.getTicker(), desiredShares - currentStock.getShares(),
+                LocalDate.now()).execute();
 
+      } else if (desiredShares < currentStock.getShares()) {
+        new SellStockFrom(model, view, title,
+                currentStock.getTicker(), desiredShares, LocalDate.now()).execute();
       }
     }
   }

@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import model.Model;
 
-import model.Stock;
 import model.portfolio.*;
 import model.portfolio.portfolioFunctions.AddStockTo;
 import model.portfolio.portfolioFunctions.Redistribute;
@@ -59,7 +58,6 @@ public class PortfolioController extends StockController {
       processCommand(userInput, scanner);
     }
 
-    quit = true;
   }
 
   // Processes all available commands.

@@ -55,7 +55,7 @@ public class PortfolioControllerTest {
   }
 
   @Test
-  public void testListPortfolios() {
+  public void testListPortfolios() throws IOException {
     Reader rd = new StringReader("list-portfolios\n" +
             "b" // Quitting the program
 
@@ -74,7 +74,7 @@ public class PortfolioControllerTest {
   }
 
   @Test
-  public void testAddStockTo() {
+  public void testAddStockTo() throws IOException {
     Reader rd = new StringReader("create-portfolio\nportfolio\n" +
             "add-stock-to\nportfolio\nGOOG\n2\n" +
             "b" // Quitting the program
@@ -95,7 +95,7 @@ public class PortfolioControllerTest {
   }
 
   @Test
-  public void testRemoveStockFrom() {
+  public void testRemoveStockFrom() throws IOException {
     Reader rd = new StringReader("create-portfolio\nportfolio\n" +
             "remove-stock-from\nportfolio\nGOOG\n" +
             "b" // Quitting the program
@@ -116,7 +116,7 @@ public class PortfolioControllerTest {
   }
 
   @Test
-  public void testExaminePortfolio() {
+  public void testExaminePortfolio() throws IOException {
     Reader rd = new StringReader("create-portfolio\nportfolio\n" +
             "examine-portfolio\nportfolio\n" +
             "b" // Quitting the program
@@ -137,7 +137,7 @@ public class PortfolioControllerTest {
   }
 
   @Test
-  public void testGetValueOf() {
+  public void testGetValueOf() throws IOException {
     Reader rd = new StringReader("create-portfolio\nportfolio\n" +
             "get-value-of\nportfolio\n" +
             "2024\n6\n6\n" +

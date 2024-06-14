@@ -3,14 +3,8 @@ package model.portfolio;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import model.AccessApi;
 import model.Stock;
@@ -35,6 +29,9 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public Stock getStock(String ticker) {
+    if (stocks == null || stocks.length == 0) {
+      return null;
+    }
     for (Stock stock : stocks) {
       if (stock.getTicker().equals(ticker)) {
         return stock;
@@ -45,22 +42,43 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public String formatStock() {
-    if (stocks.length == 0) {
+    if (stocks == null || stocks.length == 0) {
       return "No stocks found";
     }
 
-    String output = "";
+    StringBuilder output = new StringBuilder();
 
-    for (Stock stock : stocks) {
-      if (stock.getSellDate() == null) {
-        output += System.lineSeparator() + "  ";
-        output += stock.getTicker();
-        output += "; " + stock.getShares() + " shares";
-
+    for (int i = 0; i < stocks.length; i += 1) {
+      if (stocks[i].getSellDate() == null) {
+        output.append(System.lineSeparator()).append("  ");
+        output.append(stocks[i].getTicker());
+        output.append("; ").append(getTotalShares(stocks[i])).append(" shares");
+        i += stockRepeats(stocks[i]) - 1;
       }
+
     }
 
-    return output;
+    return output.toString();
+  }
+
+  private String getTotalShares(Stock stock) {
+    double totalShares = 0.0;
+    for (Stock repeat : stocks) {
+      if (repeat.getTicker().equals(stock.getTicker()) && repeat.getSellDate() == null) {
+        totalShares += repeat.getShares();
+      }
+    }
+    return Double.toString(totalShares);
+  }
+
+  private int stockRepeats(Stock stock) {
+    int numRepeats = 0;
+    for (Stock repeat : stocks) {
+      if (repeat.getTicker().equals(stock.getTicker()) && repeat.getSellDate() == null) {
+        numRepeats += 1;
+      }
+    }
+    return numRepeats;
   }
 
   @Override
@@ -87,7 +105,7 @@ public class PortfolioImpl implements IPortfolio {
                   .returnData(givenDate.toString(), givenDate.toString());
           separatedData = bigData.split(",");
           // Checking if there is data on the year and month
-          if (!bigData.contains(date) && bigData.contains(date.substring(0, 6))) {
+          if (!bigData.contains(date) && bigData.contains(date.substring(0, 7))) {
             int mostRecentDateIndex = 0;
             for (int i = 0; i < separatedData.length; i += 6) {
               if (separatedData[i].compareTo(date) > 0) {
@@ -98,7 +116,7 @@ public class PortfolioImpl implements IPortfolio {
 
             date = separatedData[mostRecentDateIndex];
 
-          } else if (!bigData.contains(date) && !bigData.contains(date.substring(0, 6))){
+          } else if (!bigData.contains(date) && !bigData.contains(date.substring(0, 7))){
             return "Date not found";
           }
 
@@ -123,26 +141,35 @@ public class PortfolioImpl implements IPortfolio {
     String bigData = "";
     String[] separatedData;
     String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
-    String output = "";
+    StringBuilder output = new StringBuilder();
 
     for (Stock stock : stocks) {
-      if (stock.getBuyDate().isBefore(givenDate) && stock.getSellDate().isAfter(givenDate)) {
+      if (stock.getBuyDate().isBefore(givenDate) &&
+              (stock.getSellDate() == null || stock.getSellDate().isAfter(givenDate))) {
         // Gets the data for the given stock
         bigData = new AccessApi(stock.getTicker())
                 .returnData(givenDate.toString(), givenDate.toString());
         separatedData = bigData.split(",");
+
+        if (!bigData.contains(date) && bigData.contains(date.substring(0, 7))) {
+          int mostRecentDateIndex = 0;
+          for (int i = 0; i < separatedData.length; i += 6) {
+            if (separatedData[i].compareTo(date) > 0) {
+              break;
+            }
+            mostRecentDateIndex = i;
+          }
+
+          date = separatedData[mostRecentDateIndex];
+        }
+
         if (bigData.contains(date)) {
           // Locates the given date and adds the end of day value per stock times its shares.
           for (int i = 0; i < separatedData.length; i += 6) {
             if (separatedData[i].contains(date)) {
-              output += System.lineSeparator();
-              output += stock.getTicker() + ": $";
-              output += stock.getShares() * Double.parseDouble(separatedData[i + 4]);
-              break;
-            } else if (separatedData[i].contains(date.substring(0, 6))) {
-              output += System.lineSeparator();
-              output += stock.getTicker() + ": $";
-              output += stock.getShares() * Double.parseDouble(separatedData[i - 1]);
+              output.append(System.lineSeparator());
+              output.append(stock.getTicker()).append(": $");
+              output.append(stock.getShares() * Double.parseDouble(separatedData[i + 4]));
               break;
             }
           }
@@ -150,16 +177,14 @@ public class PortfolioImpl implements IPortfolio {
       }
     }
 
-    return output;
+    return output.toString();
 
   }
 
   @Override
   public void addToPortfolio(Stock inputStock) {
     Stock[] newStocks = new Stock[stocks.length + 1];
-    for (int i = 0; i < stocks.length; i++) {
-      newStocks[i] = stocks[i];
-    }
+    System.arraycopy(stocks, 0, newStocks, 0, stocks.length);
     newStocks[newStocks.length - 1] = inputStock;
     this.stocks = newStocks;
   }
@@ -168,12 +193,13 @@ public class PortfolioImpl implements IPortfolio {
   public void removeFromPortfolio(String removeStock) {
     Stock stock = getStock(removeStock);
     Stock[] newStocks = new Stock[stocks.length - 1];
+
     if (stock != null) {
+      int newCounter = 0;
       for (int i = 0; i < stocks.length; i += 1) {
-        if (stocks[i].getTicker().equals(removeStock)) {
-          i += 1;
-        } else {
-          newStocks[i] = stocks[i];
+        if (!stocks[i].getTicker().equals(removeStock)) {
+          newStocks[newCounter] = stocks[i];
+          newCounter += 1;
         }
       }
       this.stocks = newStocks;
@@ -184,7 +210,7 @@ public class PortfolioImpl implements IPortfolio {
   public void savePortfolio() throws IOException {
     File newFile = new File("saved_portfolios/" + this.getPortfolioTitle() + ".txt");
     FileWriter writer = new FileWriter(newFile);
-    String temporaryString = "";
+    StringBuilder temporaryString = new StringBuilder();
     String finalBuy = "";
     String finalSell = "";
     for (Stock stock : stocks) {
@@ -200,12 +226,12 @@ public class PortfolioImpl implements IPortfolio {
       } else {
         finalSell = "TBD|";
       }
-        temporaryString = temporaryString + stock.getTicker() + ","
-                + stock.getShares() + "," + finalBuy + ","
-                + finalSell + System.lineSeparator();
+        temporaryString.append(stock.getTicker()).append(",").append(stock.getShares())
+                .append(",").append(finalBuy).append(",").append(finalSell)
+                .append(System.lineSeparator());
 
     }
-    writer.write(temporaryString);
+    writer.write(temporaryString.toString());
     writer.close();
   }
 
@@ -227,13 +253,16 @@ public class PortfolioImpl implements IPortfolio {
     }
 
     String bigData = "";
+    String[] separatedData;
+
     bigData = new AccessApi(stocks[stockIndex].getTicker())
             .returnData(LocalDate.now().toString(), LocalDate.now().toString());
+    separatedData = bigData.split(",");
 
     // Only need the very end of the data
-    bigData = bigData.substring(bigData.length() - 50);
+    String sharePrice = separatedData[separatedData.length - 2];
 
-    return 0.0;
+    return Double.valueOf(sharePrice);
   }
 
   @Override
