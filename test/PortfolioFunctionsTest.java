@@ -65,7 +65,7 @@ public class PortfolioFunctionsTest {
             "portfolio2: No stocks found", m.formatPortfolios());
 
     portfolio1.addToPortfolio(stock1);
-    assertEquals("\nportfolio1: \nGOOG 2.0\n" +
+    assertEquals("\nportfolio1: \n  GOOG; 2.0 shares\n" +
             "portfolio2: No stocks found", m.formatPortfolios());
   }
 

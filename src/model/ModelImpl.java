@@ -67,7 +67,7 @@ public class ModelImpl implements Model {
 
   @Override
   public String formatPortfolios() {
-    if (portfolios.length == 0) {
+    if (portfolios == null) {
       return "No portfolios found";
     }
 

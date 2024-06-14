@@ -8,6 +8,9 @@ import java.util.Objects;
 import model.portfolio.IPortfolio;
 import model.stockFunctions.PortfolioOptions;
 import model.stockFunctions.StockFunction;
+import model.stockFunctions.StockGainOrLoss;
+import model.stockFunctions.XDayCrossovers;
+import model.stockFunctions.XDayMovingAverage;
 import view.StockView;
 
 /**
@@ -33,7 +36,7 @@ public class MockModelImpl implements Model {
             .append(initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" finalDate=")
             .append(finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
             .append(System.lineSeparator());
-    return null;
+    return new StockGainOrLoss(stockName, initialDate, finalDate);
   }
 
   @Override
@@ -41,7 +44,7 @@ public class MockModelImpl implements Model {
     log.append("movingAvg: stock=").append(stockName).append(" date=")
             .append(date.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" xVal=").append(xValue)
             .append(System.lineSeparator());
-    return null;
+    return new XDayMovingAverage(stockName, date, xValue);
   }
 
   @Override
@@ -51,7 +54,7 @@ public class MockModelImpl implements Model {
             .append(initialDate.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" finalDate=")
             .append(finalDate.format(DateTimeFormatter.ISO_LOCAL_DATE)).append(" xVal=")
             .append(xValue).append(System.lineSeparator());
-    return null;
+    return new XDayCrossovers(stockName, initialDate, finalDate, xValue);
   }
 
   @Override

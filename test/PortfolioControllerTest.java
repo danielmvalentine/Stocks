@@ -78,7 +78,7 @@ public class PortfolioControllerTest {
   @Test
   public void testAddStockTo() throws IOException {
     Reader rd = new StringReader("create-portfolio\nportfolio\n" +
-            "add-stock-to\nportfolio\nGOOG\n2\n" +
+            "add-stock-to\nportfolio\nGOOG\n2\n2020\n2\n2\n" +
             "b" // Quitting the program
 
     );
@@ -91,16 +91,19 @@ public class PortfolioControllerTest {
     controller.control();
 
     // Testing assign-value
-    assertEquals("addPortfolio: portfolio\n" +
+    assertEquals("numberOfPortfolios: \n" +
+                    "addPortfolio: portfolio\n" +
+                    "numberOfPortfolios: \n" +
                     "getPortfolio: title=portfolio\n",
             log.toString());
   }
 
   @Test
-  public void testRemoveStockFrom() throws IOException {
+  public void testSellStockFrom() throws IOException {
     Reader rd = new StringReader("create-portfolio\nportfolio\n" +
-            "remove-stock-from\nportfolio\nGOOG\n" +
-            "b" // Quitting the program
+            "add-stock-to\nportfolio\nGOOG\n2\n2020\n2\n2\n" +
+            "sell-stock-from\nportfolio\nGOOG\n1\n2024\n2\n2\n" +
+            "b\n" // Quitting the program
 
     );
     //Don't care about out
@@ -112,7 +115,10 @@ public class PortfolioControllerTest {
     controller.control();
 
     // Testing assign-value
-    assertEquals("addPortfolio: portfolio\n" +
+    assertEquals("numberOfPortfolios: \n" +
+                    "addPortfolio: portfolio\n" +
+                    "numberOfPortfolios: \n" +
+                    "getPortfolio: title=portfolio\n" +
                     "getPortfolio: title=portfolio\n",
             log.toString());
   }
