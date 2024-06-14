@@ -3,6 +3,7 @@ package model.portfolio;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -272,7 +273,8 @@ public class PortfolioImpl implements IPortfolio {
       finalString.append(stars).append(System.lineSeparator());
       newDate = newDate.plusDays(1);
     }
-    finalString.append("* = ").append(highestValue);
+    DecimalFormat numberFormat = new DecimalFormat("#.##");
+    finalString.append("* = $").append(numberFormat.format(highestValue));
     return finalString.toString();
   }
 
