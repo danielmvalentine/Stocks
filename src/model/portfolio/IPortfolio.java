@@ -75,4 +75,21 @@ public interface IPortfolio {
    * @param dateTwo The date to end on.
    */
   void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo);
+
+  /**
+   * Gets the number of stocks within this portfolio.
+   *
+   * @return The number of stocks within this portfolio as an int.
+   */
+  int numberOfStocks();
+
+  /**
+   * Finds and returns the most recent share price of a stock given its index in this portfolio.
+   * @param stockIndex  The index of the desired stock.
+   * @return  The most recent share price of the given stock
+   */
+  Double getSharePriceOfStock(int stockIndex);
+
+
+  Stock getStockByIndex(int stockIndex);
 }

@@ -3,17 +3,14 @@ package model;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.portfolio.IPortfolio;
-import model.portfolio.PortfolioImpl;
+import model.portfolio.*;
 import model.stockFunctions.PortfolioOptions;
 import model.stockFunctions.StockFunction;
 import model.stockFunctions.StockGainOrLoss;
@@ -143,5 +140,13 @@ public class ModelImpl implements Model {
     }catch(NoSuchFileException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public int numberOfPortfolios() {
+    if (portfolios == null) {
+      return 0;
+    }
+    return portfolios.length;
   }
 }

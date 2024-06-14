@@ -39,6 +39,12 @@ public class PortfolioView extends StockView {
             + System.lineSeparator());
     writeMessage("9 - load-portfolio - Loads the specified portfolio. (Portfolio must be located" +
             "in the given folder titled 'saved_portfolios'" + System.lineSeparator());
+    writeMessage("10 - find-portfolio-over-time - Prints out a graph to show "
+            + "the distribution of values over time for the given portfolio"
+            + System.lineSeparator());
+    writeMessage("11 - redistribute-portfolio - Redistributes the given portfolio based on "
+            + "rebalancing the number of shares within the portfolio"
+            + System.lineSeparator());
     writeMessage("B or Back - Return to the main menu." + System.lineSeparator());
   }
 

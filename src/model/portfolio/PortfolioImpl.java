@@ -79,20 +79,34 @@ public class PortfolioImpl implements IPortfolio {
       double value = 0;
       String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
 
-
       for (Stock stock : stocks) {
-        if (stock.getBuyDate().isBefore(givenDate) && stock.getSellDate().isAfter(givenDate)) {
+        if (stock.getBuyDate().isBefore(givenDate) &&
+                (stock.getSellDate() == null || stock.getSellDate().isAfter(givenDate))) {
           // Gets the data for the given stock
           bigData = new AccessApi(stock.getTicker())
                   .returnData(givenDate.toString(), givenDate.toString());
           separatedData = bigData.split(",");
-          if (bigData.contains(date)) {
-            // Locates the given date and adds the end of day value per stock times its shares.
-            for (int i = 0; i < separatedData.length; i += 5) {
-              if (separatedData[i].contains(date)) {
-                value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
+          // Checking if there is data on the year and month
+          if (!bigData.contains(date) && bigData.contains(date.substring(0, 6))) {
+            int mostRecentDateIndex = 0;
+            for (int i = 0; i < separatedData.length; i += 6) {
+              if (separatedData[i].compareTo(date) > 0) {
                 break;
               }
+              mostRecentDateIndex = i;
+            }
+
+            date = separatedData[mostRecentDateIndex];
+
+          } else if (!bigData.contains(date) && !bigData.contains(date.substring(0, 6))){
+            return "Date not found";
+          }
+
+          // Locates the given date and adds the end of day value per stock times its shares.
+          for (int i = 0; i < separatedData.length; i += 6) {
+            if (separatedData[i].contains(date)) {
+              value += (stock.getShares() * Double.parseDouble(separatedData[i + 4]));
+              break;
             }
           }
         }
@@ -119,11 +133,16 @@ public class PortfolioImpl implements IPortfolio {
         separatedData = bigData.split(",");
         if (bigData.contains(date)) {
           // Locates the given date and adds the end of day value per stock times its shares.
-          for (int i = 0; i < separatedData.length; i += 5) {
+          for (int i = 0; i < separatedData.length; i += 6) {
             if (separatedData[i].contains(date)) {
               output += System.lineSeparator();
               output += stock.getTicker() + ": $";
               output += stock.getShares() * Double.parseDouble(separatedData[i + 4]);
+              break;
+            } else if (separatedData[i].contains(date.substring(0, 6))) {
+              output += System.lineSeparator();
+              output += stock.getTicker() + ": $";
+              output += stock.getShares() * Double.parseDouble(separatedData[i - 1]);
               break;
             }
           }
@@ -195,4 +214,35 @@ public class PortfolioImpl implements IPortfolio {
   public void getPortfolioOverTime(LocalDate dateOne, LocalDate dateTwo) {
 
   }
+
+  @Override
+  public int numberOfStocks() {
+    return stocks.length;
+  }
+
+  @Override
+  public Double getSharePriceOfStock(int stockIndex) {
+    if (stockIndex < 0 || stockIndex >= stocks.length) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    String bigData = "";
+    bigData = new AccessApi(stocks[stockIndex].getTicker())
+            .returnData(LocalDate.now().toString(), LocalDate.now().toString());
+
+    // Only need the very end of the data
+    bigData = bigData.substring(bigData.length() - 50);
+
+    return 0.0;
+  }
+
+  @Override
+  public Stock getStockByIndex(int stockIndex) {
+    if (stockIndex < 0 || stockIndex >= stocks.length) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    return this.stocks[stockIndex];
+  }
+
 }

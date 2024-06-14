@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 import model.Model;
 
+import model.Stock;
 import model.portfolio.*;
 import model.portfolio.portfolioFunctions.AddStockTo;
+import model.portfolio.portfolioFunctions.Redistribute;
 import model.portfolio.portfolioFunctions.SellStockFrom;
 import view.PortfolioView;
 
@@ -179,7 +181,7 @@ public class PortfolioController extends StockController {
                   + this.model.getPortfolio(title).distributionOfValue(date));
         } else {
           // If the portfolio doesn't exist, informs the user and resets.
-          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
+          view.writeMessage("Portfolio does not exist.");
         }
         break;
 
@@ -192,7 +194,7 @@ public class PortfolioController extends StockController {
           //Saves the portfolio
           this.model.getPortfolio(title).savePortfolio();
         } else {
-          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
+          view.writeMessage("Portfolio does not exist.");
         }
         break;
 
@@ -223,7 +225,40 @@ public class PortfolioController extends StockController {
         if (this.model.getPortfolio(title) != null) {
           this.model.getPortfolio(title).getPortfolioOverTime(dateOne, dateTwo);
         } else {
-          view.writeMessage("Portfolio does not exist." + System.lineSeparator());
+          view.writeMessage("Portfolio does not exist.");
+        }
+        break;
+
+      case "11":
+      case "redistribute-portfolio":
+        view.writeMessage("Enter the title of the portfolio to be redistributed: ");
+        title = scanner.next();
+        // Checks that the portfolio entered exists
+        if (this.model.getPortfolio(title) != null) {
+
+          int numStocks = this.model.getPortfolio(title).numberOfStocks();
+          double[] redistribution = new double[numStocks];
+
+          Double totalRedistr = 0.0;  // To check if the entered distributions add up to 100%
+          for (int i = 0; i < numStocks; i++) {
+            view.writeMessage(System.lineSeparator()
+                    + "Enter the desired redistribution percentage for stock ("
+                    + (i + 1) + "): ");
+            redistribution[i] = scanner.nextDouble();
+            totalRedistr += redistribution[i];
+          }
+
+          // Check that the total distribution adds up to 100%
+          if (totalRedistr.compareTo(100.0) != 0) {
+            view.writeMessage("Distribution does not add up to 100%. Totals to " + totalRedistr);
+          } else {
+            new Redistribute(model, view, redistribution, title).execute();
+            view.writeMessage("Successfully redistributed.");
+          }
+
+
+        } else {
+          view.writeMessage("Portfolio does not exist.");
         }
         break;
 
@@ -242,6 +277,7 @@ public class PortfolioController extends StockController {
         this.control();
         break;
     }
+    view.writeMessage(System.lineSeparator());
   }
 
 }
