@@ -220,11 +220,12 @@ public class PortfolioController extends StockController {
         view.writeMessage("Enter the date you would like the end of "
                 + "the examination to happen on: ");
         LocalDate dateTwo = getDate(scanner);
-        if (this.model.getPortfolio(title) != null) {
+        if ( this.model.getPortfolio(title) == null){
+          view.writeMessage("Portfolio does not exist.");
+        }
+        else if (this.model.getPortfolio(title) != null) {
           view.writeMessage(this.model
                   .getPortfolio(title).getPortfolioOverTime(dateOne, dateTwo));
-        } else {
-          view.writeMessage("Portfolio does not exist.");
         }
         break;
 
