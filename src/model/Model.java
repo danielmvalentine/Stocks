@@ -3,8 +3,8 @@ package model;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import model.stockFunctions.StockFunction;
-import model.portfolioProgram.IPortfolio;
+import model.stockfunctions.StockFunction;
+import model.portfolios.IPortfolio;
 import view.StockView;
 
 /**

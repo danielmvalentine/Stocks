@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-import model.stockFunctions.XDayMovingAverage;
+import model.stockfunctions.XDayMovingAverage;
 
 import static org.junit.Assert.assertEquals;
 

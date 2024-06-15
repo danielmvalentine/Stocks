@@ -6,13 +6,16 @@ import java.time.LocalDate;
 import model.Model;
 import model.ModelImpl;
 import model.Stock;
-import model.portfolioProgram.IPortfolio;
-import model.portfolioProgram.PortfolioImpl;
-import model.portfolioProgram.portfolioFunctions.Redistribute;
+import model.portfolios.IPortfolio;
+import model.portfolios.PortfolioImpl;
+import model.portfolios.portfoliofunctions.Redistribute;
 import view.PortfolioView;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * Tests the Redistribute class and its execution.
+ */
 public class RedistributeTest {
   IPortfolio portfolio;
 

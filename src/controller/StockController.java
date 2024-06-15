@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import model.Model;
-import model.stockFunctions.StockFunction;
+import model.stockfunctions.StockFunction;
 import view.StockView;
 
 /**

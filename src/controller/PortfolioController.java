@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 import model.Model;
 
-import model.portfolioProgram.PortfolioImpl;
-import model.portfolioProgram.portfolioFunctions.AddStockTo;
-import model.portfolioProgram.portfolioFunctions.Redistribute;
-import model.portfolioProgram.portfolioFunctions.SellStockFrom;
+import model.portfolios.PortfolioImpl;
+import model.portfolios.portfoliofunctions.AddStockTo;
+import model.portfolios.portfoliofunctions.Redistribute;
+import model.portfolios.portfoliofunctions.SellStockFrom;
 import view.PortfolioView;
 
 /**

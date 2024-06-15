@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-import model.stockFunctions.XDayCrossovers;
+import model.stockfunctions.XDayCrossovers;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package model.stockFunctions;
+package model.stockfunctions;
 
 import java.io.IOException;
 

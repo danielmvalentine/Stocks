@@ -6,10 +6,15 @@ import java.time.LocalDate;
 import model.Model;
 import model.ModelImpl;
 import model.Stock;
-import model.portfolio.*;
+import model.portfolios.IPortfolio;
+import model.portfolios.PortfolioImpl;
+
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Tests the creation of the barchart.
+ */
 public class PortfolioOverTimeTest {
 
   Model m;

@@ -1,4 +1,4 @@
-package model.portfolioProgram.portfolioFunctions;
+package model.portfolios.portfoliofunctions;
 
 import java.time.LocalDate;
 

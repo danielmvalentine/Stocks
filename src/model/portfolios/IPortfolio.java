@@ -1,4 +1,4 @@
-package model.portfolioProgram;
+package model.portfolios;
 
 import java.io.IOException;
 import java.time.LocalDate;

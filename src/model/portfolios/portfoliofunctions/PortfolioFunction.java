@@ -1,4 +1,4 @@
-package model.portfolioProgram.portfolioFunctions;
+package model.portfolios.portfoliofunctions;
 
 /**
  * Represents some of the functions that can be performed by this program.

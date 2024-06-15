@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-import model.stockFunctions.StockGainOrLoss;
+import model.stockfunctions.StockGainOrLoss;
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,7 +42,7 @@ public class TestGainOrLoss {
    * Testing over a long period of time that it will gain.
    */
   @Test
-  public void testGainTime(){
+  public void testGainTime() {
     LocalDate testDateOne = LocalDate.of(2015, 5, 5);
     LocalDate testDateTwo = LocalDate.of(2017, 7, 3);
     StockGainOrLoss testStock = new StockGainOrLoss("GOOL", testDateOne, testDateTwo);

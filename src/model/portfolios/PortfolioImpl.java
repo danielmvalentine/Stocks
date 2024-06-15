@@ -1,4 +1,4 @@
-package model.portfolioProgram;
+package model.portfolios;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -117,7 +117,7 @@ public class PortfolioImpl implements IPortfolio {
 
             date = separatedData[mostRecentDateIndex];
 
-          } else if (!bigData.contains(date) && !bigData.contains(date.substring(0, 7))){
+          } else if (!bigData.contains(date) && !bigData.contains(date.substring(0, 7))) {
             return "Date not found";
           }
 
@@ -219,7 +219,7 @@ public class PortfolioImpl implements IPortfolio {
       LocalDate nullSellSubstitute = stock.getSellDate();
       if (stock.getBuyDate() != null) {
         finalBuy = nullBuySubstitute.toString();
-      } else{
+      } else {
         finalBuy = "TBD";
       }
       if (stock.getSellDate() != null) {
@@ -227,9 +227,9 @@ public class PortfolioImpl implements IPortfolio {
       } else {
         finalSell = "TBD|";
       }
-        temporaryString.append(stock.getTicker()).append(",").append(stock.getShares())
-                .append(",").append(finalBuy).append(",").append(finalSell)
-                .append(System.lineSeparator());
+      temporaryString.append(stock.getTicker()).append(",").append(stock.getShares())
+              .append(",").append(finalBuy).append(",").append(finalSell)
+              .append(System.lineSeparator());
 
     }
     writer.write(temporaryString.toString());
@@ -244,7 +244,7 @@ public class PortfolioImpl implements IPortfolio {
 
     // First off find how many days between the two dates.
     int dateDistance = 1;
-    while(newDate.isBefore(dateTwo)){
+    while (newDate.isBefore(dateTwo)) {
       newDate = newDate.plusDays(1);
       dateDistance += 1;
     }
@@ -252,8 +252,8 @@ public class PortfolioImpl implements IPortfolio {
 
     // Then find the highest value date
     double highestValue = 0;
-    for(int i = 0; i < dateDistance; i++){
-      if(Double.parseDouble(this.getPortfolioValue(newDate)) > highestValue){
+    for (int i = 0; i < dateDistance; i++) {
+      if (Double.parseDouble(this.getPortfolioValue(newDate)) > highestValue) {
         highestValue = Double.parseDouble(this.getPortfolioValue(newDate));
       }
       newDate = newDate.plusDays(1);
@@ -262,12 +262,12 @@ public class PortfolioImpl implements IPortfolio {
 
     // Then add the info to the string with the data we've gathered!
     newDate = dateOne;
-    for(int i = 0; i < dateDistance; i++){
+    for (int i = 0; i < dateDistance; i++) {
       finalString.append(newDate).append(" - ");
       double stockValue = Double.parseDouble(this.getPortfolioValue(newDate));
-      double starCount = stockValue/highestValue;
+      double starCount = stockValue / highestValue;
       StringBuilder stars = new StringBuilder();
-      for(int j = 0; j < starCount; j++){
+      for (int j = 0; j < starCount; j++) {
         stars.append("*");
       }
       finalString.append(stars).append(System.lineSeparator());

@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import model.Model;
 import model.ModelImpl;
 import model.Stock;
-import model.portfolioProgram.IPortfolio;
-import model.portfolioProgram.PortfolioImpl;
+import model.portfolios.IPortfolio;
+import model.portfolios.PortfolioImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -117,7 +117,8 @@ public class PortfolioFunctionsTest {
     assertEquals("\n  GOOG; 2.0 shares", m.getPortfolio("portfolio1").formatStock());
 
     m.getPortfolio("portfolio1").addToPortfolio(stock2);
-    assertEquals("\n  GOOG; 2.0 shares\n  APPL; 3.0 shares", m.getPortfolio("portfolio1").formatStock());
+    assertEquals("\n  GOOG; 2.0 shares\n  APPL; 3.0 shares",
+            m.getPortfolio("portfolio1").formatStock());
   }
 
   @Test

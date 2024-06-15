@@ -5,12 +5,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import model.portfolioProgram.IPortfolio;
-import model.stockFunctions.PortfolioOptions;
-import model.stockFunctions.StockFunction;
-import model.stockFunctions.StockGainOrLoss;
-import model.stockFunctions.XDayCrossovers;
-import model.stockFunctions.XDayMovingAverage;
+import model.portfolios.IPortfolio;
+import model.stockfunctions.PortfolioOptions;
+import model.stockfunctions.StockFunction;
+import model.stockfunctions.StockGainOrLoss;
+import model.stockfunctions.XDayCrossovers;
+import model.stockfunctions.XDayMovingAverage;
 import view.StockView;
 
 /**

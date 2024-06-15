@@ -1,10 +1,10 @@
-package model.portfolioProgram.portfolioFunctions;
+package model.portfolios.portfoliofunctions;
 
 import java.time.LocalDate;
 
 import model.Model;
 import model.Stock;
-import model.portfolioProgram.IPortfolio;
+import model.portfolios.IPortfolio;
 import view.PortfolioView;
 
 /**

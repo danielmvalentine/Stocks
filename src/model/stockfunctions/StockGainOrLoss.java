@@ -1,4 +1,4 @@
-package model.stockFunctions;
+package model.stockfunctions;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;

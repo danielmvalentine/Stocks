@@ -9,13 +9,13 @@ import java.nio.file.NoSuchFileException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.portfolioProgram.IPortfolio;
-import model.portfolioProgram.PortfolioImpl;
-import model.stockFunctions.PortfolioOptions;
-import model.stockFunctions.StockFunction;
-import model.stockFunctions.StockGainOrLoss;
-import model.stockFunctions.XDayCrossovers;
-import model.stockFunctions.XDayMovingAverage;
+import model.portfolios.IPortfolio;
+import model.portfolios.PortfolioImpl;
+import model.stockfunctions.PortfolioOptions;
+import model.stockfunctions.StockFunction;
+import model.stockfunctions.StockGainOrLoss;
+import model.stockfunctions.XDayCrossovers;
+import model.stockfunctions.XDayMovingAverage;
 import view.StockView;
 
 /**
@@ -40,7 +40,7 @@ public class ModelImpl implements Model {
 
   @Override
   public StockFunction xDayCrossovers(String stockName,
-                                        LocalDate initialDate, LocalDate finalDate, int xValue) {
+                                      LocalDate initialDate, LocalDate finalDate, int xValue) {
     return new XDayCrossovers(stockName, initialDate, finalDate, xValue);
   }
 
@@ -111,8 +111,8 @@ public class ModelImpl implements Model {
       BufferedReader br = new BufferedReader(isr);
       String lineContent;
       String fileContent = "";
-      while((lineContent = br.readLine()) != null) {
-       fileContent = fileContent + lineContent;
+      while ((lineContent = br.readLine()) != null) {
+        fileContent = fileContent + lineContent;
       }
       br.close();
       ArrayList<String> listOfStockNames = new ArrayList<>();
@@ -130,7 +130,7 @@ public class ModelImpl implements Model {
         Stock newStock = new Stock(ticker, shares, individualDate);
         newPortfolio.addToPortfolio(newStock);
       }
-    }catch(NoSuchFileException e) {
+    } catch (NoSuchFileException e) {
       e.printStackTrace();
     }
   }
