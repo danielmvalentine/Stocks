@@ -18,7 +18,7 @@ import view.StockView;
  * <p>This controller works with any Readable to read its inputs and
  * any Appendable to transmit output through a viewer.
  */
-public class StockController {
+public class StockController implements Controller {
 
   private final Readable readable;
   private final StockView stockView;
@@ -44,6 +44,7 @@ public class StockController {
    * Our main method for our controller to edit maneuvering around our menu.
    * Will iterate until the user quits the program.
    */
+  @Override
   public void control() throws IOException {
     Scanner scanner = new Scanner(readable);
 

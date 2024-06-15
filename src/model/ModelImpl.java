@@ -9,8 +9,8 @@ import java.nio.file.NoSuchFileException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.portfolio.IPortfolio;
-import model.portfolio.*;
+import model.portfolioProgram.IPortfolio;
+import model.portfolioProgram.PortfolioImpl;
 import model.stockFunctions.PortfolioOptions;
 import model.stockFunctions.StockFunction;
 import model.stockFunctions.StockGainOrLoss;
@@ -57,11 +57,6 @@ public class ModelImpl implements Model {
       }
     }
     return null;
-  }
-
-  @Override
-  public IPortfolio[] getAllPortfolios() {
-    return portfolios;
   }
 
 

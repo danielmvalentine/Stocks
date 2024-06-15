@@ -1,4 +1,4 @@
-package model.portfolio;
+package model.portfolioProgram;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -30,7 +30,7 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public Stock getStock(String ticker) {
-    if (stocks == null || stocks.length == 0) {
+    if (stocks == null) {
       return null;
     }
     for (Stock stock : stocks) {
@@ -93,7 +93,7 @@ public class PortfolioImpl implements IPortfolio {
     // Checks that the date entered is not the future.
     if (!givenDate.isAfter(LocalDate.now())) {
 
-      String bigData = "";
+      String bigData;
       String[] separatedData;
       double value = 0;
       String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
@@ -139,7 +139,7 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public String distributionOfValue(LocalDate givenDate) {
-    String bigData = "";
+    String bigData;
     String[] separatedData;
     String date = givenDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
     StringBuilder output = new StringBuilder();
@@ -197,9 +197,9 @@ public class PortfolioImpl implements IPortfolio {
 
     if (stock != null) {
       int newCounter = 0;
-      for (int i = 0; i < stocks.length; i += 1) {
-        if (!stocks[i].getTicker().equals(removeStock)) {
-          newStocks[newCounter] = stocks[i];
+      for (Stock value : stocks) {
+        if (!value.getTicker().equals(removeStock)) {
+          newStocks[newCounter] = value;
           newCounter += 1;
         }
       }
@@ -212,8 +212,8 @@ public class PortfolioImpl implements IPortfolio {
     File newFile = new File("saved_portfolios/" + this.getPortfolioTitle() + ".txt");
     FileWriter writer = new FileWriter(newFile);
     StringBuilder temporaryString = new StringBuilder();
-    String finalBuy = "";
-    String finalSell = "";
+    String finalBuy;
+    String finalSell;
     for (Stock stock : stocks) {
       LocalDate nullBuySubstitute = stock.getBuyDate();
       LocalDate nullSellSubstitute = stock.getSellDate();
@@ -263,7 +263,7 @@ public class PortfolioImpl implements IPortfolio {
     // Then add the info to the string with the data we've gathered!
     newDate = dateOne;
     for(int i = 0; i < dateDistance; i++){
-      finalString.append(newDate.toString()).append(" - ");
+      finalString.append(newDate).append(" - ");
       double stockValue = Double.parseDouble(this.getPortfolioValue(newDate));
       double starCount = stockValue/highestValue;
       StringBuilder stars = new StringBuilder();
@@ -289,7 +289,7 @@ public class PortfolioImpl implements IPortfolio {
       throw new IndexOutOfBoundsException();
     }
 
-    String bigData = "";
+    String bigData;
     String[] separatedData;
 
     bigData = new AccessApi(stocks[stockIndex].getTicker())

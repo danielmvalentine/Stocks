@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import model.stockFunctions.StockFunction;
-import model.portfolio.IPortfolio;
+import model.portfolioProgram.IPortfolio;
 import view.StockView;
 
 /**
@@ -64,13 +64,6 @@ public interface Model {
    * @return The portfolio with the given title.
    */
   IPortfolio getPortfolio(String title);
-
-  /**
-   * Used in the portfolio controller to get the portfolios of the user.
-   *
-   * @return A List of Portfolios that the user has.
-   */
-  IPortfolio[] getAllPortfolios();
 
   /**
    * Formats the portfolios as a string.

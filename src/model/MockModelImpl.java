@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import model.portfolio.IPortfolio;
+import model.portfolioProgram.IPortfolio;
 import model.stockFunctions.PortfolioOptions;
 import model.stockFunctions.StockFunction;
 import model.stockFunctions.StockGainOrLoss;
@@ -67,12 +67,6 @@ public class MockModelImpl implements Model {
   @Override
   public IPortfolio getPortfolio(String title) {
     log.append("getPortfolio: title=").append(title).append(System.lineSeparator());
-    return null;
-  }
-
-  @Override
-  public IPortfolio[] getAllPortfolios() {
-    log.append("getAllPortfolios: ").append(System.lineSeparator());
     return null;
   }
 

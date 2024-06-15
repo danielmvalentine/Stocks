@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 import model.Model;
 
-import model.portfolio.*;
-import model.portfolio.portfolioFunctions.AddStockTo;
-import model.portfolio.portfolioFunctions.Redistribute;
-import model.portfolio.portfolioFunctions.SellStockFrom;
+import model.portfolioProgram.PortfolioImpl;
+import model.portfolioProgram.portfolioFunctions.AddStockTo;
+import model.portfolioProgram.portfolioFunctions.Redistribute;
+import model.portfolioProgram.portfolioFunctions.SellStockFrom;
 import view.PortfolioView;
 
 /**
@@ -47,6 +47,7 @@ public class PortfolioController extends StockController {
    * Our main method for our controller to edit maneuvering around our menu.
    * Will iterate until the user quits the portfolio program.
    */
+  @Override
   public void control() throws IOException {
     Scanner scanner = new Scanner(readable);
 
@@ -174,7 +175,7 @@ public class PortfolioController extends StockController {
         view.writeMessage("Enter the date for the portfolio to be examined: ");
         date = super.getDate(scanner);
         if (this.model.getPortfolio(title) != null) {
-          // Calculates the value of the portfolio
+          // Calculates the value of each stock in the portfolio
           view.writeMessage("Value of portfolio: "
                   + this.model.getPortfolio(title).distributionOfValue(date));
         } else {
@@ -202,7 +203,7 @@ public class PortfolioController extends StockController {
                 + System.lineSeparator() + "Ex: portfolio.txt" + System.lineSeparator());
         title = scanner.next();
         StringBuilder titleOfPortfolio = new StringBuilder();
-        for(int i = 0; i < title.length() - 4; i++){
+        for (int i = 0; i < title.length() - 4; i++) {
           titleOfPortfolio.append(title.charAt(i));
         }
         title = "saved_portfolios/" + title;
@@ -210,6 +211,7 @@ public class PortfolioController extends StockController {
         this.model.getFromTxt(titleOfPortfolio.toString(), title);
         break;
 
+      // Creates a bar chart of the given portfolio and given time.
       case "10":
       case "find-portfolio-over-time":
         view.writeMessage("Enter the name of the portfolio to be examined: ");
@@ -220,14 +222,14 @@ public class PortfolioController extends StockController {
         view.writeMessage("Enter the date you would like the end of "
                 + "the examination to happen on: ");
         LocalDate dateTwo = getDate(scanner);
-        if ( this.model.getPortfolio(title) == null){
+        if (this.model.getPortfolio(title) == null) {
           view.writeMessage("Portfolio does not exist.");
-        }
-        else if (this.model.getPortfolio(title) != null) {
+        } else if (this.model.getPortfolio(title) != null) {
           view.writeMessage(this.model
                   .getPortfolio(title).getPortfolioOverTime(dateOne, dateTwo));
         }
         break;
+
 
       case "11":
       case "redistribute-portfolio":

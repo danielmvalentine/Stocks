@@ -1,13 +1,15 @@
-package model.portfolio.portfolioFunctions;
+package model.portfolioProgram.portfolioFunctions;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import model.Model;
 import model.Stock;
-import model.portfolio.IPortfolio;
+import model.portfolioProgram.IPortfolio;
 import view.PortfolioView;
 
+/**
+ * Will sell an amount of shares from a stock in a given portfolio.
+ */
 public class SellStockFrom implements PortfolioFunction {
   private final Model model;
   private final PortfolioView view;
@@ -17,8 +19,17 @@ public class SellStockFrom implements PortfolioFunction {
   private final LocalDate date;
 
 
-
-
+  /**
+   * Creates a new PortfolioFunction Object, SellStockFrom.
+   *
+   * @param model The model containing the portfolio of interest.
+   * @param view  Displays any issues that are found within the execution of the program.
+   * @param title The title of the portfolio of interest.
+   * @param stock The stock to be sold.
+   * @param shares  The number of shares to be sold (all shares will be sold if this value
+   *                    is greater than the shares present).
+   * @param date  The date that the stocks should be sold on.
+   */
   public SellStockFrom(Model model, PortfolioView view, String title,
                        String stock, double shares, LocalDate date) {
     if (stock.length() != 4) {
@@ -33,6 +44,9 @@ public class SellStockFrom implements PortfolioFunction {
     this.date = date;
   }
 
+  /**
+   * Will sell a given amount of shares of a given stock.
+   */
   @Override
   public void execute() {
     // Checks that the given portfolio exists
@@ -53,11 +67,10 @@ public class SellStockFrom implements PortfolioFunction {
   }
 
 
-  // The method that takes care of selling the stock and adjusting the portfolio if needed.
+  // The method that takes care of selling the stock and adjusting the current shares if needed.
   private void sellStock() {
     IPortfolio portfolio = this.model.getPortfolio(title);
     Stock stockOfInterest = portfolio.getStock(stock);
-    LocalDate buyDate = stockOfInterest.getBuyDate();
 
     double leftoverShares = 0;
 
@@ -65,12 +78,14 @@ public class SellStockFrom implements PortfolioFunction {
 
     if (stockOfInterest.getShares() > this.shares) {
       leftoverShares = portfolio.getStock(stock).getShares() - this.shares;
-      leftoverStock = new Stock(stockOfInterest.getTicker(), leftoverShares,
+      leftoverStock = new Stock(stockOfInterest.getTicker(),
+              stockOfInterest.getShares() - leftoverShares,
               stockOfInterest.getBuyDate());
     }
 
+
     Stock originalStock = new Stock(stockOfInterest.getTicker(),
-            stockOfInterest.getShares() - leftoverShares,
+            leftoverShares,
             stockOfInterest.getBuyDate());
     originalStock.addSellDate(date);
 

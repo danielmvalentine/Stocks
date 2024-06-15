@@ -10,10 +10,21 @@ Dates tested include 2015-05-05, 2015-05-26, and 2016-05-05.
 1.
 To create a porfolio, begin the program by running StockProgram, and navigate down to the portfolio option by entering 4.
 You can then create a new portfolio by entering 1, and you may name it whatever you like.
-You can then add stocks to this portfolio by entering 3 and adding the four digit ticker of whatever stock you would like.
+You can then add stocks to this portfolio by entering 3, entering the portfolio name, adding the four
+digit ticker of whatever stock you would like, and the date that these would have been bought on.
+
 Examples of stocks that would work include GOOL, APPL, and AMZN.
+Dates tested include 2015-05-05, 2021-05-26, and 2024-06-13.
+A Note On Dates:
+    All dates after the present date are not valid inputs, however dates such as 0002-2-2
+    that include years before the stock market was created are allowed and the values of
+    which will return 0.
 
 2.
 To create a second portfolio, continue without closing the program from the first step.
 Enter 1 and name your second portfolio whatever you would like.
 You can then enter 6 and enter the name of your portfolio to return the value of that total portfolio.
+Or, you may enter 7 to view the value of each stock in the given portfolio.
+
+3.
+Additional features are explicated in the README.html file and in the menu of the program.
