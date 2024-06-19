@@ -16,6 +16,23 @@ public class StockProgramGUIFrame extends JFrame
         implements ActionListener, ItemListener, ListSelectionListener {
 
   private final Model model;
+  private JTextField pfield;
+  private JTextField inputPortfolioForStockAmount;
+  private JTextField inputPortfolioForValue;
+  private JTextField getPortfolioForComposition;
+  private JTextField getPortfolioToSave;
+  private JTextField getPortfolioToLoad;
+  private JTextField tickerField;
+  private JTextField inputStockAmount;
+  private JTextField dayInput;
+  private JTextField monthInput;
+  private JTextField yearInput;
+  private JTextField dayValueInput;
+  private JTextField monthValueInput;
+  private JTextField yearValueInput;
+  private JTextField dayCompInput;
+  private JTextField monthCompInput;
+  private JTextField yearCompInput;
 
   public StockProgramGUIFrame(Model model) {
     super();
@@ -33,12 +50,19 @@ public class StockProgramGUIFrame extends JFrame
 
     JPanel createPortfolioPanel = new JPanel();
     createPortfolioPanel.setBorder(BorderFactory.createTitledBorder("Create Portfolio"));
+    JPanel portfolioPanel = new JPanel();
+    portfolioPanel.setLayout(new BoxLayout(portfolioPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(createPortfolioPanel);
 
-
-
-    // The create portfolio button
+    // The create portfolio section.
     JPanel inputTitlePanel = new JPanel();
+
+    JLabel inputDisplay = new JLabel("Portfolio title here:");
+    createPortfolioPanel.add(inputDisplay);
+
+    pfield = new JTextField(10);
+    createPortfolioPanel.add(pfield);
+
     inputTitlePanel.setLayout(new FlowLayout());
     createPortfolioPanel.add(inputTitlePanel);
 
@@ -47,8 +71,8 @@ public class StockProgramGUIFrame extends JFrame
     createNewPortfolioButton.addActionListener(this);
     inputTitlePanel.add(createNewPortfolioButton);
 
-    JLabel inputDisplay = new JLabel("Portfolio title here");
-    inputTitlePanel.add(inputDisplay);
+    String[] portfoliosComp = {"Portfolios here"};
+    // TODO add method / add all portfolios
 
 
 
@@ -66,51 +90,37 @@ public class StockProgramGUIFrame extends JFrame
     buyOrSellPanel.setLayout(new BoxLayout(buyOrSellPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(buyOrSellPanel);
 
-    // Adding the list of portfolios available to select
-    JPanel listOfPortfoliosToEdit = new JPanel();
-    listOfPortfoliosToEdit.setLayout(new FlowLayout());
-    buyOrSellPanel.add(listOfPortfoliosToEdit);
-    JLabel portfolioDisplay = new JLabel("Portfolio:");
-    listOfPortfoliosToEdit.add(portfolioDisplay);
+    // Inputting portfolio title
+    JPanel inputPortfolioNameStock = new JPanel();
+    inputPortfolioNameStock.setLayout(new FlowLayout());
+    buyOrSellPanel.add(inputPortfolioNameStock);
 
-    String[] portfolios = {"Portfolios here"};
-    // TODO add method / add all portfolios
-
-    JComboBox<String> portfolioOptions = new JComboBox<String>();
-    //the event listener when an option is selected
-    portfolioOptions.setActionCommand("Size options");
-    portfolioOptions.addActionListener(this);
-    for (int i = 0; i < portfolios.length; i++) {
-      portfolioOptions.addItem(portfolios[i]);
-    }
-    listOfPortfoliosToEdit.add(portfolioOptions);
+    JLabel inputPortfolioLabel = new JLabel("Portfolio title here:");
+    inputPortfolioNameStock.add(inputPortfolioLabel);
+    inputPortfolioForStockAmount = new JTextField(10);
+    inputPortfolioNameStock.add(inputPortfolioForStockAmount);
 
     // Inputting stock ability
     JPanel inputTickerPanel = new JPanel();
     inputTickerPanel.setLayout(new FlowLayout());
     buyOrSellPanel.add(inputTickerPanel);
 
-    JButton addStockButton = new JButton("Click to input stock ticker");
-    addStockButton.setActionCommand("Input");
-    addStockButton.addActionListener(this);
-    inputTickerPanel.add(addStockButton);
 
-    JLabel tickerDisplay = new JLabel("Stock ticker here");
+    JLabel tickerDisplay = new JLabel("Stock ticker here:");
     inputTickerPanel.add(tickerDisplay);
+    tickerField = new JTextField(4);
+    inputTickerPanel.add(tickerField);
 
     // Adding the input areas for the number of shares
     JPanel inputSharesPanel = new JPanel();
     inputSharesPanel.setLayout(new FlowLayout());
     buyOrSellPanel.add(inputSharesPanel);
 
-    // The function to determine the number of shares
-    JButton addSharesButton = new JButton("Click to input number of shares");
-    addSharesButton.setActionCommand("Input");
-    addSharesButton.addActionListener(this);
-    inputSharesPanel.add(addSharesButton);
-
-    JLabel sharesDisplay = new JLabel("# shares");
+    JLabel sharesDisplay = new JLabel("Number of shares:");
     inputSharesPanel.add(sharesDisplay);
+
+    inputStockAmount = new JTextField(10);
+    inputSharesPanel.add(inputStockAmount);
 
     // Adding the input areas for the date
     JPanel inputDatePanel = new JPanel();
@@ -118,13 +128,24 @@ public class StockProgramGUIFrame extends JFrame
     buyOrSellPanel.add(inputDatePanel);
 
     // The function to determine the date the stock should be bought / sold on
-    JButton addDateButton = new JButton("Click to input the buy/sell date");
-    addDateButton.setActionCommand("Input");
-    addDateButton.addActionListener(this);
-    inputDatePanel.add(addDateButton);
 
-    JLabel dateDisplay = new JLabel("Date (YYYY-MM-DD)");
-    inputDatePanel.add(dateDisplay);
+    // First off day
+    JLabel dayDisplay = new JLabel("Day:");
+    inputDatePanel.add(dayDisplay);
+    dayInput = new JTextField(2);
+    inputDatePanel.add(dayInput);
+
+    // Then month
+    JLabel monthDisplay = new JLabel("Month:");
+    inputDatePanel.add(monthDisplay);
+    monthInput = new JTextField(2);
+    inputDatePanel.add(monthInput);
+
+    // Then year
+    JLabel yearDisplay = new JLabel("Year:");
+    inputDatePanel.add(yearDisplay);
+    yearInput = new JTextField(4);
+    inputDatePanel.add(yearInput);
 
     // Adding the input areas for the number of shares
     JPanel buyOrSellButtonsPanel = new JPanel();
@@ -143,8 +164,6 @@ public class StockProgramGUIFrame extends JFrame
     sellButton.addActionListener(this);
     buyOrSellButtonsPanel.add(sellButton);
 
-
-
     // The querying value functions
     JPanel valuePanel = new JPanel();
     valuePanel.setBorder(BorderFactory.createTitledBorder("Get Value"));
@@ -155,34 +174,35 @@ public class StockProgramGUIFrame extends JFrame
     JPanel listOfPortfoliosToQueryValue = new JPanel();
     listOfPortfoliosToQueryValue.setLayout(new FlowLayout());
     valuePanel.add(listOfPortfoliosToQueryValue);
-    JLabel portfolioDisplayQueryValue = new JLabel("Portfolio:");
-    listOfPortfoliosToQueryValue.add(portfolioDisplayQueryValue);
 
-    String[] portfoliosValue = {"Portfolios here"};
-    // TODO add method / add all portfolios
-
-    JComboBox<String> portfolioOptionsValue = new JComboBox<String>();
-    //the event listener when an option is selected
-    portfolioOptionsValue.setActionCommand("Size options");
-    portfolioOptionsValue.addActionListener(this);
-    for (int i = 0; i < portfoliosValue.length; i++) {
-      portfolioOptionsValue.addItem(portfoliosValue[i]);
-    }
-    listOfPortfoliosToQueryValue.add(portfolioOptionsValue);
+    // Adding the input area for the portfolio
+    JLabel titleOfPortfolioForValue = new JLabel("Portfolio title here:");
+    listOfPortfoliosToQueryValue.add(titleOfPortfolioForValue);
+    inputPortfolioForValue = new JTextField(10);
+    listOfPortfoliosToQueryValue.add(inputPortfolioForValue);
 
     // Adding the input areas for the date
     JPanel inputDateValuePanel = new JPanel();
     inputDateValuePanel.setLayout(new FlowLayout());
     valuePanel.add(inputDateValuePanel);
 
-    // The function to determine the date the value should be gotten from
-    JButton addDateButtonValue = new JButton("Click to input the desired date");
-    addDateButtonValue.setActionCommand("Input");
-    addDateButtonValue.addActionListener(this);
-    inputDateValuePanel.add(addDateButtonValue);
+    // Adding day value
+    JLabel dayValueDisplay = new JLabel("Day:");
+    inputDateValuePanel.add(dayValueDisplay);
+    dayValueInput = new JTextField(2);
+    inputDateValuePanel.add(dayValueInput);
 
-    JLabel dateValueDisplay = new JLabel("Date (YYYY-MM-DD)");
-    inputDateValuePanel.add(dateValueDisplay);
+    // Adding month value
+    JLabel monthValueDisplay = new JLabel("Month:");
+    inputDateValuePanel.add(monthValueDisplay);
+    monthValueInput = new JTextField(2);
+    inputDateValuePanel.add(monthValueInput);
+
+    // Adding year value
+    JLabel yearValueDisplay = new JLabel("Year:");
+    inputDateValuePanel.add(yearValueDisplay);
+    yearValueInput = new JTextField(4);
+    inputDateValuePanel.add(yearValueInput);
 
     // Adding the input areas for the value output
     JPanel outputValuePanel = new JPanel();
@@ -196,10 +216,6 @@ public class StockProgramGUIFrame extends JFrame
     getValueButton.addActionListener(this);
     outputValuePanel.add(getValueButton);
 
-    JLabel getValueDisplay = new JLabel("Value");
-    outputValuePanel.add(getValueDisplay);
-
-
 
     // The querying composition functions
     JPanel compositionPanel = new JPanel();
@@ -207,38 +223,37 @@ public class StockProgramGUIFrame extends JFrame
     compositionPanel.setLayout(new BoxLayout(compositionPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(compositionPanel);
 
-    // Adding the list of portfolios available to select
-    JPanel listOfPortfoliosToQueryComp = new JPanel();
-    listOfPortfoliosToQueryComp.setLayout(new FlowLayout());
-    compositionPanel.add(listOfPortfoliosToQueryComp);
-    JLabel portfolioDisplayQueryComp = new JLabel("Portfolio:");
-    listOfPortfoliosToQueryComp.add(portfolioDisplayQueryComp);
+    JPanel compositionPortfolioPanel = new JPanel();
+    compositionPortfolioPanel.setLayout(new FlowLayout());
+    compositionPanel.add(compositionPortfolioPanel);
 
-    String[] portfoliosComp = {"Portfolios here"};
-    // TODO add method / add all portfolios
-
-    JComboBox<String> portfolioOptionsComp = new JComboBox<String>();
-    //the event listener when an option is selected
-    portfolioOptionsComp.setActionCommand("Size options");
-    portfolioOptionsComp.addActionListener(this);
-    for (int i = 0; i < portfoliosComp.length; i++) {
-      portfolioOptionsComp.addItem(portfoliosComp[i]);
-    }
-    listOfPortfoliosToQueryComp.add(portfolioOptionsComp);
+    JLabel compositionLabel = new JLabel("Portfolio title here:");
+    compositionPortfolioPanel.add(compositionLabel);
+    getPortfolioForComposition = new JTextField(10);
+    compositionPortfolioPanel.add(getPortfolioForComposition);
 
     // Adding the input areas for the date
     JPanel inputDateCompPanel = new JPanel();
     inputDateCompPanel.setLayout(new FlowLayout());
     compositionPanel.add(inputDateCompPanel);
 
-    // The function to determine the date the value should be gotten from
-    JButton addDateButtonComp = new JButton("Click to input the desired date");
-    addDateButtonComp.setActionCommand("Input");
-    addDateButtonComp.addActionListener(this);
-    inputDateCompPanel.add(addDateButtonComp);
+    // Adding day value
+    JLabel dayCompDisplay = new JLabel("Day:");
+    inputDateCompPanel.add(dayCompDisplay);
+    dayCompInput = new JTextField(2);
+    inputDateCompPanel.add(dayCompInput);
 
-    JLabel dateCompDisplay = new JLabel("Date (YYYY-MM-DD)");
-    inputDateCompPanel.add(dateCompDisplay);
+    // Adding month value
+    JLabel monthCompDisplay = new JLabel("Month:");
+    inputDateCompPanel.add(monthCompDisplay);
+    monthCompInput = new JTextField(2);
+    inputDateCompPanel.add(monthCompInput);
+
+    // Adding year value
+    JLabel yearCompDisplay = new JLabel("Year:");
+    inputDateCompPanel.add(yearCompDisplay);
+    yearCompInput = new JTextField(4);
+    inputDateCompPanel.add(yearCompInput);
 
     // Adding the input areas for the value output
     JPanel outputCompPanel = new JPanel();
@@ -252,41 +267,27 @@ public class StockProgramGUIFrame extends JFrame
     getCompButton.addActionListener(this);
     outputCompPanel.add(getCompButton);
 
-    JLabel getCompDisplay = new JLabel("Composition:");
-    outputCompPanel.add(getCompDisplay);
-
-
-
     // Save portfolio function
     JPanel savePortfolioPanel = new JPanel();
     savePortfolioPanel.setBorder(BorderFactory.createTitledBorder("Save Portfolio"));
     savePortfolioPanel.setLayout(new BoxLayout(savePortfolioPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(savePortfolioPanel);
 
-    // Adding the list of portfolios available to select
-    JPanel listOfPortfoliosToSave = new JPanel();
-    listOfPortfoliosToSave.setLayout(new FlowLayout());
-    savePortfolioPanel.add(listOfPortfoliosToSave);
-    JLabel portfolioSaveDisplay = new JLabel("Portfolio:");
-    listOfPortfoliosToSave.add(portfolioSaveDisplay);
+    // The panel to put the name of the portfolio in
+    JPanel savePortfolioLabelPanel = new JPanel();
+    savePortfolioLabelPanel.setLayout(new FlowLayout());
+    savePortfolioPanel.add(savePortfolioLabelPanel);
 
-    String[] portfoliosSave = {"Portfolios here"};
-    // TODO add method / add all portfolios
-
-    JComboBox<String> portfolioOptionsSave = new JComboBox<String>();
-    //the event listener when an option is selected
-    portfolioOptionsSave.setActionCommand("Size options");
-    portfolioOptionsSave.addActionListener(this);
-    for (int i = 0; i < portfoliosSave.length; i++) {
-      portfolioOptionsSave.addItem(portfoliosSave[i]);
-    }
-    listOfPortfoliosToSave.add(portfolioOptionsSave);
+    // The label of the portfolio to save
+    JLabel savePortfolioLabel = new JLabel("Portfolio title here:");
+    savePortfolioLabelPanel.add(savePortfolioLabel);
+    getPortfolioToSave = new JTextField(10);
+    savePortfolioLabelPanel.add(getPortfolioToSave);
 
     // Save button
     JPanel fileSavePanel = new JPanel();
     fileSavePanel.setLayout(new FlowLayout());
     savePortfolioPanel.add(fileSavePanel);
-
     JButton fileSaveButton = new JButton("Save");
     fileSaveButton.setActionCommand("Save file");
     fileSaveButton.addActionListener(this);
@@ -294,32 +295,22 @@ public class StockProgramGUIFrame extends JFrame
     JLabel saveDisplay = new JLabel("File path will appear here");
     fileSavePanel.add(saveDisplay);
 
-
-
     // Load portfolio function
     JPanel loadPortfolioPanel = new JPanel();
     loadPortfolioPanel.setBorder(BorderFactory.createTitledBorder("Load Portfolio"));
     loadPortfolioPanel.setLayout(new BoxLayout(loadPortfolioPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(loadPortfolioPanel);
 
-    // Adding the list of portfolios available to select
-    JPanel listOfPortfoliosToLoad = new JPanel();
-    listOfPortfoliosToLoad.setLayout(new FlowLayout());
-    loadPortfolioPanel.add(listOfPortfoliosToLoad);
-    JLabel portfolioLoadDisplay = new JLabel("Portfolio:");
-    listOfPortfoliosToLoad.add(portfolioLoadDisplay);
+    // The panel to add our label to
+    JPanel loadPortfolioLabelPanel = new JPanel();
+    loadPortfolioLabelPanel.setLayout(new FlowLayout());
+    loadPortfolioPanel.add(loadPortfolioLabelPanel);
 
-    String[] portfoliosLoad = {"Portfolios here"};
-    // TODO add method / add all portfolios
-
-    JComboBox<String> portfolioOptionsLoad = new JComboBox<String>();
-    //the event listener when an option is selected
-    portfolioOptionsLoad.setActionCommand("Size options");
-    portfolioOptionsLoad.addActionListener(this);
-    for (int i = 0; i < portfoliosLoad.length; i++) {
-      portfolioOptionsLoad.addItem(portfoliosLoad[i]);
-    }
-    listOfPortfoliosToLoad.add(portfolioOptionsLoad);
+    // Adding the loadPortfolioLabelPanel to the panel
+    JLabel loadPortfolioLabel = new JLabel("Portfolio title here:");
+    loadPortfolioLabelPanel.add(loadPortfolioLabel);
+    getPortfolioToLoad = new JTextField(10);
+    loadPortfolioLabelPanel.add(getPortfolioToLoad);
 
     // Load button
     JPanel loadPanel = new JPanel();
