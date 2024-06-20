@@ -303,8 +303,6 @@ public class StockProgramGUIFrame extends JFrame
     fileSaveButton.setActionCommand("Save-File");
     fileSaveButton.addActionListener(this);
     fileSavePanel.add(fileSaveButton);
-    JLabel saveDisplay = new JLabel("File path will appear here");
-    fileSavePanel.add(saveDisplay);
 
     // Load portfolio function
     JPanel loadPortfolioPanel = new JPanel();
@@ -342,8 +340,6 @@ public class StockProgramGUIFrame extends JFrame
     loadButton.setActionCommand("Load-File");
     loadButton.addActionListener(this);
     loadPanel.add(loadButton);
-    JLabel fileOpenDisplay = new JLabel("File path will appear here");
-    loadPanel.add(fileOpenDisplay);
   }
 
   @Override
@@ -358,8 +354,8 @@ public class StockProgramGUIFrame extends JFrame
         break;
       case "Save-File":
         try {
-          if (getPortfolioToLoad.getText().length() != 0) {
-            model.getPortfolio(getPortfolioToSave.toString()).savePortfolio();
+          if (!getPortfolioToLoad.getText().isEmpty()) {
+            model.getPortfolio(getPortfolioToSave.getText()).savePortfolio();
           }
         } catch (IOException e) {
           throw new RuntimeException(e);
@@ -367,8 +363,9 @@ public class StockProgramGUIFrame extends JFrame
         break;
       case "Load-File":
         try {
-          if (getPortfolioToLoad.getText().length() != 0) {
-            model.getFromTxt(getPortfolioToLoad.getText(),
+          if (!getPortfolioToLoad.getText().isEmpty()) {
+            model.getFromTxt(getPortfolioToLoad.getText().substring(0,
+                            getPortfolioToLoad.getText().length() - 4),
                     "saved_portfolios/" + getPortfolioToLoad.getText());
             formattedPortfolios = model.formatPortfolios()
                     .replaceAll(System.lineSeparator(), "<br>");
