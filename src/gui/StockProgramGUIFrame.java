@@ -11,11 +11,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Model;
+import model.portfolios.PortfolioImpl;
 
 public class StockProgramGUIFrame extends JFrame
         implements ActionListener, ItemListener, ListSelectionListener {
 
   private final Model model;
+  private final JPanel listPortfoliosPanel;
+  JLabel addedPortfolio;
   private JTextField pfield;
   private JTextField inputPortfolioForStockAmount;
   private JTextField inputPortfolioForValue;
@@ -39,7 +42,7 @@ public class StockProgramGUIFrame extends JFrame
     this.model = model;
 
     setTitle("Stock Program");
-    setSize(420, 400);
+    setSize(550, 400);
 
     JPanel mainPanel = new JPanel();
     // For elements to be arranged vertically within this panel
@@ -54,6 +57,7 @@ public class StockProgramGUIFrame extends JFrame
     portfolioPanel.setLayout(new BoxLayout(portfolioPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(createPortfolioPanel);
 
+
     // The create portfolio section.
     JPanel inputTitlePanel = new JPanel();
 
@@ -67,19 +71,17 @@ public class StockProgramGUIFrame extends JFrame
     createPortfolioPanel.add(inputTitlePanel);
 
     JButton createNewPortfolioButton = new JButton("Click to create new portfolio");
-    createNewPortfolioButton.setActionCommand("Input");
+    createNewPortfolioButton.setActionCommand("Create-Portfolio");
     createNewPortfolioButton.addActionListener(this);
     inputTitlePanel.add(createNewPortfolioButton);
-
-    String[] portfoliosComp = {"Portfolios here"};
-    // TODO add method / add all portfolios
 
 
 
     // The current list of portfolios
-    //TODO I don't really know if this can/should happen but like just wanted to throw it out there
-    JPanel listPortfoliosPanel = new JPanel();
+    listPortfoliosPanel = new JPanel();
     listPortfoliosPanel.setBorder(BorderFactory.createTitledBorder("List of Portfolios"));
+    addedPortfolio = new JLabel(model.formatPortfolios());
+    listPortfoliosPanel.add(addedPortfolio);
     mainPanel.add(listPortfoliosPanel);
 
 
@@ -326,17 +328,24 @@ public class StockProgramGUIFrame extends JFrame
   }
 
   @Override
-  public void actionPerformed(ActionEvent e) {
-
+  public void actionPerformed(ActionEvent arg0) {
+    switch (arg0.getActionCommand()) {
+      case "Create-Portfolio":
+        model.addPortfolio(new PortfolioImpl(pfield.getText()));
+        String formattedPortfolios = model.formatPortfolios()
+                .replaceAll(System.lineSeparator(), "<br>");
+        addedPortfolio.setText("<html><body>" + formattedPortfolios + "</body></html>");
+        break;
+    }
   }
 
   @Override
-  public void itemStateChanged(ItemEvent e) {
-
+  public void itemStateChanged(ItemEvent arg0) {
+      // Because there are no check boxes, nothing needs to be here
   }
 
   @Override
-  public void valueChanged(ListSelectionEvent e) {
+  public void valueChanged(ListSelectionEvent arg0) {
 
   }
 }

@@ -69,7 +69,7 @@ public class ModelImpl implements Model {
     StringBuilder output = new StringBuilder();
 
     for (IPortfolio portfolio : portfolios) {
-      output.append("\n");
+      output.append(System.lineSeparator());
       output.append(portfolio.getPortfolioTitle());
       output.append(": ").append(portfolio.formatStock());
     }
