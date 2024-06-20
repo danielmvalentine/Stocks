@@ -275,6 +275,14 @@ public class StockProgramGUIFrame extends JFrame
     savePortfolioPanel.setLayout(new BoxLayout(savePortfolioPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(savePortfolioPanel);
 
+    // Info for save portfolio
+    JPanel savePortfolioInfoPanel = new JPanel();
+    savePortfolioInfoPanel.setLayout(new FlowLayout());
+    savePortfolioPanel.add(savePortfolioInfoPanel);
+    JLabel savePortfolioInfo = new JLabel("Given .txt file will be located in"
+            + " the given saved_portfolios folder.");
+    savePortfolioInfoPanel.add(savePortfolioInfo);
+
     // The panel to put the name of the portfolio in
     JPanel savePortfolioLabelPanel = new JPanel();
     savePortfolioLabelPanel.setLayout(new FlowLayout());
@@ -302,6 +310,14 @@ public class StockProgramGUIFrame extends JFrame
     loadPortfolioPanel.setBorder(BorderFactory.createTitledBorder("Load Portfolio"));
     loadPortfolioPanel.setLayout(new BoxLayout(loadPortfolioPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(loadPortfolioPanel);
+
+    // Putting the info for the save info
+    JPanel loadPortfolioInfoPanel = new JPanel();
+    loadPortfolioInfoPanel.setLayout(new FlowLayout());
+    loadPortfolioPanel.add(loadPortfolioInfoPanel);
+    JLabel loadPortfolioInfo = new JLabel("Given portfolio must be in .txt format,"
+            + " and be located in the given folder named saved_portfolios");
+    loadPortfolioInfoPanel.add(loadPortfolioInfo);
 
     // The panel to add our label to
     JPanel loadPortfolioLabelPanel = new JPanel();
