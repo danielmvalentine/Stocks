@@ -59,6 +59,36 @@ public class PortfolioImpl implements IPortfolio {
 
     }
 
+    if (output.equals("")) {
+      return "No stocks found";
+    }
+
+    return output.toString();
+  }
+
+  @Override
+  public String formatStockOnDate(LocalDate date) {
+    if (stocks == null || stocks.length == 0) {
+      return "No stocks found";
+    }
+
+    StringBuilder output = new StringBuilder();
+
+    for (int i = 0; i < stocks.length; i += 1) {
+      if ((stocks[i].getSellDate() == null || stocks[i].getSellDate().isAfter(date))
+              && stocks[i].getBuyDate().isBefore(date)) {
+        output.append(System.lineSeparator()).append("  ");
+        output.append(stocks[i].getTicker());
+        output.append("; ").append(getTotalShares(stocks[i])).append(" shares");
+        i += stockRepeats(stocks[i]) - 1;
+      }
+
+    }
+
+    if (output.equals("")) {
+      return "No stocks found";
+    }
+
     return output.toString();
   }
 

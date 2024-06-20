@@ -82,15 +82,18 @@ public class ModelImpl implements Model {
 
   @Override
   public void addPortfolio(IPortfolio portfolio) {
-    if (portfolios == null) {
-      portfolios = new IPortfolio[1];
-      portfolios[0] = portfolio;
-    } else if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
-      IPortfolio[] newList = new IPortfolio[portfolios.length + 1];
-      System.arraycopy(portfolios, 0, newList, 0, newList.length - 1);
-      newList[newList.length - 1] = portfolio;
-      this.portfolios = newList;
+    if (portfolio != null && !(portfolio.getPortfolioTitle().equals(""))) {
+      if (portfolios == null) {
+        portfolios = new IPortfolio[1];
+        portfolios[0] = portfolio;
+      } else if (!sameTitle(portfolios, portfolio.getPortfolioTitle())) {
+        IPortfolio[] newList = new IPortfolio[portfolios.length + 1];
+        System.arraycopy(portfolios, 0, newList, 0, newList.length - 1);
+        newList[newList.length - 1] = portfolio;
+        this.portfolios = newList;
+      }
     }
+
   }
 
   private boolean sameTitle(IPortfolio[] portfolios, String title) {
