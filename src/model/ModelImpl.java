@@ -51,6 +51,9 @@ public class ModelImpl implements Model {
 
   @Override
   public IPortfolio getPortfolio(String title) {
+    if(portfolios == null){
+      return null;
+    }
     for (IPortfolio portfolio : portfolios) {
       if (portfolio.getPortfolioTitle().equals(title)) {
         return portfolio;
@@ -129,6 +132,15 @@ public class ModelImpl implements Model {
         LocalDate individualDate = LocalDate.parse(date);
         Stock newStock = new Stock(ticker, shares, individualDate);
         newPortfolio.addToPortfolio(newStock);
+      }
+      if (portfolios == null) {
+        portfolios = new IPortfolio[1];
+        portfolios[0] = newPortfolio;
+      } else if (!sameTitle(portfolios, newPortfolio.getPortfolioTitle())) {
+        IPortfolio[] newList = new IPortfolio[portfolios.length + 1];
+        System.arraycopy(portfolios, 0, newList, 0, newList.length - 1);
+        newList[newList.length - 1] = newPortfolio;
+        this.portfolios = newList;
       }
     } catch (NoSuchFileException e) {
       e.printStackTrace();

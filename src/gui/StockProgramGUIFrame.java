@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -299,7 +300,7 @@ public class StockProgramGUIFrame extends JFrame
     fileSavePanel.setLayout(new FlowLayout());
     savePortfolioPanel.add(fileSavePanel);
     JButton fileSaveButton = new JButton("Save");
-    fileSaveButton.setActionCommand("Save file");
+    fileSaveButton.setActionCommand("Save-File");
     fileSaveButton.addActionListener(this);
     fileSavePanel.add(fileSaveButton);
     JLabel saveDisplay = new JLabel("File path will appear here");
@@ -316,7 +317,7 @@ public class StockProgramGUIFrame extends JFrame
     loadPortfolioInfoPanel.setLayout(new FlowLayout());
     loadPortfolioPanel.add(loadPortfolioInfoPanel);
     JLabel loadPortfolioInfo = new JLabel("Given portfolio must be in .txt format,"
-            + " and be located in the given folder named saved_portfolios");
+            + " and be located in the given folder named saved_portfolios.");
     loadPortfolioInfoPanel.add(loadPortfolioInfo);
 
     // The panel to add our label to
@@ -329,6 +330,8 @@ public class StockProgramGUIFrame extends JFrame
     loadPortfolioLabelPanel.add(loadPortfolioLabel);
     getPortfolioToLoad = new JTextField(10);
     loadPortfolioLabelPanel.add(getPortfolioToLoad);
+    JLabel loadGuide= new JLabel("Ex: Example.txt");
+    loadPortfolioLabelPanel.add(loadGuide);
 
     // Load button
     JPanel loadPanel = new JPanel();
@@ -336,7 +339,7 @@ public class StockProgramGUIFrame extends JFrame
     loadPortfolioPanel.add(loadPanel);
 
     JButton loadButton = new JButton("Load");
-    loadButton.setActionCommand("Open file");
+    loadButton.setActionCommand("Load-File");
     loadButton.addActionListener(this);
     loadPanel.add(loadButton);
     JLabel fileOpenDisplay = new JLabel("File path will appear here");
@@ -351,6 +354,30 @@ public class StockProgramGUIFrame extends JFrame
         String formattedPortfolios = model.formatPortfolios()
                 .replaceAll(System.lineSeparator(), "<br>");
         addedPortfolio.setText("<html><body>" + formattedPortfolios + "</body></html>");
+        System.out.println(model.formatPortfolios());
+        break;
+      case "Save-File":
+        try {
+          if (getPortfolioToLoad.getText().length() != 0) {
+            model.getPortfolio(getPortfolioToSave.toString()).savePortfolio();
+          }
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+        break;
+      case "Load-File":
+        try {
+          if (getPortfolioToLoad.getText().length() != 0) {
+            model.getFromTxt(getPortfolioToLoad.getText(),
+                    "saved_portfolios/" + getPortfolioToLoad.getText());
+            formattedPortfolios = model.formatPortfolios()
+                    .replaceAll(System.lineSeparator(), "<br>");
+            addedPortfolio.setText("<html><body>" + formattedPortfolios + "</body></html>");
+            System.out.println(model.formatPortfolios());
+          }
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
         break;
     }
   }
