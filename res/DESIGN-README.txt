@@ -2,14 +2,14 @@ Stock Program Design
 
 Created by: Daniel Valentine and Baer Istok
 
-The design of our program very strictly followed the guidelines given by the concept of the Model View Controller design pattern.
-We strictly seperated our classes into each category based on their role in the greater program.
-For example, our view is where we store the data to hold our welcome text, our menu, and our options, while our controller is where
-we held the scanner that dealt with inputs given in response to this menu.
+The majority of our design choices for this assignmed arose from the simple fact that we were locked
+into using Java Swing for our GUI. This led us to the idea of making one central panel with separate
+smaller panels within it so that we didn't have to open or repaint panels as often.
 
-We then further seperated our specific functions into a new package within model. Classes that we counted as functions were ones that
-would be used in direct response to user inputs, and all followed an interface given within the functions package. This allowed for easy 
-addition of new functions.
+Every main method we were instructed to write has its own unique panel, which in turn has individual
+panels within them. Most methods that require an intake require the intake to be written out. We
+felt that although this was a more difficult option for the user, it was only mildly difficult for
+them at worst, and made the jobs of the developers worlds simpler.
 
-Additionally, portfolio functionality is essentially shifted into its own Model View Controller pattern of design within
-the greater program. It was set up extremely similarly to the program at large, also having certain functions being in their own package.
+Our finished product only repaints one panel, the panel that shows which portfolios exist at any
+given time, which is ideal both for runtime and for coding difficulty.
