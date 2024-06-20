@@ -51,7 +51,7 @@ public class ModelImpl implements Model {
 
   @Override
   public IPortfolio getPortfolio(String title) {
-    if(portfolios == null){
+    if (portfolios == null) {
       return null;
     }
     for (IPortfolio portfolio : portfolios) {
