@@ -30,7 +30,7 @@ public class PortfolioImpl implements IPortfolio {
 
   @Override
   public Stock getStock(String ticker) {
-    if (stocks == null) {
+    if (stocks == null || ticker == null) {
       return null;
     }
     for (Stock stock : stocks) {
@@ -54,7 +54,7 @@ public class PortfolioImpl implements IPortfolio {
         output.append(System.lineSeparator()).append("  ");
         output.append(stocks[i].getTicker());
         output.append("; ").append(getTotalShares(stocks[i])).append(" shares");
-        i += stockRepeats(stocks[i]) - 1;
+        i += stockRepeats(stocks[i]);
       }
 
     }
@@ -74,22 +74,36 @@ public class PortfolioImpl implements IPortfolio {
 
     StringBuilder output = new StringBuilder();
 
+    Stock[] withoutRepeats = stocks.clone();
+
     for (int i = 0; i < stocks.length; i += 1) {
       if ((stocks[i].getSellDate() == null || stocks[i].getSellDate().isAfter(date))
               && stocks[i].getBuyDate().isBefore(date)) {
         output.append(System.lineSeparator()).append("  ");
         output.append(stocks[i].getTicker());
-        output.append("; ").append(getTotalShares(stocks[i])).append(" shares");
-        i += stockRepeats(stocks[i]) - 1;
+        output.append("; ").append(getTotalSharesOnDate(stocks[i], date)).append(" shares");
+        i += stockRepeats(stocks[i]);
       }
 
     }
 
-    if (output.equals("")) {
+    if (output.length() == 0) {
       return "No stocks found";
     }
 
     return output.toString();
+  }
+
+  private String getTotalSharesOnDate(Stock stock, LocalDate date) {
+    double totalShares = 0.0;
+    for (Stock repeat : stocks) {
+      if (repeat.getTicker().equals(stock.getTicker())
+              && (repeat.getSellDate() == null || repeat.getSellDate().isAfter(date))
+              && repeat.getBuyDate().isBefore(date)) {
+        totalShares += repeat.getShares();
+      }
+    }
+    return Double.toString(totalShares);
   }
 
   private String getTotalShares(Stock stock) {
@@ -109,7 +123,7 @@ public class PortfolioImpl implements IPortfolio {
         numRepeats += 1;
       }
     }
-    return numRepeats;
+    return numRepeats - 1;
   }
 
   @Override

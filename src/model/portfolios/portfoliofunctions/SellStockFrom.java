@@ -79,13 +79,13 @@ public class SellStockFrom implements PortfolioFunction {
     if (stockOfInterest.getShares() > this.shares) {
       leftoverShares = portfolio.getStock(stock).getShares() - this.shares;
       leftoverStock = new Stock(stockOfInterest.getTicker(),
-              stockOfInterest.getShares() - leftoverShares,
+              leftoverShares,
               stockOfInterest.getBuyDate());
     }
 
 
     Stock originalStock = new Stock(stockOfInterest.getTicker(),
-            leftoverShares,
+            stockOfInterest.getShares() - leftoverShares,
             stockOfInterest.getBuyDate());
     originalStock.addSellDate(date);
 
