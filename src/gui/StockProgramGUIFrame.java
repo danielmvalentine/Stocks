@@ -29,6 +29,10 @@ import model.portfolios.portfoliofunctions.AddStockTo;
 import model.portfolios.portfoliofunctions.SellStockFrom;
 import view.PortfolioView;
 
+/**
+ * The majority of the GUI piece of the Stocks Program. Contains the structure and functionality
+ * of the GUI.
+ */
 public class StockProgramGUIFrame extends JFrame
         implements ActionListener, ItemListener, ListSelectionListener {
 
