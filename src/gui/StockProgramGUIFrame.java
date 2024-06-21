@@ -1,6 +1,8 @@
 package gui;
 
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -9,7 +11,15 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-import javax.swing.*;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -23,48 +33,49 @@ public class StockProgramGUIFrame extends JFrame
         implements ActionListener, ItemListener, ListSelectionListener {
 
   private final Model model;
-  private final Appendable ap;
   private final PortfolioView view;
 
-  private final JPanel listPortfoliosPanel;
-  private JLabel addedPortfolio;
-  private JTextField pfield;
-  private JLabel inputPortfolioLabel;
-  private JTextField inputPortfolioForStockAmount;
-  private JTextField inputPortfolioForValue;
-  private JLabel titleOfPortfolioForValue;
-  private JTextField getPortfolioForComposition;
-  private JLabel compositionLabel;
-  private JTextField getPortfolioToSave;
-  private JLabel savePortfolioLabel;
-  private JTextField getPortfolioToLoad;
-  private JLabel tickerDisplay;
-  private JTextField tickerField;
-  private JLabel sharesDisplay;
-  private JTextField inputStockAmount;
-  private JTextField dayInput;
-  private JLabel dayDisplay;
-  private JTextField monthInput;
-  private JLabel monthDisplay;
-  private JTextField yearInput;
-  private JLabel yearDisplay;
-  private JLabel dayValueDisplay;
-  private JTextField dayValueInput;
-  private JTextField monthValueInput;
-  private JTextField yearValueInput;
-  private JLabel returnedValue;
-  private JLabel dayCompDisplay;
-  private JTextField dayCompInput;
-  private JTextField monthCompInput;
-  private JTextField yearCompInput;
-  private JLabel composition;
+  private final JLabel addedPortfolio;
+  private final JTextField pfield;
+  private final JLabel inputPortfolioLabel;
+  private final JTextField inputPortfolioForStockAmount;
+  private final JTextField inputPortfolioForValue;
+  private final JLabel titleOfPortfolioForValue;
+  private final JTextField getPortfolioForComposition;
+  private final JLabel compositionLabel;
+  private final JTextField getPortfolioToSave;
+  private final JLabel savePortfolioLabel;
+  private final JTextField getPortfolioToLoad;
+  private final JLabel tickerDisplay;
+  private final JTextField tickerField;
+  private final JLabel sharesDisplay;
+  private final JTextField inputStockAmount;
+  private final JTextField dayInput;
+  private final JLabel dayDisplay;
+  private final JTextField monthInput;
+  private final JTextField yearInput;
+  private final JLabel dayValueDisplay;
+  private final JTextField dayValueInput;
+  private final JTextField monthValueInput;
+  private final JTextField yearValueInput;
+  private final JLabel returnedValue;
+  private final JLabel dayCompDisplay;
+  private final JTextField dayCompInput;
+  private final JTextField monthCompInput;
+  private final JTextField yearCompInput;
+  private final JLabel composition;
 
+  /**
+   * Creates a new GUIFrame for the Stock Program. Contains all the buttons and formatting
+   * of the overall GUI.
+   * @param model The model that contains all the portfolios.
+   */
   public StockProgramGUIFrame(Model model) {
     super();
     this.model = model;
-    this.ap = new StringBuilder();
+    Appendable ap = new StringBuilder();
     // Don't care about the views output, but used to utilize certain functions
-    this.view = new PortfolioView(this.ap);
+    this.view = new PortfolioView(ap);
 
     setTitle("Stock Program");
     setSize(600, 400);
@@ -103,7 +114,7 @@ public class StockProgramGUIFrame extends JFrame
 
 
     // The current list of portfolios
-    listPortfoliosPanel = new JPanel();
+    JPanel listPortfoliosPanel = new JPanel();
     listPortfoliosPanel.setBorder(BorderFactory.createTitledBorder("List of Portfolios"));
     addedPortfolio = new JLabel(model.formatPortfolios());
     listPortfoliosPanel.add(addedPortfolio);
@@ -163,13 +174,13 @@ public class StockProgramGUIFrame extends JFrame
     inputDatePanel.add(dayInput);
 
     // Then month
-    monthDisplay = new JLabel("Month:");
+    JLabel monthDisplay = new JLabel("Month:");
     inputDatePanel.add(monthDisplay);
     monthInput = new JTextField(2);
     inputDatePanel.add(monthInput);
 
     // Then year
-    yearDisplay = new JLabel("Year:");
+    JLabel yearDisplay = new JLabel("Year:");
     inputDatePanel.add(yearDisplay);
     yearInput = new JTextField(4);
     inputDatePanel.add(yearInput);
@@ -366,7 +377,7 @@ public class StockProgramGUIFrame extends JFrame
     loadPortfolioLabelPanel.add(loadPortfolioLabel);
     getPortfolioToLoad = new JTextField(10);
     loadPortfolioLabelPanel.add(getPortfolioToLoad);
-    JLabel loadGuide= new JLabel("Ex: Example.txt");
+    JLabel loadGuide = new JLabel("Ex: Example.txt");
     loadPortfolioLabelPanel.add(loadGuide);
 
     // Load button
@@ -381,10 +392,10 @@ public class StockProgramGUIFrame extends JFrame
   }
 
   @Override
-  public void actionPerformed(ActionEvent arg0) {
+  public void actionPerformed(ActionEvent argument0) {
     LocalDate date;
 
-    switch (arg0.getActionCommand()) {
+    switch (argument0.getActionCommand()) {
       case "Create-Portfolio":
         model.addPortfolio(new PortfolioImpl(pfield.getText()));
         resetListPortfolios();
@@ -478,6 +489,9 @@ public class StockProgramGUIFrame extends JFrame
           throw new RuntimeException(e);
         }
         break;
+
+      default:
+        throw new IllegalArgumentException("Button has unknown action command.");
     }
   }
 
@@ -488,13 +502,13 @@ public class StockProgramGUIFrame extends JFrame
   }
 
   @Override
-  public void itemStateChanged(ItemEvent arg0) {
+  public void itemStateChanged(ItemEvent argument0) {
       // Because there are no check boxes, nothing needs to be here
   }
 
   @Override
-  public void valueChanged(ListSelectionEvent arg0) {
-
+  public void valueChanged(ListSelectionEvent argument0) {
+    // No objects require the value to be changed so this method is also unused.
   }
 
   // Checks that the entered portfolio exists in the model

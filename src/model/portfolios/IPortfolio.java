@@ -35,9 +35,9 @@ public interface IPortfolio {
 
   /**
    * Formats all the stock within this portfolio, including their ticker symbol, and the number
-   * of shares the portfolio has, given the date entered
-   * @param date
-   * @return
+   * of shares the portfolio has, given the date entered.
+   * @param date  The date that the stock should be formatted on.
+   * @return  The formatted stocks of the portfolio given the date.
    */
   String formatStockOnDate(LocalDate date);
 
